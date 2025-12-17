@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdfeProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/mdfe">
+  <MDFe xmlns="http://www.portalfiscal.inf.br/mdfe">
+    <infMDFe Id="MDFeCHAVE_MDFE" versao="3.00">
+      <ide>
+        <cUF>41</cUF>
+        <tpAmb>1</tpAmb>
+        <mod>58</mod>
+        <serie>22</serie>
+        <nMDF>NUMERO_MDFE</nMDF>
+        <cMDF>CODIGO_NUMERICO</cMDF>
+        <modal>1</modal>
+        <dhEmi>2025-01-01T10:00:00-03:00</dhEmi>
+        <UFIni>PR</UFIni>
+        <UFFim>SP</UFFim>
+      </ide>
+
+      <emit>
+        <CNPJ>11158565000118</CNPJ>
+        <xNome>Pré vendas transportadora</xNome>
+      </emit>
+
+      <infModal versaoModal="3.00">
+        <rodo>
+          <veicTracao>
+            <placa>AUU0D40</placa>
+            <UF>PR</UF>
+          </veicTracao>
+        </rodo>
+      </infModal>
+
+      <infDoc>
+        <infMunDescarga>
+          <cMunDescarga>3554102</cMunDescarga>
+          <xMunDescarga>TAUBATE</xMunDescarga>
+          <infCTe>
+            <chCTe>CHAVE_CTE</chCTe>
+          </infCTe>
+        </infMunDescarga>
+      </infDoc>
+    </infMDFe>
+  </MDFe>
+</mdfeProc>
