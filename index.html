@@ -1,61 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Gerador CT-e / MDF-e</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="app">
-    <header class="top">
-      <h1>Gerador de Par CT-e / MDF-e</h1>
-      <p>Geração rápida, sem emissão. Layout profissional.</p>
-    </header>
 
-    <section class="panel">
-      <div class="grid">
-        <div class="card">
-          <label>CT-e (XML base)</label>
-          <input type="file" id="cteFile" accept=".xml"/>
-        </div>
-        <div class="card">
-          <label>MDF-e (XML base)</label>
-          <input type="file" id="mdfeFile" accept=".xml"/>
-        </div>
-      </div>
+<h2>Gerar novo par CT-e / MDF-e</h2>
 
-      <div class="grid">
-        <div class="card">
-          <label>Nº CT-e</label>
-          <input id="nCT" placeholder="Ex: 12345"/>
-        </div>
-        <div class="card">
-          <label>Chave CT-e</label>
-          <input id="chCTe" placeholder="44 dígitos"/>
-        </div>
-        <div class="card">
-          <label>Nº MDF-e</label>
-          <input id="nMDF" placeholder="Ex: 6789"/>
-        </div>
-        <div class="card">
-          <label>Chave MDF-e</label>
-          <input id="chMDFe" placeholder="44 dígitos"/>
-        </div>
-      </div>
+<input id="nCT" placeholder="Novo número CT-e"><br><br>
+<input id="chCTe" placeholder="Nova chave CT-e (44)"><br><br>
+<input id="nMDF" placeholder="Novo número MDF-e"><br><br>
+<input id="chMDFe" placeholder="Nova chave MDF-e (44)"><br><br>
+<input id="chNFe" placeholder="Nova chave NF-e"><br><br>
 
-      <div class="grid">
-        <div class="card full">
-          <label>Chave NF-e (opcional)</label>
-          <input id="chNFe" placeholder="se existir no CT-e"/>
-        </div>
-      </div>
+<button onclick="gerar()">GERAR E BAIXAR</button>
 
-      <button id="generate">Gerar e Baixar ZIP</button>
-    </section>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
