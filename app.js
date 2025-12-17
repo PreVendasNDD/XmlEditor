@@ -55,10 +55,12 @@ async function loadXML(path) {
   // return xml.replace(re, "");
 // }
 
-function replaceTag(xml, tag, value) {
-  const re = new RegExp(`<${tag}>[\\s\\S]*?<\\/${tag}>`, "g");
-  return xml.replace(re, `<${tag}>${value}</${tag}>`);
+function replaceTagValue(xml, tag, value) {
+  if (value == null) return xml;
+  const re = new RegExp(`(<${tag}>)([\\s\\S]*?)(</${tag}>)`, "g");
+  return xml.replace(re, `$1${value}$3`);
 }
+
 
 function replaceKey(xml, prefix, key) {
   const re = new RegExp(`${prefix}[0-9]{44}`, "g");
@@ -175,9 +177,9 @@ async function gerar() {
   });
 
   // aplicar CT-e
-  cte = replaceTag(cte, "nCT", nCT);
-  cte = replaceTag(cte, "chCTe", chaveCTe);
-  cte = replaceKey(cte, "CTe", chaveCTe);
+  cte = replaceTagValue(cte, "nCT", nCT);
+  cte = replaceTagValue(cte, "chCTe", chaveCTe);
+  cte = replaceKeyValue(cte, "CTe", chaveCTe);
 
   // aplicar NF-e (se existir)
   cte = replaceTag(cte, "chave", gerarChave({
@@ -190,9 +192,9 @@ async function gerar() {
   }));
 
   // aplicar MDF-e
-  mdfe = replaceTag(mdfe, "nMDF", nMDF);
-  mdfe = replaceTag(mdfe, "chCTe", chaveCTe);
-  mdfe = replaceKey(mdfe, "MDFe", chaveMDFe);
+  mdfe = replaceTagValue(mdfe, "nMDF", nMDF);
+  mdfe = replaceTagValue(mdfe, "chCTe", chaveCTe);
+  mdfe = replaceKeyValue(mdfe, "MDFe", chaveMDFe);
 
    
 // normalizar XML antes de salvar
