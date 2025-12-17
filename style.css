@@ -4,23 +4,20 @@ body {
   color: #fff;
   font-family: Arial, sans-serif;
 }
-
 .app {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
   justify-content: center;
 }
-
 button {
-  padding: 16px 32px;
-  font-size: 16px;
-  border: none;
+  padding: 14px 28px;
   border-radius: 10px;
-  cursor: pointer;
+  border: none;
   background: #2563eb;
   color: #fff;
   font-weight: bold;
+  cursor: pointer;
 }
