@@ -103,3 +103,32 @@ button:hover {
     grid-column: span 1;
   }
 }
+
+
+.auto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.auto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #1f2937;
+}
+
+.auto-item .label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.auto-item .value {
+  font-size: 13px;
+  color: #9ca3af;
+}
