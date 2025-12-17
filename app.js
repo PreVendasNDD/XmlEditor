@@ -50,10 +50,10 @@ async function loadXML(path) {
   return await res.text();
 }
 
-function removeBlock(xml, tag) {
-  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, "g");
-  return xml.replace(re, "");
-}
+// function removeBlock(xml, tag) {
+ //  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, "g");
+  // return xml.replace(re, "");
+// }
 
 function replaceTag(xml, tag, value) {
   const re = new RegExp(`<${tag}>[\\s\\S]*?<\\/${tag}>`, "g");
@@ -111,11 +111,11 @@ function gerarChave({ cUF, anoMes, CNPJ, modelo, serie, numero }) {
    FUNÇÃO DE NORMALIZAÇÃO XML (OBRIGATÓRIA)
 ========================================================= */
 
-function normalizarXML(xml) {
+// function normalizarXML(xml) {
   // remove BOM UTF-8 se existir
-  if (xml.charCodeAt(0) === 0xFEFF) {
-    xml = xml.slice(1);
-  }
+ // if (xml.charCodeAt(0) === 0xFEFF) {
+ //   xml = xml.slice(1);
+ // }
 
   // remove espaços/quebras antes do <?xml
   xml = xml.trimStart();
