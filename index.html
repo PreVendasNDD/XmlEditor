@@ -15,34 +15,26 @@
   </header>
 
   <section class="card">
-    <div class="grid">
-      <div class="field">
-        <label>Número do CT-e</label>
-        <input id="nCT" placeholder="Ex: 91731">
+
+    <div class="auto-info">
+      <div class="auto-item">
+        <span class="label">CT-e</span>
+        <span class="value">Número e chave gerados automaticamente</span>
       </div>
 
-      <div class="field">
-        <label>Chave do CT-e</label>
-        <input id="chCTe" placeholder="44 dígitos">
+      <div class="auto-item">
+        <span class="label">MDF-e</span>
+        <span class="value">Número e chave gerados automaticamente</span>
       </div>
 
-      <div class="field">
-        <label>Número do MDF-e</label>
-        <input id="nMDF" placeholder="Ex: 91731">
-      </div>
-
-      <div class="field">
-        <label>Chave do MDF-e</label>
-        <input id="chMDFe" placeholder="44 dígitos">
-      </div>
-
-      <div class="field full">
-        <label>Chave da NF-e (quando existir)</label>
-        <input id="chNFe" placeholder="44 dígitos">
+      <div class="auto-item">
+        <span class="label">NF-e</span>
+        <span class="value">Sequência automática (base 1666666)</span>
       </div>
     </div>
 
     <button onclick="gerar()">Gerar e baixar XMLs</button>
+
   </section>
 
   <footer class="footer">
