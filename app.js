@@ -1,60 +1,54 @@
-const byId = id => document.getElementById(id);
-
-function readFile(file){
-  return new Promise(res=>{
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.readAsText(file);
-  });
+async function carregarXML(path) {
+  const res = await fetch(path);
+  return await res.text();
 }
 
-function removeBlocks(xml, names){
-  names.forEach(n=>{
-    const re = new RegExp(`<${n}[\\s\\S]*?<\\/${n}>`,'g');
-    xml = xml.replace(re,'');
-  });
-  return xml;
+function removerBloco(xml, tag) {
+  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, "g");
+  return xml.replace(re, "");
 }
 
-function replaceTag(xml, tag, value){
-  if(!value) return xml;
-  const re = new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`,'g');
-  return xml.replace(re, `<${tag}>${value}</${tag}>`);
+function substituir(xml, tag, valor) {
+  if (!valor) return xml;
+  const re = new RegExp(`<${tag}>[\\s\\S]*?<\\/${tag}>`, "g");
+  return xml.replace(re, `<${tag}>${valor}</${tag}>`);
 }
 
-function replaceId(xml, root, prefix, value){
-  if(!value) return xml;
-  const re = new RegExp(`<${root}([^>]*?)Id="[^"]+"`,'g');
-  return xml.replace(re, `<${root}$1Id="${prefix}${value}"`);
+function substituirId(xml, prefixo, valor) {
+  const re = new RegExp(`${prefixo}[0-9]{44}`, "g");
+  return xml.replace(re, prefixo + valor);
 }
 
-byId("generate").onclick = async () => {
-  const cteF = byId("cteFile").files[0];
-  const mdfeF = byId("mdfeFile").files[0];
-  if(!cteF || !mdfeF) return alert("Selecione CT-e e MDF-e");
+async function gerar() {
+  let cte = await carregarXML("base/cte_base.xml");
+  let mdfe = await carregarXML("base/mdfe_base.xml");
 
-  let cte = await readFile(cteF);
-  let mdfe = await readFile(mdfeF);
+  // limpar assinatura / protocolo
+  cte = removerBloco(cte, "Signature");
+  cte = removerBloco(cte, "protCTe");
 
-  cte = removeBlocks(cte, ["Signature","protCTe"]);
-  mdfe = removeBlocks(mdfe, ["Signature","protMDFe"]);
+  mdfe = removerBloco(mdfe, "Signature");
+  mdfe = removerBloco(mdfe, "protMDFe");
 
-  cte = replaceTag(cte,"nCT",byId("nCT").value);
-  cte = replaceTag(cte,"chCTe",byId("chCTe").value);
-  cte = replaceTag(cte,"chave",byId("chNFe").value);
-  cte = replaceId(cte,"infCte","CTe",byId("chCTe").value);
+  // substituições CTe
+  cte = substituir(cte, "nCT", nCT.value);
+  cte = substituir(cte, "chave", chNFe.value);
+  cte = substituirId(cte, "CTe", chCTe.value);
+  cte = substituir(cte, "chCTe", chCTe.value);
 
-  mdfe = replaceTag(mdfe,"nMDF",byId("nMDF").value);
-  mdfe = replaceTag(mdfe,"chCTe",byId("chCTe").value);
-  mdfe = replaceTag(mdfe,"chMDFe",byId("chMDFe").value);
-  mdfe = replaceId(mdfe,"infMDFe","MDFe",byId("chMDFe").value);
+  // substituições MDFe
+  mdfe = substituir(mdfe, "nMDF", nMDF.value);
+  mdfe = substituirId(mdfe, "MDFe", chMDFe.value);
+  mdfe = substituir(mdfe, "chMDFe", chMDFe.value);
+  mdfe = substituir(mdfe, "chCTe", chCTe.value);
 
   const zip = new JSZip();
   zip.file("CTe_NOVO.xml", cte);
   zip.file("MDFe_NOVO.xml", mdfe);
-  const blob = await zip.generateAsync({type:"blob"});
+
+  const blob = await zip.generateAsync({ type: "blob" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "par_cte_mdfe.zip";
+  a.download = "cte_mdfe.zip";
   a.click();
-};
+}
