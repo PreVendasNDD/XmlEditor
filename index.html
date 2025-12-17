@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XmlEditor - Gerador CT-e/MDF-e</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 XmlEditor - Gerador de XMLs</h1>
+        
+        <div class="upload-section">
+            <h3>1. Carregue seus modelos base:</h3>
+            <input type="file" id="cteFile" accept=".xml">
+            <label for="cteFile">CT-e Base</label>
+            
+            <input type="file" id="mdfeFile" accept=".xml">
+            <label for="mdfeFile">MDF-e Base</label>
+        </div>
+        
+        <div class="form-section">
+            <h3>2. Informe os novos dados:</h3>
+            
+            <div class="form-group">
+                <label>Novo Número CT-e:</label>
+                <input type="text" id="numeroCte" placeholder="091732">
+            </div>
+            
+            <div class="form-group">
+                <label>Nova Chave CT-e (44 dígitos):</label>
+                <input type="text" id="chaveCte" placeholder="41250611158565000118570010000917321001054737">
+            </div>
+            
+            <div class="form-group">
+                <label>Novo Número MDF-e:</label>
+                <input type="text" id="numeroMdfe" placeholder="091732">
+            </div>
+            
+            <div class="form-group">
+                <label>Nova Chave MDF-e (44 dígitos):</label>
+                <input type="text" id="chaveMdfe" placeholder="41250611158565000118580010000091731023283840">
+            </div>
+            
+            <div class="form-group">
+                <label>Chave NF-e (opcional):</label>
+                <input type="text" id="chaveNfe">
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button onclick="gerarXMLs()">📁 Gerar XMLs</button>
+            <button onclick="baixarTudo()">📦 Baixar ZIP</button>
+            <button onclick="limpar()">🗑️ Limpar</button>
+        </div>
+        
+        <div id="resultado"></div>
+    </div>
+    
+    <script src="js/xml-generator.js"></script>
+    <script src="js/downloader.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
