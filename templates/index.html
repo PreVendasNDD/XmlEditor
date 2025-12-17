@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de XMLs CT-e e MDF-e</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-code"></i> Gerador de XMLs de Transporte</h1>
+            <p class="subtitle">Gere automaticamente novos pares de CT-e e MDF-e para novas apresentações</p>
+        </header>
+
+        <div class="form-container">
+            <form id="geradorForm">
+                <div class="form-group">
+                    <h2><i class="fas fa-edit"></i> Campos a Alterar</h2>
+                    <p class="form-info">Preencha os campos abaixo para gerar os novos XMLs</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="novo_numero_cte">
+                            <i class="fas fa-hashtag"></i> Novo Número do CT-e
+                        </label>
+                        <input type="text" id="novo_numero_cte" name="novo_numero_cte" 
+                               placeholder="Ex: 091732" required>
+                        <small>Número sequencial do CT-e (sem zeros à esquerda)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nova_chave_cte">
+                            <i class="fas fa-key"></i> Nova Chave do CT-e
+                        </label>
+                        <input type="text" id="nova_chave_cte" name="nova_chave_cte" 
+                               placeholder="Ex: 41250611158565000118570010000917321001054737" required>
+                        <small>44 dígitos - Chave de acesso do CT-e</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="novo_numero_mdfe">
+                            <i class="fas fa-hashtag"></i> Novo Número do MDF-e
+                        </label>
+                        <input type="text" id="novo_numero_mdfe" name="novo_numero_mdfe" 
+                               placeholder="Ex: 091732" required>
+                        <small>Número sequencial do MDF-e</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nova_chave_mdfe">
+                            <i class="fas fa-key"></i> Nova Chave do MDF-e
+                        </label>
+                        <input type="text" id="nova_chave_mdfe" name="nova_chave_mdfe" 
+                               placeholder="Ex: 41250611158565000118580010000091731023283840" required>
+                        <small>44 dígitos - Chave de acesso do MDF-e</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="chave_nfe_vinculada">
+                            <i class="fas fa-link"></i> Chave da NF-e Vinculada (Opcional)
+                        </label>
+                        <input type="text" id="chave_nfe_vinculada" name="chave_nfe_vinculada" 
+                               placeholder="Ex: 41231159104422010384550380004425511317946100">
+                        <small>Chave da NF-e mencionada no CT-e</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data_emissao">
+                            <i class="fas fa-calendar-alt"></i> Data de Emissão (Opcional)
+                        </label>
+                        <input type="datetime-local" id="data_emissao" name="data_emissao">
+                        <small>Data e hora da emissão (padrão: data/hora atual)</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="data_vencimento">
+                        <i class="fas fa-calendar-times"></i> Data de Vencimento (Opcional)
+                    </label>
+                    <input type="date" id="data_vencimento" name="data_vencimento">
+                    <small>Data de vencimento da duplicata no CT-e</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Gerar XMLs
+                    </button>
+                    <button type="button" id="limparBtn" class="btn btn-secondary">
+                        <i class="fas fa-broom"></i> Limpar
+                    </button>
+                </div>
+
+                <div class="loading" id="loading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> Gerando XMLs...
+                </div>
+            </form>
+
+            <div class="info-box">
+                <h3><i class="fas fa-info-circle"></i> Como usar</h3>
+                <ul>
+                    <li>Preencha os campos obrigatórios (marcados com *)</li>
+                    <li>Os campos opcionais podem ser deixados em branco</li>
+                    <li>Os XMLs serão gerados com base nos modelos configurados</li>
+                    <li>Os arquivos serão baixados em um arquivo ZIP</li>
+                    <li>Certifique-se de que as chaves têm 44 dígitos</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>Desenvolvido para automatização de documentos fiscais de transporte</p>
+            <p class="version">v1.0.0 | Compatível com CT-e 3.00 e MDF-e 3.00</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('geradorForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('/gerar-xmls', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    // Criar link para download do arquivo
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `xmls_viagem_${Date.now()}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    alert('XMLs gerados com sucesso! O download começará automaticamente.');
+                } else {
+                    const error = await response.json();
+                    alert(`Erro: ${error.error}`);
+                }
+            } catch (error) {
+                alert('Erro ao gerar XMLs: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('limparBtn').addEventListener('click', function() {
+            document.getElementById('geradorForm').reset();
+        });
+        
+        // Configurar data/hora atual como padrão
+        window.addEventListener('load', function() {
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+                .toISOString()
+                .slice(0, 16);
+            
+            if (!document.getElementById('data_emissao').value) {
+                document.getElementById('data_emissao').value = localDateTime;
+            }
+            
+            if (!document.getElementById('data_vencimento').value) {
+                // Data de vencimento padrão: 30 dias a partir de hoje
+                const futureDate = new Date(now);
+                futureDate.setDate(futureDate.getDate() + 30);
+                document.getElementById('data_vencimento').value = 
+                    futureDate.toISOString().slice(0, 10);
+            }
+        });
+    </script>
+</body>
+</html>
