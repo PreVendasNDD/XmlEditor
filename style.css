@@ -1,58 +1,105 @@
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(135deg,#0b0f1a,#0f172a);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
   color: #e5e7eb;
 }
-.app { max-width: 980px; margin: 40px auto; padding: 0 16px; }
-.top { margin-bottom: 24px; }
-.top h1 { margin: 0; font-size: 28px; }
-.top p { color: #9ca3af; }
 
-.panel {
+.app {
+  max-width: 860px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.header p {
+  margin-top: 6px;
+  color: #9ca3af;
+}
+
+.card {
   background: #020617;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 16px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
-.grid .full { grid-column: span 4; }
 
-.card label {
+.field label {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   color: #9ca3af;
   margin-bottom: 6px;
 }
-.card input {
+
+.field input {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 14px 14px;
+  border-radius: 12px;
   border: 1px solid #1f2937;
   background: #020617;
-  color: #e5e7eb;
+  color: #f9fafb;
+  font-size: 14px;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.field.full {
+  grid-column: span 2;
 }
 
 button {
+  margin-top: 28px;
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg,#2563eb,#4f46e5);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
   color: #fff;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
 }
-button:hover { opacity: .9; }
 
-@media (max-width: 900px) {
-  .grid { grid-template-columns: 1fr; }
-  .grid .full { grid-column: span 1; }
+button:hover {
+  opacity: 0.92;
+}
+
+.footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .field.full {
+    grid-column: span 1;
+  }
 }
