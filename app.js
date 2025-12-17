@@ -108,6 +108,29 @@ function gerarChave({ cUF, anoMes, CNPJ, modelo, serie, numero }) {
 }
 
 /* =========================================================
+   FUNÇÃO DE NORMALIZAÇÃO XML (OBRIGATÓRIA)
+========================================================= */
+
+function normalizarXML(xml) {
+  // remove BOM UTF-8 se existir
+  if (xml.charCodeAt(0) === 0xFEFF) {
+    xml = xml.slice(1);
+  }
+
+  // remove espaços/quebras antes do <?xml
+  xml = xml.trimStart();
+
+  // garante apenas UMA declaração XML
+  xml = xml.replace(
+    /(<\?xml[^>]*\?>\s*)+/i,
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+  );
+
+  return xml;
+}
+
+
+/* =========================================================
    FUNÇÃO PRINCIPAL — BOTÃO
 ========================================================= */
 
@@ -171,14 +194,20 @@ async function gerar() {
   mdfe = replaceTag(mdfe, "chCTe", chaveCTe);
   mdfe = replaceKey(mdfe, "MDFe", chaveMDFe);
 
-  // ZIP
-  const zip = new JSZip();
-  zip.file("CTe_NOVO.xml", cte);
-  zip.file("MDFe_NOVO.xml", mdfe);
+   
+// normalizar XML antes de salvar
+cte = normalizarXML(cte);
+mdfe = normalizarXML(mdfe);
 
-  const blob = await zip.generateAsync({ type: "blob" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "cte_mdfe.zip";
-  a.click();
+// criar ZIP com nomes baseados nos números gerados
+const zip = new JSZip();
+zip.file(`CTE_${nCT}.xml`, cte);
+zip.file(`MDFE_${nMDF}.xml`, mdfe);
+
+const blob = await zip.generateAsync({ type: "blob" });
+const a = document.createElement("a");
+a.href = URL.createObjectURL(blob);
+a.download = `CTE_${nCT}__MDFE_${nMDF}.zip`;
+a.click();
+
 }
