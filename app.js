@@ -1,6 +1,7 @@
 /* =========================================================
    BANCO LOCAL (IndexedDB) — SEQUÊNCIAS
 ========================================================= */
+console.log("APP.JS CARREGOU");
 
 const DB_NAME = "cte_mdfe_saas";
 const STORE_NAME = "sequencias";
@@ -109,27 +110,7 @@ function gerarChave({ cUF, anoMes, CNPJ, modelo, serie, numero }) {
   return base43 + calcDV(base43);
 }
 
-/* =========================================================
-   FUNÇÃO DE NORMALIZAÇÃO XML (OBRIGATÓRIA)
-========================================================= */
 
-// function normalizarXML(xml) {
-  // remove BOM UTF-8 se existir
- // if (xml.charCodeAt(0) === 0xFEFF) {
- //   xml = xml.slice(1);
- // }
-
-  // remove espaços/quebras antes do <?xml
- // xml = xml.trimStart();
-
-  // garante apenas UMA declaração XML
- // xml = xml.replace(
-//    /(<\?xml[^>]*\?>\s*)+/i,
- //   '<?xml version="1.0" encoding="UTF-8"?>\n'
-//  );
-
-  //return xml;
-}
 
 
 /* =========================================================
