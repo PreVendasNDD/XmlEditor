@@ -139,10 +139,10 @@ async function gerar() {
   let mdfe = await loadXML("base/mdfe_base.xml");
 
   // limpar protocolos / assinaturas
-  cte = removeBlock(cte, "Signature");
-  cte = removeBlock(cte, "protCTe");
-  mdfe = removeBlock(mdfe, "Signature");
-  mdfe = removeBlock(mdfe, "protMDFe");
+ // cte = removeBlock(cte, "Signature");
+ // cte = removeBlock(cte, "protCTe");
+ // mdfe = removeBlock(mdfe, "Signature");
+ // mdfe = removeBlock(mdfe, "protMDFe");
 
   // sequências
   const nCT = await nextNumero("CTE");
@@ -196,8 +196,8 @@ async function gerar() {
 
    
 // normalizar XML antes de salvar
-cte = normalizarXML(cte);
-mdfe = normalizarXML(mdfe);
+// cte = normalizarXML(cte);
+// mdfe = normalizarXML(mdfe);
 
 // extrair DV (último dígito da chave)
 const dvCTe = chaveCTe.slice(-1);
