@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<mdfeProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/mdfe">
+	<MDFe xmlns="http://www.portalfiscal.inf.br/mdfe">
+		<infMDFe Id="MDFe41250611158565000118580010000091728023283840" versao="3.00">
+			<ide>
+				<cUF>41</cUF>
+				<tpAmb>1</tpAmb>
+				<tpEmit>1</tpEmit>
+				<mod>58</mod>
+				<serie>22</serie>
+				<nMDF>091731</nMDF>
+				<cMDF>02328384</cMDF>
+				<cDV>0</cDV>
+				<modal>1</modal>
+				<dhEmi>2025-09-26T13:10:00-03:00</dhEmi>
+				<tpEmis>1</tpEmis>
+				<procEmi>0</procEmi>
+				<verProc>NDDigital MDFe 4.8.5</verProc>
+				<UFIni>PR</UFIni>
+				<UFFim>SP</UFFim>
+				<infMunCarrega>
+					<cMunCarrega>4125506</cMunCarrega>
+					<xMunCarrega>SAO JOSE DOS PINHAIS</xMunCarrega>
+				</infMunCarrega>
+				<dhIniViagem>2025-06-17T13:10:00-03:00</dhIniViagem>
+			</ide>
+			<emit>
+				<CNPJ>11158565000118</CNPJ>
+				<IE>9032205116</IE>
+				<xNome>Pré vendas transportadora</xNome>
+				<xFant>SAO JOSE PINHAIS - PR</xFant>
+				<enderEmit>
+					<xLgr>RUA ANTONIO SINGER</xLgr>
+					<nro>6.751</nro>
+					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
+					<cMun>4125506</cMun>
+					<xMun>SAO JOSE DOS PINHAIS</xMun>
+					<CEP>83090901</CEP>
+					<UF>PR</UF>
+					<fone>49984094010</fone>
+				</enderEmit>
+			</emit>
+			<infModal versaoModal="3.00">
+				<rodo>
+					<infANTT>
+						<RNTRC>00109548</RNTRC>
+						<valePed>
+							<disp>
+								<CNPJForn>04088208000165</CNPJForn>
+								<CNPJPg>59104422010384</CNPJPg>
+								<nCompra>14771862365</nCompra>
+								<vValePed>647.88</vValePed>
+								<tpValePed>01</tpValePed>
+							</disp>
+							<categCombVeic>08</categCombVeic>
+						</valePed>
+						<infContratante>
+							<xNome>NDD TESTE MOVE</xNome>
+							<CNPJ>59104422010384</CNPJ>
+						</infContratante>
+					</infANTT>
+					<veicTracao>
+						<placa>AUU0D40</placa>
+						<RENAVAM>899048080</RENAVAM>
+						<tara>0</tara>
+						<capKG>0</capKG>
+						<capM3>0</capM3>
+						<condutor>
+							<xNome>JOÃO VICTOR NUNES PINHEIRO</xNome>
+							<CPF>01193932980</CPF>
+						</condutor>
+						<tpRod>06</tpRod>
+						<tpCar>01</tpCar>
+						<UF>PR</UF>
+					</veicTracao>
+				</rodo>
+			</infModal>
+			<infDoc>
+				<infMunDescarga>
+					<cMunDescarga>3554102</cMunDescarga>
+					<xMunDescarga>TAUBATE</xMunDescarga>
+					<infCTe>
+						<chCTe>41250611158565000118570010000917311001054737</chCTe>
+					</infCTe>
+				</infMunDescarga>
+			</infDoc>
+			<seg>
+				<infResp>
+					<respSeg>2</respSeg>
+					<CNPJ>59104422000150</CNPJ>
+				</infResp>
+				<infSeg>
+					<xSeg>SOMPO SEGUROS</xSeg>
+					<CNPJ>60405925000144</CNPJ>
+				</infSeg>
+				<nApol>5400026836</nApol>
+				<nAver>KJP55152AO4SDTAX185B0ANV84RVRQZTR</nAver>
+			</seg>
+			<prodPred>
+				<tpCarga>05</tpCarga>
+				<xProd>B.ZINCADA</xProd>
+				<cEAN>SEM GTIN</cEAN>
+				<NCM>72104910</NCM>
+				<infLotacao>
+					<infLocalCarrega>
+						<CEP>83000000</CEP>
+					</infLocalCarrega>
+					<infLocalDescarrega>
+						<CEP>12072010</CEP>
+					</infLocalDescarrega>
+				</infLotacao>
+			</prodPred>
+			<tot>
+				<qCTe>1</qCTe>
+				<vCarga>87736.68</vCarga>
+				<cUnid>01</cUnid>
+				<qCarga>1000.0000</qCarga>
+			</tot>
+		</infMDFe>
+		<infMDFeSupl>
+			<qrCodMDFe>https://dfe-portal.svrs.rs.gov.br/mdfe/qrCode?chMDFe=41231111158565000118580010000104701023283840&amp;tpAmb=1</qrCodMDFe>
+		</infMDFeSupl>
+		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+			<SignedInfo>
+				<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+				<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+				<Reference URI="#MDFe41231111158565000118580010000104701023283840">
+					<Transforms>
+						<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+						<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+					</Transforms>
+					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+					<DigestValue>Ik0DC6lkhsj+Z7SMl94tEJtw/rM=</DigestValue>
+				</Reference>
+			</SignedInfo>
+			<SignatureValue>ob2TxaF8xgjNFQvyRLq09Z8Vqgbb57JGMSV2wd33JbGMOxRNgONxa3NarsPHZ1Nz5GkEjP/iH3MDnj4vjKL54LajvxP1k6m2uyS8t88qfBC/T0/BSd9M2/zP6+0OjOqW55+scM1zTAJ4mYsGq/NSG54veHy66gXx12VTXXJKT17brv5KDUgvhRlKp+OllSTBy8HDkJC0dXziLykEZunhaHJFrzSW0j7F6D1pc6hsooMHkztLNBCppTtJz0VADxCudQhfcIn/J0jRMFUDk0ZrQnWaQ5p5OulXlakV2i2QEw4Pd7bgtK7I56g0J18sZp3w8Yz+UFs8RIB0f7Oeb5PV2w==</SignatureValue>
+			<KeyInfo>
+				<X509Data>
+					<X509Certificate>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</X509Certificate>
+				</X509Data>
+			</KeyInfo>
+		</Signature>
+	</MDFe>
+	<protMDFe versao="3.00">
+		<infProt Id="MDFe941230017668937">
+			<tpAmb>1</tpAmb>
+			<verAplic>RS20230403093610</verAplic>
+			<chMDFe>41250611158565000118580010000091731023283840</chMDFe>
+			<dhRecbto>2025-26-09T13:17:17-03:00</dhRecbto>
+			<nProt>941230017668937</nProt>
+			<digVal>Ik0DC6lkhsj+Z7SMl94tEJtw/rM=</digVal>
+			<cStat>100</cStat>
+			<xMotivo>Autorizado o uso do MDF-e</xMotivo>
+		</infProt>
+	</protMDFe>
+</mdfeProc>
