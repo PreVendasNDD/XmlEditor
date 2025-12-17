@@ -120,15 +120,15 @@ function gerarChave({ cUF, anoMes, CNPJ, modelo, serie, numero }) {
  // }
 
   // remove espaços/quebras antes do <?xml
-  xml = xml.trimStart();
+ // xml = xml.trimStart();
 
   // garante apenas UMA declaração XML
-  xml = xml.replace(
-    /(<\?xml[^>]*\?>\s*)+/i,
-    '<?xml version="1.0" encoding="UTF-8"?>\n'
-  );
+ // xml = xml.replace(
+//    /(<\?xml[^>]*\?>\s*)+/i,
+ //   '<?xml version="1.0" encoding="UTF-8"?>\n'
+//  );
 
-  return xml;
+  //return xml;
 }
 
 
@@ -140,24 +140,15 @@ async function gerar() {
   let cte = await loadXML("base/cte_base.xml");
   let mdfe = await loadXML("base/mdfe_base.xml");
 
-  // limpar protocolos / assinaturas
- // cte = removeBlock(cte, "Signature");
- // cte = removeBlock(cte, "protCTe");
- // mdfe = removeBlock(mdfe, "Signature");
- // mdfe = removeBlock(mdfe, "protMDFe");
-
-  // sequências
   const nCT = await nextNumero("CTE");
   const nMDF = await nextNumero("MDFE");
   const nNFE = await nextNumero("NFE");
 
-  // dados base do XML
   const cUF = cte.match(/<cUF>(\d+)<\/cUF>/)[1];
   const CNPJ = cte.match(/<CNPJ>(\d+)<\/CNPJ>/)[1];
   const anoMes = cte.match(/<dhEmi>(\d{4})-(\d{2})/);
   const aamm = anoMes[1].slice(2) + anoMes[2];
 
-  // chaves
   const chaveCTe = gerarChave({
     cUF,
     anoMes: aamm,
@@ -179,10 +170,10 @@ async function gerar() {
   // aplicar CT-e
   cte = replaceTagValue(cte, "nCT", nCT);
   cte = replaceTagValue(cte, "chCTe", chaveCTe);
-  cte = replaceKeyValue(cte, "CTe", chaveCTe);
+  cte = replaceKey(cte, "CTe", chaveCTe);
 
-  // aplicar NF-e (se existir)
-  cte = replaceTag(cte, "chave", gerarChave({
+  // aplicar NF-e
+  cte = replaceTagValue(cte, "chave", gerarChave({
     cUF,
     anoMes: aamm,
     CNPJ,
@@ -194,27 +185,18 @@ async function gerar() {
   // aplicar MDF-e
   mdfe = replaceTagValue(mdfe, "nMDF", nMDF);
   mdfe = replaceTagValue(mdfe, "chCTe", chaveCTe);
-  mdfe = replaceKeyValue(mdfe, "MDFe", chaveMDFe);
+  mdfe = replaceKey(mdfe, "MDFe", chaveMDFe);
 
-   
-// normalizar XML antes de salvar
-// cte = normalizarXML(cte);
-// mdfe = normalizarXML(mdfe);
+  const dvCTe = chaveCTe.slice(-1);
+  const dvMDFe = chaveMDFe.slice(-1);
 
-// extrair DV (último dígito da chave)
-const dvCTe = chaveCTe.slice(-1);
-const dvMDFe = chaveMDFe.slice(-1);
+  const zip = new JSZip();
+  zip.file(`CTe ${chaveCTe} ${dvCTe}.xml`, cte);
+  zip.file(`MDFe ${chaveMDFe} ${dvMDFe}.xml`, mdfe);
 
-// criar ZIP com os nomes no formato solicitado
-const zip = new JSZip();
-zip.file(`CTe ${chaveCTe} ${dvCTe}.xml`, cte);
-zip.file(`MDFe ${chaveMDFe} ${dvMDFe}.xml`, mdfe);
-
-const blob = await zip.generateAsync({ type: "blob" });
-const a = document.createElement("a");
-a.href = URL.createObjectURL(blob);
-a.download = `CTe_${chaveCTe}__MDFe_${chaveMDFe}.zip`;
-a.click();
-
-
+  const blob = await zip.generateAsync({ type: "blob" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `CTe_${chaveCTe}__MDFe_${chaveMDFe}.zip`;
+  a.click();
 }
