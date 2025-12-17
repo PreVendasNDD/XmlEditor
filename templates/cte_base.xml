@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cteProc xmlns="http://www.portalfiscal.inf.br/cte">
+  <CTe>
+    <infCte Id="CTeCHAVE_CTE">
+      <ide>
+        <cUF>41</cUF>
+        <serie>1</serie>
+        <nCT>NUMERO_CTE</nCT>
+      </ide>
+    </infCte>
+  </CTe>
+</cteProc>
