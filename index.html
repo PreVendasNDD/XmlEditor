@@ -3,18 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>Gerador CT-e / MDF-e</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Gerar novo par CT-e / MDF-e</h2>
+<div class="app">
+  <header class="header">
+    <h1>Gerador CT-e / MDF-e</h1>
+    <p>Geração automática de XML • Estrutura oficial preservada</p>
+  </header>
 
-<input id="nCT" placeholder="Novo número CT-e"><br><br>
-<input id="chCTe" placeholder="Nova chave CT-e (44)"><br><br>
-<input id="nMDF" placeholder="Novo número MDF-e"><br><br>
-<input id="chMDFe" placeholder="Nova chave MDF-e (44)"><br><br>
-<input id="chNFe" placeholder="Nova chave NF-e"><br><br>
+  <section class="card">
+    <div class="grid">
+      <div class="field">
+        <label>Número do CT-e</label>
+        <input id="nCT" placeholder="Ex: 91731">
+      </div>
 
-<button onclick="gerar()">GERAR E BAIXAR</button>
+      <div class="field">
+        <label>Chave do CT-e</label>
+        <input id="chCTe" placeholder="44 dígitos">
+      </div>
+
+      <div class="field">
+        <label>Número do MDF-e</label>
+        <input id="nMDF" placeholder="Ex: 91731">
+      </div>
+
+      <div class="field">
+        <label>Chave do MDF-e</label>
+        <input id="chMDFe" placeholder="44 dígitos">
+      </div>
+
+      <div class="field full">
+        <label>Chave da NF-e (quando existir)</label>
+        <input id="chNFe" placeholder="44 dígitos">
+      </div>
+    </div>
+
+    <button onclick="gerar()">Gerar e baixar XMLs</button>
+  </section>
+
+  <footer class="footer">
+    <span>Uso interno • Não emite documentos fiscais</span>
+  </footer>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="app.js"></script>
