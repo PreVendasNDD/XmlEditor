@@ -199,15 +199,20 @@ async function gerar() {
 cte = normalizarXML(cte);
 mdfe = normalizarXML(mdfe);
 
-// criar ZIP com nomes baseados nos números gerados
+// extrair DV (último dígito da chave)
+const dvCTe = chaveCTe.slice(-1);
+const dvMDFe = chaveMDFe.slice(-1);
+
+// criar ZIP com os nomes no formato solicitado
 const zip = new JSZip();
-zip.file(`CTE_${nCT}.xml`, cte);
-zip.file(`MDFE_${nMDF}.xml`, mdfe);
+zip.file(`CTe ${chaveCTe} ${dvCTe}.xml`, cte);
+zip.file(`MDFe ${chaveMDFe} ${dvMDFe}.xml`, mdfe);
 
 const blob = await zip.generateAsync({ type: "blob" });
 const a = document.createElement("a");
 a.href = URL.createObjectURL(blob);
-a.download = `CTE_${nCT}__MDFE_${nMDF}.zip`;
+a.download = `CTe_${chaveCTe}__MDFe_${chaveMDFe}.zip`;
 a.click();
+
 
 }
