@@ -5,163 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XmlEditor - Gerador Automático CT-e/MDF-e</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', monospace;
-        }
-        
-        body {
-            background: #1a1a1a;
-            color: #00ff00;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #0a0a0a;
-            border: 2px solid #00ff00;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 0 20px #00ff00;
-        }
-        
-        h1 {
-            color: #00ff00;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 28px;
-            text-shadow: 0 0 10px #00ff00;
-        }
-        
-        .status {
-            background: #003300;
-            border: 1px solid #00ff00;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .input-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        label {
-            color: #00ff00;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        input {
-            background: #000;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            padding: 12px;
-            border-radius: 5px;
-            font-size: 16px;
-            font-family: 'Courier New', monospace;
-        }
-        
-        input:focus {
-            outline: none;
-            box-shadow: 0 0 10px #00ff00;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        button {
-            background: #003300;
-            color: #00ff00;
-            border: 2px solid #00ff00;
-            padding: 15px 30px;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        button:hover {
-            background: #00ff00;
-            color: #000;
-            box-shadow: 0 0 20px #00ff00;
-        }
-        
-        .output {
-            margin-top: 30px;
-            background: #000;
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            padding: 20px;
-            min-height: 100px;
-            overflow-x: auto;
-        }
-        
-        .download-links {
-            display: none;
-            margin-top: 20px;
-            text-align: center;
-        }
-        
-        .download-link {
-            display: inline-block;
-            background: #006600;
-            color: #00ff00;
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            border: 1px solid #00ff00;
-        }
-        
-        .download-link:hover {
-            background: #00ff00;
-            color: #000;
-        }
-        
-        .auto-gen {
-            background: #330000;
-            border: 1px solid #ff0000;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        
-        .auto-gen label {
-            color: #ff0000;
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-        }
+        /* [MANTENHA TODO O CSS ANTERIOR] */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
+        body { background: #1a1a1a; color: #00ff00; padding: 20px; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; background: #0a0a0a; border: 2px solid #00ff00; border-radius: 10px; padding: 30px; box-shadow: 0 0 20px #00ff00; }
+        h1 { color: #00ff00; text-align: center; margin-bottom: 30px; font-size: 28px; text-shadow: 0 0 10px #00ff00; }
+        .status { background: #003300; border: 1px solid #00ff00; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-weight: bold; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
+        .input-group { display: flex; flex-direction: column; }
+        label { color: #00ff00; margin-bottom: 8px; font-weight: bold; font-size: 14px; }
+        input { background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 12px; border-radius: 5px; font-size: 16px; font-family: 'Courier New', monospace; }
+        input:focus { outline: none; box-shadow: 0 0 10px #00ff00; }
+        .buttons { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
+        button { background: #003300; color: #00ff00; border: 2px solid #00ff00; padding: 15px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 20px #00ff00; }
+        .output { margin-top: 30px; background: #000; border: 1px solid #00ff00; border-radius: 5px; padding: 20px; min-height: 100px; overflow-x: auto; }
+        .download-links { display: none; margin-top: 20px; text-align: center; }
+        .download-link { display: inline-block; background: #006600; color: #00ff00; padding: 10px 20px; margin: 10px; border-radius: 5px; text-decoration: none; border: 1px solid #00ff00; }
+        .download-link:hover { background: #00ff00; color: #000; }
+        .auto-gen { background: #330000; border: 1px solid #ff0000; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .auto-gen label { color: #ff0000; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; }
     </style>
 </head>
 <body>
@@ -175,24 +40,24 @@
         <div class="form-grid">
             <div class="input-group">
                 <label>🔢 NOVO NÚMERO CT-e:</label>
-                <input type="text" id="numeroCte" placeholder="091732" value="091732">
+                <input type="number" id="numeroCte" placeholder="091732" value="91732" min="1" step="1">
             </div>
             
             <div class="input-group">
-                <label>🔑 NOVA CHAVE CT-e (44 dígitos):</label>
-                <input type="text" id="chaveCte" placeholder="41250611158565000118570010000917321001054737" 
-                       value="41250611158565000118570010000917321001054737">
+                <label>🔑 CHAVE CT-e GERADA:</label>
+                <input type="text" id="chaveCte" readonly style="background: #222;">
+                <small id="statusCte">Clique em "Gerar Chaves"</small>
             </div>
             
             <div class="input-group">
                 <label>🔢 NOVO NÚMERO MDF-e:</label>
-                <input type="text" id="numeroMdfe" placeholder="091732" value="091732">
+                <input type="number" id="numeroMdfe" placeholder="091732" value="91732" min="1" step="1">
             </div>
             
             <div class="input-group">
-                <label>🔑 NOVA CHAVE MDF-e (44 dígitos):</label>
-                <input type="text" id="chaveMdfe" placeholder="41250611158565000118580010000091731023283840" 
-                       value="41250611158565000118580010000091731023283840">
+                <label>🔑 CHAVE MDF-e GERADA:</label>
+                <input type="text" id="chaveMdfe" readonly style="background: #222;">
+                <small id="statusMdfe">Clique em "Gerar Chaves"</small>
             </div>
         </div>
         
@@ -201,22 +66,11 @@
             <input type="text" id="dataEmissao" value="2025-09-27T10:00:00-03:00">
         </div>
         
-        <div class="auto-gen">
-            <label>⚙️ GERAR AUTOMATICAMENTE:</label>
-            <div class="checkbox-group">
-                <input type="checkbox" id="autoChaves" checked>
-                <label for="autoChaves">Gerar chaves automaticamente (base + incremento)</label>
-            </div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="autoNumeros" checked>
-                <label for="autoNumeros">Incrementar números automaticamente (+1)</label>
-            </div>
-        </div>
-        
         <div class="buttons">
+            <button onclick="gerarChaves()">🔑 GERAR CHAVES AUTOMATICAMENTE</button>
             <button onclick="gerarXMLs()">⚡ GERAR NOVOS XMLs</button>
-            <button onclick="baixarTudo()">💾 BAIXAR ZIP</button>
-            <button onclick="autoIncrementar()">🔄 AUTO INCREMENTAR</button>
+            <button onclick="baixarTudo()">💾 BAIXAR TUDO (ZIP)</button>
+            <button onclick="autoProximaViagem()">🔄 PRÓXIMA VIAGEM</button>
         </div>
         
         <div class="output" id="output">
@@ -232,9 +86,26 @@
 
     <script>
         // ============================================
-        // XMLs BASE FIXOS NA MEMÓRIA (OS QUE VOCÊ ENVIOU)
+        // DADOS FIXOS DA SUA EMPRESA (DOS SEUS XMLs)
         // ============================================
-        
+        const DADOS_EMPRESA = {
+            cUF: '41',                    // PR - Paraná
+            CNPJ: '11158565000118',       // Seu CNPJ
+            modelo: '57',                 // CT-e
+            serie: '1',                   // Série
+            tpEmis: '1',                  // Normal
+            cDV: '7',                     // DV da chave original
+            
+            // Para MDF-e
+            modeloMDFe: '58',             // MDF-e
+            serieMDFe: '22',              // Série MDF-e
+            tpAmb: '1',                   // Produção
+            cMDF: '02328384'              // Código MDF-e
+        };
+
+        // ============================================
+        // XMLs BASE FIXOS NA MEMÓRIA
+        // ============================================
         const CTE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
 <cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
 	<CTe xmlns="http://www.portalfiscal.inf.br/cte">
@@ -479,7 +350,7 @@
 			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FscWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>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</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -636,7 +507,7 @@
 			<SignatureValue>ob2TxaF8xgjNFQvyRLq09Z8Vqgbb57JGMSV2wd33JbGMOxRNgONxa3NarsPHZ1Nz5GkEjP/iH3MDnj4vjKL54LajvxP1k6m2uyS8t88qfBC/T0/BSd9M2/zP6+0OjOqW55+scM1zTAJ4mYsGq/NSG54veHy66gXx12VTXXJKT17brv5KDUgvhRlKp+OllSTBy8HDkJC0dXziLykEZunhaHJFrzSW0j7F6D1pc6hsooMHkztLNBCppTtJz0VADxCudQhfcIn/J0jRMFUDk0ZrQnWaQ5p5OulXlakV2i2QEw4Pd7bgtK7I56g0J18sZp3w8Yz+UFs8RIB0f7Oeb5PV2w==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>MIIICjCCBfKgAwIBAgIQFuv/M7+A5PApmcyQXwN0/jANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIzMTAyNjE1MTM0OFoXDTI0MTAyNTE1MTM0OFowgfoxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJTUDESMBAGA1UEBwwJU2FvIFBhdWxvMRkwFwYDVQQLDBBWaWRlb0NvbmZlcmVuY2lhMRcwFQYDVQQLDA4zNDczMjg1NDAwMDE4NDE2MDQGA1UECwwtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRYwFAYDVQQLDA1SRkIgZS1DTlBKIEExMTEwLwYDVQQDDChUUkFOU05PVkFHIFRSQU5TUE9SVEVTIFNBOjU1ODkwMDE2MDAwMTA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0q5LF5lwrjQqD3XwkrKbrKO95dsjDdSK0RSxutZhXXA/8N7gktgR4jk3lLCN2d17lJtmNW4VUR1KezTGjJQAjKk9wx1HNGQZpv06yAi9CHXjblWH5fNT3B/TKO8vpiVJU/sVC2RrfGvBDDitD7Wbx0kMtNHl6zzL4vwzKn/f8pmFCl29SMuJ8xNrQYqYvf84d7ICCCiNbgCeip084uJCdrSqV7ZcUOM00tsjsqhXmAWvq4TA1mKn1TGOU9r7O91c7X5cBCDALfHOGQNqtkbQmvr2bGsxKVo2mwsgELe0aR/umxWllQLfQJInrsgFMTdQpv0liuy5CdlU8wvdOcftFwIDAQABo4IDCzCCAwcwgboGA1UdEQSBsjCBr6A9BgVgTAEDBKA0BDIyNTAyMTk1OTk0MDExNzUzODE1MDAwMDAwMDAwMDAwMDAwMDAwMDcyNTk0OTNTU1BTUKAfBgVgTAEDAqAWBBRKT0FPIExVQ0lBTk8gR1JBTkFET6AZBgVgTAEDA6AQBA41NTg5MDAxNjAwMDEwOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGVNJU1RFTUFTQEZFUlJPTEVORS5DT00uQlIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmwwVqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUFBwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2NlcnRpZmljYWRvcy9BQ19DZXJ0aXNpZ25fUkZCX0c1LnA3YzA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AtYWMtY2VydGlzaWduLXJmYi5jZXJ0aXNpZ24ucom.brMA0GCSqGSIb3DQEBCwUAA4ICAQBVn+njpIoyz9To/8GqlGgKrm4JMXqhOKcNoBpnf9mGldqfz2xLeL6cj5kn8/jTe7sTTpCAvs2y8w/MzsTBs5KiBR7OrXis97XP1yWbx/3gew/zmDj0EeuTfPU+n7cehqy0zzWUpRdgEa5GSuQn44KUlE/scNriWhk4iWYKdZVwzTuJweotqHv3OYTZmxpYjNOhIJos8WxWCvwGqMwdkIdunTPnxyRdjAXVuryqe9BblDVkee/ByyFg9d0x9ehHudCf78BqAGj/5xpZnmE/xFNnjmDu6Kbq+ZKGVGgzAdekvkVnZeUq3JWztzugGzfbqVPDnspnRS5SHiRcnsftXVzR3RrpHFKAjzT+4ErNOnyDrysimsh1+ZOEyS2fN63z0EkNkEcOrt2AlwmFFnBhwEyg+OTAH3UdJpcvI9678bFNOvcpgOWPBPkFeG3cLN9dimgV60eB6kGQYr7KZusmonZwwZZxeGXryBYe25QVWOJhpn0YU8LW8MMcwPMfLD7o23R9iUEXt8ODpedDIwwLHaKp1gZDc9Idy32Qux6svAzMWoSEap2Gsh+dtnkbaIh81zc1tBGGBAb7cd/89KBGtJCy/pNavVrcOM1FrTYbj9UHOAc0sUQz3zHSEFun/qNcF3GP377RsEzMEfBXBcpOQsgeLFApYl9uqqXSbprwn1Mlgg==</X509Certificate>
+					<X509Certificate>MIIICjCCBfKgAwIBAgIQFuv/M7+A5PApmcyQXwN0/jANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIzMTAyNjE1MTM0OFoXDTI0MTAyNTE1MTM0OFowgfoxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJTUDESMBAGA1UEBwwJU2FvIFBhdWxvMRkwFwYDVQQLDBBWaWRlb0NvbmZlcmVuY2lhMRcwFQYDVQQLDA4zNDczMjg1NDAwMDE4NDE2MDQGA1UECwwtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRYwFAYDVQQLDA1SRkIgZS1DTlBKIEExMTEwLwYDVQQDDChUUkFOU05PVkFHIFRSQU5TUE9SVEVTIFNBOjU1ODkwMDE2MDAwMTA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0q5LF5lwrjQqD3XwkrKbrKO95dsjDdSK0RSxutZhXXA/8N7gktgR4jk3lLCN2d17lJtmNW4VUR1KezTGjJQAjKk9wx1HNGQZpv06yAi9CHXjblWH5fNT3B/TKO8vpiVJU/sVC2RrfGvBDDitD7Wbx0kMtNHl6zzL4vwzKn/f8pmFCl29SMuJ8xNrQYqYvf84d7ICCCiNbgCeip084uJCdrSqV7ZcUOM00tsjsqhXmAWvq4TA1mKn1TGOU9r7O91c7X5cBCDALfHOGQNqtkbQmvr2bGsxKVo2mwsgELe0aR/umxWllQLfQJInrsgFMTdQpv0liuy5CdlU8wvdOcftFwIDAQABo4IDCzCCAwcwgboGA1UdEQSBsjCBr6A9BgVgTAEDBKA0BDIyNTAyMTk1OTk0MDExNzUzODE1MDAwMDAwMDAwMDAwMDAwMDAwMDcyNTk0OTNTU1BTUKAfBgVgTAEDAqAWBBRKT0FPIExVQ0lBTk8gR1JBTkFET6AZBgVgTAEDA6AQBA41NTg5MDAxNjAwMDEwOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGVNJU1RFTUFTQEZFUlJPTEVORS5DT00uQlIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmwwVqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUFBwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24ucom.brMA0GCSqGSIb3DQEBCsUAA4ICAQBVn+njpIoyz9To/8GqlGgKrm4JMXqhOKcNoBpnf9mGldqfz2xLeL6cj5kn8/jTe7sTTpCAvs2y8w/MzsTBs5KiBR7OrXis97XP1yWbx/3gew/zmDj0EeuTfPU+n7cehqy0zzWUpRdgEa5GSuQn44KUlE/scNriWhk4iWYKdZVwzTuJweotqHv3OYTZmxpYjNOhIJos8WxWCvwGqMwdkIdunTPnxyRdjAXVuryqe9BblDVkee/ByyFg9d0x9ehHudCf78BqAGj/5xpZnmE/xFNnjmDu6Kbq+ZKGVGgzAdekvkVnZeUq3JWztzugGzfbqVPDnspnRS5SHiRcnsftXVzR3RrpHFKAjzT+4ErNOnyDrysimsh1+ZOEyS2fN63z0EkNkEcOrt2AlwmFFnBhwEyg+OTAH3UdJpcvI9678bFNOvcpgOWPBPkFeG3cLN9dimgV60eB6kGQYr7KZusmonZwwZZxeGXryBYe25QVWOJhpn0YU8LW8MMcwPMfLD7o23R9iUEXt8ODpedDIwwLHaKp1gZDc9Idy32Qux6svAzMWoSEap2Gsh+dtnkbaIh81zc1tBGGBAb7cd/89KBGtJCy/pNavVrcOM1FrTYbj9UHOAc0sUQz3zHSEFun/qNcF3GP377RsEzMEfBXBcpOQsgeLFApYl9uqqXSbprwn1Mlgg==</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -656,29 +527,148 @@
 </mdfeProc>`;
 
         // ============================================
-        // FUNÇÕES PRINCIPAIS
+        // FUNÇÕES PARA GERAR CHAVES DE ACESSO
+        // ============================================
+        
+        function gerarChaveCTe(numeroCTe) {
+            // Formato: cUF (2) + AAMM (4) + CNPJ (14) + mod (2) + serie (3) + nCT (9) + tpEmis (1) + cCT (8) + DV (1) = 44
+            const nCT = numeroCTe.toString().padStart(9, '0');
+            const serie = DADOS_EMPRESA.serie.padStart(3, '0');
+            const cCT = gerarNumeroAleatorio(8); // Código numérico aleatório
+            
+            // Montar chave de 43 dígitos
+            const chave43 = 
+                DADOS_EMPRESA.cUF +                 // 2
+                getAAMM() +                         // 4
+                DADOS_EMPRESA.CNPJ +                // 14
+                DADOS_EMPRESA.modelo +              // 2
+                serie +                             // 3
+                nCT +                               // 9
+                DADOS_EMPRESA.tpEmis +              // 1
+                cCT;                                // 8
+                                                    // Total: 43
+            
+            // Calcular DV
+            const dv = calcularDigitoVerificador(chave43);
+            
+            return chave43 + dv; // 44 dígitos
+        }
+        
+        function gerarChaveMDFe(numeroMDFe) {
+            // Formato similar ao CT-e para MDF-e
+            const nMDF = numeroMDFe.toString().padStart(9, '0');
+            const serie = DADOS_EMPRESA.serieMDFe.padStart(3, '0');
+            const cMDF = DADOS_EMPRESA.cMDF; // Usar código MDF-e fixo ou gerar
+            
+            // Montar chave de 43 dígitos
+            const chave43 = 
+                DADOS_EMPRESA.cUF +                 // 2
+                getAAMM() +                         // 4
+                DADOS_EMPRESA.CNPJ +                // 14
+                DADOS_EMPRESA.modeloMDFe +          // 2
+                serie +                             // 3
+                nMDF +                              // 9
+                DADOS_EMPRESA.tpEmis +              // 1
+                cMDF;                               // 8
+                                                    // Total: 43
+            
+            // Calcular DV
+            const dv = calcularDigitoVerificador(chave43);
+            
+            return chave43 + dv; // 44 dígitos
+        }
+        
+        function getAAMM() {
+            // Retorna AAMM baseado na data atual
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            return year + month;
+        }
+        
+        function calcularDigitoVerificador(chave43) {
+            // Algoritmo oficial do módulo 11
+            let soma = 0;
+            let peso = 2;
+            
+            // Percorrer da direita para esquerda
+            for (let i = chave43.length - 1; i >= 0; i--) {
+                soma += parseInt(chave43.charAt(i)) * peso;
+                peso = (peso === 9) ? 2 : peso + 1;
+            }
+            
+            const resto = soma % 11;
+            const dv = (11 - resto);
+            
+            if (dv === 0 || dv === 1 || dv > 9) {
+                return '0';
+            }
+            
+            return dv.toString();
+        }
+        
+        function gerarNumeroAleatorio(tamanho) {
+            let numero = '';
+            for (let i = 0; i < tamanho; i++) {
+                numero += Math.floor(Math.random() * 10);
+            }
+            return numero;
+        }
+        
+        // ============================================
+        // FUNÇÕES PRINCIPAIS DA INTERFACE
         // ============================================
         
         let cteGerado = null;
         let mdfeGerado = null;
+        let ultimoNumeroCTe = 91731;
+        let ultimoNumeroMDFe = 91731;
+        
+        function gerarChaves() {
+            const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
+            const numeroMdfe = parseInt(document.getElementById('numeroMdfe').value) || ultimoNumeroMDFe + 1;
+            
+            // Atualizar números se não foram preenchidos
+            document.getElementById('numeroCte').value = numeroCte;
+            document.getElementById('numeroMdfe').value = numeroMdfe;
+            
+            // Gerar chaves
+            const chaveCte = gerarChaveCTe(numeroCte);
+            const chaveMdfe = gerarChaveMDFe(numeroMdfe);
+            
+            // Atualizar campos
+            document.getElementById('chaveCte').value = chaveCte;
+            document.getElementById('chaveMdfe').value = chaveMdfe;
+            
+            document.getElementById('statusCte').textContent = `✅ Chave válida (44 dígitos)`;
+            document.getElementById('statusMdfe').textContent = `✅ Chave válida (44 dígitos)`;
+            
+            document.getElementById('output').innerHTML = `
+                <div style="color: #00ff00; font-weight: bold;">
+                    🔑 CHAVES GERADAS AUTOMATICAMENTE!
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>CT-e ${numeroCte}:</strong> ${chaveCte}<br>
+                    <strong>MDF-e ${numeroMdfe}:</strong> ${chaveMdfe}
+                </div>
+            `;
+            
+            // Atualizar últimos números
+            ultimoNumeroCTe = numeroCte;
+            ultimoNumeroMDFe = numeroMdfe;
+        }
         
         function gerarXMLs() {
             try {
-                // Coletar dados
                 const numeroCte = document.getElementById('numeroCte').value;
                 const chaveCte = document.getElementById('chaveCte').value;
                 const numeroMdfe = document.getElementById('numeroMdfe').value;
                 const chaveMdfe = document.getElementById('chaveMdfe').value;
                 const dataEmissao = document.getElementById('dataEmissao').value;
                 
-                // Validar
-                if (!numeroCte || !chaveCte || !numeroMdfe || !chaveMdfe) {
-                    alert('Preencha todos os campos obrigatórios!');
-                    return;
-                }
-                
-                if (chaveCte.length !== 44 || chaveMdfe.length !== 44) {
-                    alert('As chaves devem ter 44 dígitos!');
+                // Validar chaves
+                if (!chaveCte || chaveCte.length !== 44) {
+                    alert('Gere as chaves primeiro! Clique em "Gerar Chaves"');
                     return;
                 }
                 
@@ -686,48 +676,33 @@
                 // GERAR NOVO CT-e
                 // ============================================
                 cteGerado = CTE_BASE
-                    // Atualizar ID do CT-e
                     .replace(/CTe\d{44}/g, `CTe${chaveCte}`)
-                    // Atualizar número do CT-e
                     .replace(/<nCT>\d+<\/nCT>/, `<nCT>${numeroCte.padStart(6, '0')}</nCT>`)
-                    // Atualizar chave no protocolo
                     .replace(/<chCTe>\d+<\/chCTe>/, `<chCTe>${chaveCte}</chCTe>`)
-                    // Atualizar data de emissão
                     .replace(/<dhEmi>[^<]+<\/dhEmi>/, `<dhEmi>${dataEmissao}</dhEmi>`)
-                    // Atualizar QR Code
                     .replace(/chCTe=\d+/g, `chCTe=${chaveCte}`)
-                    // Atualizar número da duplicata
                     .replace(/<nDup>[^<]+<\/nDup>/, `<nDup>${numeroCte}G 1</nDup>`)
-                    // Atualizar data de recebimento no protocolo
-                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao.replace('T', 'T').replace('-03:00', '-03:00')}</dhRecbto>`);
+                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
                 
                 // ============================================
                 // GERAR NOVO MDF-e
                 // ============================================
                 mdfeGerado = MDFE_BASE
-                    // Atualizar ID do MDF-e
                     .replace(/MDFe\d{44}/g, `MDFe${chaveMdfe}`)
-                    // Atualizar número do MDF-e
                     .replace(/<nMDF>\d+<\/nMDF>/, `<nMDF>${numeroMdfe.padStart(6, '0')}</nMDF>`)
-                    // Atualizar chave no protocolo
                     .replace(/<chMDFe>\d+<\/chMDFe>/, `<chMDFe>${chaveMdfe}</chMDFe>`)
-                    // Atualizar chave do CT-e dentro do MDF-e
                     .replace(/<chCTe>\d+<\/chCTe>/, `<chCTe>${chaveCte}</chCTe>`)
-                    // Atualizar data de emissão
                     .replace(/<dhEmi>[^<]+<\/dhEmi>/, `<dhEmi>${dataEmissao}</dhEmi>`)
-                    // Atualizar data início viagem
                     .replace(/<dhIniViagem>[^<]+<\/dhIniViagem>/, `<dhIniViagem>${dataEmissao}</dhIniViagem>`)
-                    // Atualizar QR Code
                     .replace(/chMDFe=\d+/g, `chMDFe=${chaveMdfe}`)
-                    // Atualizar data recebimento protocolo
-                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao.replace('T', 'T').replace('-03:00', '-03:00')}</dhRecbto>`);
+                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
                 
                 // Mostrar resultados
-                document.getElementById('output').innerHTML = `
-                    <div style="color: #00ff00; font-weight: bold;">
+                document.getElementById('output').innerHTML += `
+                    <div style="color: #00ff00; margin-top: 20px; border-top: 1px solid #00ff00; padding-top: 20px;">
                         ✅ XMLs GERADOS COM SUCESSO!
                     </div>
-                    <div style="margin-top: 15px;">
+                    <div style="margin-top: 10px;">
                         <strong>CT-e:</strong> Número ${numeroCte} | Chave ${chaveCte}<br>
                         <strong>MDF-e:</strong> Número ${numeroMdfe} | Chave ${chaveMdfe}<br>
                         <strong>Data Emissão:</strong> ${dataEmissao}
@@ -746,11 +721,28 @@
             }
         }
         
+        function autoProximaViagem() {
+            // Auto incrementar números
+            const novoNumeroCTe = ultimoNumeroCTe + 1;
+            const novoNumeroMDFe = ultimoNumeroMDFe + 1;
+            
+            document.getElementById('numeroCte').value = novoNumeroCTe;
+            document.getElementById('numeroMdfe').value = novoNumeroMDFe;
+            
+            // Gerar chaves automaticamente
+            gerarChaves();
+            
+            // Gerar XMLs automaticamente
+            setTimeout(() => {
+                gerarXMLs();
+                document.getElementById('output').innerHTML += 
+                    `<div style="color: #00ff00; margin-top: 10px;">🔄 PRÓXIMA VIAGEM CONFIGURADA AUTOMATICAMENTE!</div>`;
+            }, 500);
+        }
+        
+        // Funções de download (mantidas iguais)
         function baixarCTe() {
-            if (!cteGerado) {
-                alert('Gere os XMLs primeiro!');
-                return;
-            }
+            if (!cteGerado) return;
             const blob = new Blob([cteGerado], { type: 'application/xml' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -763,10 +755,7 @@
         }
         
         function baixarMDFe() {
-            if (!mdfeGerado) {
-                alert('Gere os XMLs primeiro!');
-                return;
-            }
+            if (!mdfeGerado) return;
             const blob = new Blob([mdfeGerado], { type: 'application/xml' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -779,31 +768,27 @@
         }
         
         function baixarZIP() {
-            if (!cteGerado || !mdfeGerado) {
-                alert('Gere os XMLs primeiro!');
-                return;
+            if (!cteGerado || !mdfeGerado) return;
+            
+            if (window.JSZip) {
+                const zip = new JSZip();
+                zip.file(`CTe_${document.getElementById('chaveCte').value}.xml`, cteGerado);
+                zip.file(`MDFe_${document.getElementById('chaveMdfe').value}.xml`, mdfeGerado);
+                
+                zip.generateAsync({ type: 'blob' }).then(function(content) {
+                    const url = URL.createObjectURL(content);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `XMLs_${document.getElementById('chaveCte').value}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+            } else {
+                baixarCTe();
+                setTimeout(() => baixarMDFe(), 500);
             }
-            
-            const JSZip = window.JSZip;
-            if (!JSZip) {
-                alert('Biblioteca ZIP não carregada!');
-                return;
-            }
-            
-            const zip = new JSZip();
-            zip.file(`CTe_${document.getElementById('chaveCte').value}.xml`, cteGerado);
-            zip.file(`MDFe_${document.getElementById('chaveMdfe').value}.xml`, mdfeGerado);
-            
-            zip.generateAsync({ type: 'blob' }).then(function(content) {
-                const url = URL.createObjectURL(content);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `XMLs_${document.getElementById('chaveCte').value}.zip`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            });
         }
         
         function baixarTudo() {
@@ -811,84 +796,7 @@
                 alert('Gere os XMLs primeiro!');
                 return;
             }
-            
-            // Tentar usar JSZip se disponível, senão baixar separado
-            if (window.JSZip) {
-                baixarZIP();
-            } else {
-                alert('Baixando arquivos separados...');
-                baixarCTe();
-                setTimeout(() => baixarMDFe(), 500);
-            }
-        }
-        
-        function autoIncrementar() {
-            const autoChaves = document.getElementById('autoChaves').checked;
-            const autoNumeros = document.getElementById('autoNumeros').checked;
-            
-            let numeroCte = document.getElementById('numeroCte').value;
-            let numeroMdfe = document.getElementById('numeroMdfe').value;
-            let chaveCte = document.getElementById('chaveCte').value;
-            let chaveMdfe = document.getElementById('chaveMdfe').value;
-            
-            if (autoNumeros) {
-                // Incrementar números
-                numeroCte = (parseInt(numeroCte) + 1).toString();
-                numeroMdfe = (parseInt(numeroMdfe) + 1).toString();
-                
-                document.getElementById('numeroCte').value = numeroCte;
-                document.getElementById('numeroMdfe').value = numeroMdfe;
-            }
-            
-            if (autoChaves) {
-                // Gerar novas chaves baseadas nas anteriores
-                // Manter estrutura e incrementar últimos dígitos
-                if (chaveCte.length === 44) {
-                    const baseCte = chaveCte.substring(0, 35);
-                    const novoNumCte = numeroCte.padStart(9, '0');
-                    const dvCte = calcularDV(baseCte + novoNumCte);
-                    chaveCte = baseCte + novoNumCte + dvCte;
-                    document.getElementById('chaveCte').value = chaveCte;
-                }
-                
-                if (chaveMdfe.length === 44) {
-                    const baseMdfe = chaveMdfe.substring(0, 35);
-                    const novoNumMdfe = numeroMdfe.padStart(9, '0');
-                    const dvMdfe = calcularDV(baseMdfe + novoNumMdfe);
-                    chaveMdfe = baseMdfe + novoNumMdfe + dvMdfe;
-                    document.getElementById('chaveMdfe').value = chaveMdfe;
-                }
-            }
-            
-            // Gerar nova data (amanhã)
-            const hoje = new Date();
-            hoje.setDate(hoje.getDate() + 1);
-            const novaData = hoje.toISOString().replace('Z', '-03:00').replace('.000', '');
-            document.getElementById('dataEmissao').value = novaData;
-            
-            document.getElementById('output').innerHTML = 
-                `<div style="color: #00ff00;">🔄 DADOS ATUALIZADOS AUTOMATICAMENTE!</div>`;
-        }
-        
-        function calcularDV(chave43) {
-            // Cálculo simplificado do dígito verificador
-            let soma = 0;
-            let peso = 2;
-            
-            for (let i = 42; i >= 0; i--) {
-                soma += parseInt(chave43.charAt(i)) * peso;
-                peso = (peso === 9) ? 2 : peso + 1;
-            }
-            
-            const resto = soma % 11;
-            return (resto === 0 || resto === 1) ? '0' : (11 - resto).toString();
-        }
-        
-        function limpar() {
-            document.getElementById('output').innerHTML = '';
-            document.getElementById('downloadLinks').style.display = 'none';
-            cteGerado = null;
-            mdfeGerado = null;
+            baixarZIP();
         }
         
         // Carregar JSZip dinamicamente
@@ -897,6 +805,11 @@
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
             document.head.appendChild(script);
         }
+        
+        // Gerar chaves iniciais ao carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            gerarChaves();
+        });
     </script>
 </body>
 </html>
