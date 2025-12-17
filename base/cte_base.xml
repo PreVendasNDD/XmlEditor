@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
+	<CTe xmlns="http://www.portalfiscal.inf.br/cte">
+		<infCte Id="CTe41250611158565000118570010000917261001054737" versao="3.00">
+			<ide>
+				<cUF>41</cUF>
+				<cCT>00105473</cCT>
+				<CFOP>6352</CFOP>
+				<natOp>PRESTACAO  SERVICOS DE  TRANSPORTES</natOp>
+				<mod>57</mod>
+				<serie>1</serie>
+				<nCT>091731</nCT>
+				<dhEmi>2025-09-26T12:43:00-03:00</dhEmi>
+				<tpImp>1</tpImp>
+				<tpEmis>1</tpEmis>
+				<cDV>7</cDV>
+				<tpAmb>1</tpAmb>
+				<tpCTe>0</tpCTe>
+				<procEmi>0</procEmi>
+				<verProc>NDDigital CTe 4.8.5</verProc>
+				<cMunEnv>4125506</cMunEnv>
+				<xMunEnv>SAO JOSE DOS PINHAIS</xMunEnv>
+				<UFEnv>PR</UFEnv>
+				<modal>01</modal>
+				<tpServ>0</tpServ>
+				<cMunIni>4125506</cMunIni>
+				<xMunIni>SAO JOSE DOS PINHAIS</xMunIni>
+				<UFIni>PR</UFIni>
+				<cMunFim>3554102</cMunFim>
+				<xMunFim>TAUBATE</xMunFim>
+				<UFFim>SP</UFFim>
+				<retira>1</retira>
+				<indIEToma>1</indIEToma>
+				<toma3>
+					<toma>0</toma>
+				</toma3>
+			</ide>
+			<compl>
+				<xCaracAd>Teste CadTnp</xCaracAd>
+				<xCaracSer>Teste CadSer</xCaracSer>
+				<xEmi>Teste FunEmi</xEmi>
+				<fluxo>
+					<pass>
+						<xPass>Teste SigPas</xPass>
+					</pass>
+				</fluxo>
+				<Entrega>
+					<semData>
+						<tpPer>0</tpPer>
+					</semData>
+					<semHora>
+						<tpHor>0</tpHor>
+					</semHora>
+				</Entrega>
+				<xObs>DEVOLUCAO DE PECAS/EMBALAGENS -  / DATA VENCIMENTO: 10/01/2024 / PLACA:AUU0D40 - RENAVAM:899048080 / PLACA REBOQUE:AKM8I69 - RENAVAM:00791445631 / PLACA REBOQUE (2):DJE9039 - RENAVAM:00791445631 / MOTORISTA:PAULO MONTEIRO WATERKEMPER - CPF:65446410220 / CARTAO PEDAGIO:0000000000000000 ID:14771862365 VALOR:647,88 / CVA:892451 - TIPO DE VIAGEM: FTL-BITREM -  / SEGURADORA: 4-RSA SEGUROS / APOLICE: 5400028799 / REQUISICAO: PEDIDO:7600024486 / CIOT:024035059815 /</xObs>
+				<ObsCont xCampo="Obs Cmp Teste">
+					<xTexto>.</xTexto>
+				</ObsCont>
+			</compl>
+			<emit>
+				<CNPJ>11158565000118</CNPJ>
+				<IE>9032205116</IE>
+				<xNome>Pré vendas transportadora</xNome>
+				<xFant>SAO JOSE PINHAIS - PR</xFant>
+				<enderEmit>
+					<xLgr>RUA ANTONIO SINGER</xLgr>
+					<nro>6.751</nro>
+					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
+					<cMun>4125506</cMun>
+					<xMun>SAO JOSE DOS PINHAIS</xMun>
+					<CEP>83090901</CEP>
+					<UF>PR</UF>
+					<fone>00004133843470</fone>
+				</enderEmit>
+				<CRT>3</CRT>
+			</emit>
+			<rem>
+				<CNPJ>59104422010384</CNPJ>
+				<IE>9013276371</IE>
+				<xNome>NDD TESTE MOVE</xNome>
+				<xFant>NDD TESTE MOVE</xFant>
+				<fone>00004133813568</fone>
+				<enderReme>
+					<xLgr>RUA ANTONIO SINGER</xLgr>
+					<nro>6751</nro>
+					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
+					<cMun>4125506</cMun>
+					<xMun>SAO JOSE DOS PINHAIS</xMun>
+					<CEP>83090901</CEP>
+					<UF>PR</UF>
+					<cPais>1058</cPais>
+					<xPais>Brasil</xPais>
+				</enderReme>
+				<email>william.souza@ndd.tech</email>
+			</rem>
+			<exped>
+				<CNPJ>59104422010384</CNPJ>
+				<IE>9013276371</IE>
+				<xNome>NDD TESTE MOVE</xNome>
+				<fone>00004133813568</fone>
+				<enderExped>
+					<xLgr>RUA ANTONIO SINGER</xLgr>
+					<nro>6751</nro>
+					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
+					<cMun>4125506</cMun>
+					<xMun>SAO JOSE DOS PINHAIS</xMun>
+					<CEP>83090901</CEP>
+					<UF>PR</UF>
+					<cPais>1058</cPais>
+					<xPais>Brasil</xPais>
+				</enderExped>
+				<email>joao.pinheiro@ndd.tech</email>
+			</exped>
+			<receb>
+				<CNPJ>02147467000518</CNPJ>
+				<IE>688165993113</IE>
+				<xNome>NDD TESTE MOVE</xNome>
+				<fone>00001236276408</fone>
+				<enderReceb>
+					<xLgr>R. Heitor Villa Lobos</xLgr>
+					<nro>525</nro>
+					<xBairro>São Francisco</xBairro>
+					<cMun>4208702</cMun>
+					<xMun>LAGES</xMun>
+					<CEP>88506400</CEP>
+					<UF>SC</UF>
+					<cPais>1058</cPais>
+					<xPais>Brasil</xPais>
+				</enderReceb>
+				<email>gpa-nfe@br.gestamp.com</email>
+			</receb>
+			<dest>
+				<CNPJ>71363101000175</CNPJ>
+				<IE>688165993113</IE>
+				<xNome>NDD TESTE MOVE</xNome>
+				<fone>00001236276408</fone>
+				<enderDest>
+					<xLgr>R. Heitor Villa Lobos</xLgr>
+					<nro>525</nro>
+					<xBairro>São Francisco</xBairro>
+					<cMun>4208702</cMun>
+					<xMun>LAGES</xMun>
+					<CEP>88506400</CEP>
+					<UF>SP</UF>
+					<cPais>1058</cPais>
+					<xPais>Brasil</xPais>
+				</enderDest>
+				<email>joao.pinheiro@ndd.tech</email>
+			</dest>
+			<vPrest>
+				<vTPrest>1254.66</vTPrest>
+				<vRec>1254.66</vRec>
+				<Comp>
+					<xNome>Frete/Unitario</xNome>
+					<vComp>1254.66</vComp>
+				</Comp>
+				<Comp>
+					<xNome>Frete/Peso</xNome>
+					<vComp>1254.66</vComp>
+				</Comp>
+				<Comp>
+					<xNome>Frete/Valor</xNome>
+					<vComp>0.00</vComp>
+				</Comp>
+				<Comp>
+					<xNome>Outros/Transbor</xNome>
+					<vComp>0.00</vComp>
+				</Comp>
+				<Comp>
+					<xNome>SEC-CAT</xNome>
+					<vComp>0.00</vComp>
+				</Comp>
+				<Comp>
+					<xNome>Pedagio</xNome>
+					<vComp>0.00</vComp>
+				</Comp>
+				<Comp>
+					<xNome>Despacho</xNome>
+					<vComp>0.00</vComp>
+				</Comp>
+				<Comp>
+					<xNome>Peso Total</xNome>
+					<vComp>1000.00</vComp>
+				</Comp>
+			</vPrest>
+			<imp>
+				<ICMS>
+					<ICMS00>
+						<CST>00</CST>
+						<vBC>1254.66</vBC>
+						<pICMS>12.00</pICMS>
+						<vICMS>150.56</vICMS>
+					</ICMS00>
+				</ICMS>
+				<vTotTrib>150.56</vTotTrib>
+			</imp>
+			<infCTeNorm>
+				<infCarga>
+					<vCarga>87736.68</vCarga>
+					<proPred>UNIDADE</proPred>
+					<infQ>
+						<cUnid>01</cUnid>
+						<tpMed>PESO</tpMed>
+						<qCarga>1000</qCarga>
+					</infQ>
+				</infCarga>
+				<infDoc>
+					<infNFe>
+						<chave>41231159104422010384550380004425511317946100</chave>
+					</infNFe>
+				</infDoc>
+				<infModal versaoModal="3.00">
+					<rodo>
+						<RNTRC>00109548</RNTRC>
+					</rodo>
+				</infModal>
+				<cobr>
+					<dup>
+						<nDup>105458G 1</nDup>
+						<dVenc>2024-01-10</dVenc>
+						<vDup>1254.66</vDup>
+					</dup>
+				</cobr>
+			</infCTeNorm>
+		</infCte>
+		<infCTeSupl>
+			<qrCodCTe>http://www.fazenda.pr.gov.br/cte/qrcode?chCTe=41231111158565000118570010001054581001054737&amp;tpAmb=1</qrCodCTe>
+		</infCTeSupl>
+		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+			<SignedInfo>
+				<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+				<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+				<Reference URI="#CTe41231111158565000118570010001054581001054737">
+					<Transforms>
+						<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+						<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+					</Transforms>
+					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+					<DigestValue>h0V9xLqpcwaRlwTSiJ1ai8/n7vI=</DigestValue>
+				</Reference>
+			</SignedInfo>
+			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FScWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
+			<KeyInfo>
+				<X509Data>
+					<X509Certificate>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</X509Certificate>
+				</X509Data>
+			</KeyInfo>
+		</Signature>
+	</CTe>
+	<protCTe versao="3.00">
+		<infProt>
+			<tpAmb>1</tpAmb>
+			<verAplic>PR-v3_3_11</verAplic>
+			<chCTe>41250611158565000118570010000917311001054737</chCTe>
+			<dhRecbto>2025-09-26T12:44:54-03:00</dhRecbto>
+			<nProt>141230252735166</nProt>
+			<digVal>h0V9xLqpcwaRlwTSiJ1ai8/n7vI=</digVal>
+			<cStat>100</cStat>
+			<xMotivo>Autorizado o uso do CT-e</xMotivo>
+		</infProt>
+	</protCTe>
+</cteProc>
