@@ -527,85 +527,98 @@
 </mdfeProc>`;
 
         // ============================================
-        // FUNÇÕES PARA GERAR CHAVES DE ACESSO
-        // ============================================
-        
-        function gerarChaveCTe(numeroCTe) {
-            // Formato: cUF (2) + AAMM (4) + CNPJ (14) + mod (2) + serie (3) + nCT (9) + tpEmis (1) + cCT (8) + DV (1) = 44
-            const nCT = numeroCTe.toString().padStart(9, '0');
-            const serie = DADOS_EMPRESA.serie.padStart(3, '0');
-            const cCT = gerarNumeroAleatorio(8); // Código numérico aleatório
-            
-            // Montar chave de 43 dígitos
-            const chave43 = 
-                DADOS_EMPRESA.cUF +                 // 2
-                getAAMM() +                         // 4
-                DADOS_EMPRESA.CNPJ +                // 14
-                DADOS_EMPRESA.modelo +              // 2
-                serie +                             // 3
-                nCT +                               // 9
-                DADOS_EMPRESA.tpEmis +              // 1
-                cCT;                                // 8
-                                                    // Total: 43
-            
-            // Calcular DV
-            const dv = calcularDigitoVerificador(chave43);
-            
-            return chave43 + dv; // 44 dígitos
-        }
-        
-        function gerarChaveMDFe(numeroMDFe) {
-            // Formato similar ao CT-e para MDF-e
-            const nMDF = numeroMDFe.toString().padStart(9, '0');
-            const serie = DADOS_EMPRESA.serieMDFe.padStart(3, '0');
-            const cMDF = DADOS_EMPRESA.cMDF; // Usar código MDF-e fixo ou gerar
-            
-            // Montar chave de 43 dígitos
-            const chave43 = 
-                DADOS_EMPRESA.cUF +                 // 2
-                getAAMM() +                         // 4
-                DADOS_EMPRESA.CNPJ +                // 14
-                DADOS_EMPRESA.modeloMDFe +          // 2
-                serie +                             // 3
-                nMDF +                              // 9
-                DADOS_EMPRESA.tpEmis +              // 1
-                cMDF;                               // 8
-                                                    // Total: 43
-            
-            // Calcular DV
-            const dv = calcularDigitoVerificador(chave43);
-            
-            return chave43 + dv; // 44 dígitos
-        }
-        
-        function getAAMM() {
-            // Retorna AAMM baseado na data atual
-            const now = new Date();
-            const year = now.getFullYear().toString().slice(2);
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            return year + month;
-        }
-        
-        function calcularDigitoVerificador(chave43) {
-            // Algoritmo oficial do módulo 11
-            let soma = 0;
-            let peso = 2;
-            
-            // Percorrer da direita para esquerda
-            for (let i = chave43.length - 1; i >= 0; i--) {
-                soma += parseInt(chave43.charAt(i)) * peso;
-                peso = (peso === 9) ? 2 : peso + 1;
-            }
-            
-            const resto = soma % 11;
-            const dv = (11 - resto);
-            
-            if (dv === 0 || dv === 1 || dv > 9) {
-                return '0';
-            }
-            
-            return dv.toString();
-        }
+// FUNÇÕES PARA GERAR CHAVES DE ACESSO - CORRIGIDO!
+// ============================================
+
+function gerarChaveCTe(numeroCTe) {
+    // CORREÇÃO: O número do CT-e (nCT) DEVE estar na chave!
+    // Posições 26-34 (9 dígitos) são para o nCT
+    
+    const nCT = numeroCTe.toString().padStart(9, '0'); // 9 dígitos, zeros à esquerda
+    const serie = DADOS_EMPRESA.serie.padStart(3, '0'); // 3 dígitos
+    const cCT = '00105473'; // Código numérico FIXO do seu XML original
+    
+    // ESTRUTURA DA CHAVE CT-e (44 dígitos):
+    // 1-2: cUF = 41 (PR)
+    // 3-6: AAMM = Ano e mês (ex: 2509)
+    // 7-20: CNPJ = 11158565000118
+    // 21-22: mod = 57 (CT-e)
+    // 23-25: serie = 001
+    // 26-34: nCT = 000091732 (9 dígitos do número do CT-e!) ← AQUI ESTÁ O NÚMERO!
+    // 35: tpEmis = 1
+    // 36-43: cCT = 00105473
+    // 44: DV = dígito verificador
+    
+    const AAMM = getAAMM();
+    
+    // Montar chave de 43 dígitos (sem o DV)
+    const chave43 = 
+        DADOS_EMPRESA.cUF +      // 2 dígitos
+        AAMM +                   // 4 dígitos
+        DADOS_EMPRESA.CNPJ +     // 14 dígitos
+        DADOS_EMPRESA.modelo +   // 2 dígitos (57)
+        serie +                  // 3 dígitos (001)
+        nCT +                    // 9 dígitos (número do CT-e!) ← CORRIGIDO!
+        DADOS_EMPRESA.tpEmis +   // 1 dígito
+        cCT;                     // 8 dígitos
+                                 // Total: 43 dígitos
+    
+    // Calcular DV
+    const dv = calcularDigitoVerificador(chave43);
+    
+    return chave43 + dv; // 44 dígitos
+}
+
+function gerarChaveMDFe(numeroMDFe) {
+    // JÁ ESTAVA CORRETO: O número do MDF-e está na chave
+    const nMDF = numeroMDFe.toString().padStart(9, '0'); // 9 dígitos
+    const serie = DADOS_EMPRESA.serieMDFe.padStart(3, '0'); // 3 dígitos
+    const cMDF = DADOS_EMPRESA.cMDF; // Código MDF-e fixo
+    
+    const AAMM = getAAMM();
+    
+    // Montar chave de 43 dígitos (sem o DV)
+    const chave43 = 
+        DADOS_EMPRESA.cUF +          // 2
+        AAMM +                       // 4
+        DADOS_EMPRESA.CNPJ +         // 14
+        DADOS_EMPRESA.modeloMDFe +   // 2 (58)
+        serie +                      // 3
+        nMDF +                       // 9 (número do MDF-e) ← JÁ ESTAVA CORRETO!
+        DADOS_EMPRESA.tpEmis +       // 1
+        cMDF;                        // 8
+                                     // Total: 43
+    
+    const dv = calcularDigitoVerificador(chave43);
+    
+    return chave43 + dv; // 44 dígitos
+}
+
+function getAAMM() {
+    const now = new Date();
+    const year = now.getFullYear().toString().slice(2); // últimos 2 dígitos do ano
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    return year + month;
+}
+
+function calcularDigitoVerificador(chave43) {
+    let soma = 0;
+    let peso = 2;
+    
+    for (let i = chave43.length - 1; i >= 0; i--) {
+        soma += parseInt(chave43.charAt(i)) * peso;
+        peso = (peso === 9) ? 2 : peso + 1;
+    }
+    
+    const resto = soma % 11;
+    const dv = (11 - resto);
+    
+    if (dv === 0 || dv === 1 || dv > 9) {
+        return '0';
+    }
+    
+    return dv.toString();
+}
         
         function gerarNumeroAleatorio(tamanho) {
             let numero = '';
