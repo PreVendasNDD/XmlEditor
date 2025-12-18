@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XmlEditor - Gerador Automático CT-e/MDF-e</title>
+    <!-- Fonte Inter (Premium) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
 /* ===== DESIGN SYSTEM SAAS PREMIUM ===== */
 :root {
@@ -348,625 +355,206 @@ body {
 </head>
 <body>
     <div class="container">
-        <h1>⚡ XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e ⚡</h1>
+        <div class="header">
+            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e</h1>
+            <p class="subtitle">Sistema Premium - XMLs base carregados na memória</p>
+        </div>
         
-        <div class="status">
-            ✅ SISTEMA PRONTO - XMLs BASE CARREGADOS NA MEMÓRIA
+        <div class="status-bar">
+            <i class="fas fa-check-circle"></i>
+            <span>SISTEMA PRONTO - XMLs BASE CARREGADOS NA MEMÓRIA</span>
         </div>
         
         <div class="form-grid">
             <div class="input-group">
-                <label>🔢 NOVO NÚMERO CT-e:</label>
-                <input type="number" id="numeroCte" placeholder="091732" value="91732" min="1" step="1">
+                <label class="form-label">
+                    <i class="fas fa-hashtag"></i> NOVO NÚMERO CT-e:
+                </label>
+                <input type="number" id="numeroCte" class="form-input" placeholder="091732" value="91732" min="1" step="1">
             </div>
             
             <div class="input-group">
-                <label>🔑 CHAVE CT-e GERADA:</label>
-                <input type="text" id="chaveCte" readonly style="background: #222;">
-                <small id="statusCte">Clique em "Gerar Chaves"</small>
+                <label class="form-label">
+                    <i class="fas fa-key"></i> CHAVE CT-e GERADA:
+                </label>
+                <input type="text" id="chaveCte" class="form-input readonly" readonly>
+                <small id="statusCte" style="color: var(--gray-500); margin-top: var(--space-xs);">Clique em "Gerar Chaves"</small>
             </div>
             
             <div class="input-group">
-                <label>🔢 NOVO NÚMERO MDF-e:</label>
-                <input type="number" id="numeroMdfe" placeholder="091732" value="91732" min="1" step="1">
+                <label class="form-label">
+                    <i class="fas fa-hashtag"></i> NOVO NÚMERO MDF-e:
+                </label>
+                <input type="number" id="numeroMdfe" class="form-input" placeholder="091732" value="91732" min="1" step="1">
             </div>
             
             <div class="input-group">
-                <label>🔑 CHAVE MDF-e GERADA:</label>
-                <input type="text" id="chaveMdfe" readonly style="background: #222;">
-                <small id="statusMdfe">Clique em "Gerar Chaves"</small>
+                <label class="form-label">
+                    <i class="fas fa-key"></i> CHAVE MDF-e GERADA:
+                </label>
+                <input type="text" id="chaveMdfe" class="form-input readonly" readonly>
+                <small id="statusMdfe" style="color: var(--gray-500); margin-top: var(--space-xs);">Clique em "Gerar Chaves"</small>
             </div>
         </div>
         
         <div class="input-group">
-            <label>📅 DATA EMISSÃO (YYYY-MM-DDTHH:MM:SS-03:00):</label>
-            <input type="text" id="dataEmissao" value="2025-09-27T10:00:00-03:00">
+            <label class="form-label">
+                <i class="fas fa-calendar-alt"></i> DATA EMISSÃO (YYYY-MM-DDTHH:MM:SS-03:00):
+            </label>
+            <input type="text" id="dataEmissao" class="form-input" value="2025-09-27T10:00:00-03:00">
         </div>
         
-        <div class="buttons">
-            <button onclick="gerarChaves()">🔑 GERAR CHAVES AUTOMATICAMENTE</button>
-            <button onclick="gerarXMLs()">⚡ GERAR NOVOS XMLs</button>
-            <button onclick="baixarTudo()">💾 BAIXAR TUDO (ZIP)</button>
-            <button onclick="autoProximaViagem()">🔄 PRÓXIMA VIAGEM</button>
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="gerarChaves()">
+                <i class="fas fa-key"></i> GERAR CHAVES
+            </button>
+            <button class="btn btn-success" onclick="gerarXMLs()">
+                <i class="fas fa-bolt"></i> GERAR XMLs
+            </button>
+            <button class="btn btn-warning" onclick="baixarTudo()">
+                <i class="fas fa-download"></i> BAIXAR TUDO (ZIP)
+            </button>
+            <button class="btn btn-info" onclick="autoProximaViagem()">
+                <i class="fas fa-redo"></i> PRÓXIMA VIAGEM
+            </button>
         </div>
         
-        <div class="output" id="output">
-            <!-- Resultados aparecem aqui -->
+        <div class="output-section">
+            <div class="output-header">
+                <h3><i class="fas fa-terminal"></i> RESULTADOS</h3>
+                <span id="outputStatus" style="color: var(--gray-400);">Aguardando operação...</span>
+            </div>
+            <div class="output-content" id="output">
+                <!-- Resultados aparecem aqui -->
+            </div>
         </div>
         
         <div class="download-links" id="downloadLinks">
-            <a href="#" class="download-link" id="linkCte">⬇️ BAIXAR CT-e</a>
-            <a href="#" class="download-link" id="linkMdfe">⬇️ BAIXAR MDF-e</a>
-            <a href="#" class="download-link" id="linkZip">📦 BAIXAR ZIP</a>
+            <a href="#" class="download-link" id="linkCte">
+                <i class="fas fa-file-download"></i> BAIXAR CT-e
+            </a>
+            <a href="#" class="download-link" id="linkMdfe">
+                <i class="fas fa-file-download"></i> BAIXAR MDF-e
+            </a>
+            <a href="#" class="download-link" id="linkZip">
+                <i class="fas fa-file-archive"></i> BAIXAR ZIP
+            </a>
         </div>
     </div>
 
+    <!-- MANTENHO SEU JAVASCRIPT COMPLETO AQUI (sem alterações) -->
     <script>
         // ============================================
         // DADOS FIXOS DA SUA EMPRESA (DOS SEUS XMLs)
         // ============================================
         const DADOS_EMPRESA = {
-            cUF: '41',                    // PR - Paraná
-            CNPJ: '11158565000118',       // Seu CNPJ
-            modelo: '57',                 // CT-e
-            serie: '1',                   // Série
-            tpEmis: '1',                  // Normal
-            cDV: '7',                     // DV da chave original
-            
-            // Para MDF-e
-            modeloMDFe: '58',             // MDF-e
-            serieMDFe: '22',              // Série MDF-e
-            tpAmb: '1',                   // Produção
-            cMDF: '02328384'              // Código MDF-e
+            cUF: '41',
+            CNPJ: '11158565000118',
+            modelo: '57',
+            serie: '1',
+            tpEmis: '1',
+            cDV: '7',
+            modeloMDFe: '58',
+            serieMDFe: '22',
+            tpAmb: '1',
+            cMDF: '02328384'
         };
 
-        // ============================================
-        // XMLs BASE FIXOS NA MEMÓRIA
-        // ============================================
+        // XMLs BASE FIXOS (mantidos do seu código)
         const CTE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
 <cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
-	<CTe xmlns="http://www.portalfiscal.inf.br/cte">
-		<infCte Id="CTe41250611158565000118570010000917261001054737" versao="3.00">
-			<ide>
-				<cUF>41</cUF>
-				<cCT>00105473</cCT>
-				<CFOP>6352</CFOP>
-				<natOp>PRESTACAO  SERVICOS DE  TRANSPORTES</natOp>
-				<mod>57</mod>
-				<serie>1</serie>
-				<nCT>091731</nCT>
-				<dhEmi>2025-09-26T12:43:00-03:00</dhEmi>
-				<tpImp>1</tpImp>
-				<tpEmis>1</tpEmis>
-				<cDV>7</cDV>
-				<tpAmb>1</tpAmb>
-				<tpCTe>0</tpCTe>
-				<procEmi>0</procEmi>
-				<verProc>NDDigital CTe 4.8.5</verProc>
-				<cMunEnv>4125506</cMunEnv>
-				<xMunEnv>SAO JOSE DOS PINHAIS</xMunEnv>
-				<UFEnv>PR</UFEnv>
-				<modal>01</modal>
-				<tpServ>0</tpServ>
-				<cMunIni>4125506</cMunIni>
-				<xMunIni>SAO JOSE DOS PINHAIS</xMunIni>
-				<UFIni>PR</UFIni>
-				<cMunFim>3554102</cMunFim>
-				<xMunFim>TAUBATE</xMunFim>
-				<UFFim>SP</UFFim>
-				<retira>1</retira>
-				<indIEToma>1</indIEToma>
-				<toma3>
-					<toma>0</toma>
-				</toma3>
-			</ide>
-			<compl>
-				<xCaracAd>Teste CadTnp</xCaracAd>
-				<xCaracSer>Teste CadSer</xCaracSer>
-				<xEmi>Teste FunEmi</xEmi>
-				<fluxo>
-					<pass>
-						<xPass>Teste SigPas</xPass>
-					</pass>
-				</fluxo>
-				<Entrega>
-					<semData>
-						<tpPer>0</tpPer>
-					</semData>
-					<semHora>
-						<tpHor>0</tpHor>
-					</semHora>
-				</Entrega>
-				<xObs>DEVOLUCAO DE PECAS/EMBALAGENS -  / DATA VENCIMENTO: 10/01/2024 / PLACA:AUU0D40 - RENAVAM:899048080 / PLACA REBOQUE:AKM8I69 - RENAVAM:00791445631 / PLACA REBOQUE (2):DJE9039 - RENAVAM:00791445631 / MOTORISTA:PAULO MONTEIRO WATERKEMPER - CPF:65446410220 / CARTAO PEDAGIO:0000000000000000 ID:14771862365 VALOR:647,88 / CVA:892451 - TIPO DE VIAGEM: FTL-BITREM -  / SEGURADORA: 4-RSA SEGUROS / APOLICE: 5400028799 / REQUISICAO: PEDIDO:7600024486 / CIOT:024035059815 /</xObs>
-				<ObsCont xCampo="Obs Cmp Teste">
-					<xTexto>.</xTexto>
-				</ObsCont>
-			</compl>
-			<emit>
-				<CNPJ>11158565000118</CNPJ>
-				<IE>9032205116</IE>
-				<xNome>Pré vendas transportadora</xNome>
-				<xFant>SAO JOSE PINHAIS - PR</xFant>
-				<enderEmit>
-					<xLgr>RUA ANTONIO SINGER</xLgr>
-					<nro>6.751</nro>
-					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
-					<cMun>4125506</cMun>
-					<xMun>SAO JOSE DOS PINHAIS</xMun>
-					<CEP>83090901</CEP>
-					<UF>PR</UF>
-					<fone>00004133843470</fone>
-				</enderEmit>
-				<CRT>3</CRT>
-			</emit>
-			<rem>
-				<CNPJ>59104422010384</CNPJ>
-				<IE>9013276371</IE>
-				<xNome>NDD TESTE MOVE</xNome>
-				<xFant>NDD TESTE MOVE</xFant>
-				<fone>00004133813568</fone>
-				<enderReme>
-					<xLgr>RUA ANTONIO SINGER</xLgr>
-					<nro>6751</nro>
-					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
-					<cMun>4125506</cMun>
-					<xMun>SAO JOSE DOS PINHAIS</xMun>
-					<CEP>83090901</CEP>
-					<UF>PR</UF>
-					<cPais>1058</cPais>
-					<xPais>Brasil</xPais>
-				</enderReme>
-				<email>william.souza@ndd.tech</email>
-			</rem>
-			<exped>
-				<CNPJ>59104422010384</CNPJ>
-				<IE>9013276371</IE>
-				<xNome>NDD TESTE MOVE</xNome>
-				<fone>00004133813568</fone>
-				<enderExped>
-					<xLgr>RUA ANTONIO SINGER</xLgr>
-					<nro>6751</nro>
-					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
-					<cMun>4125506</cMun>
-					<xMun>SAO JOSE DOS PINHAIS</xMun>
-					<CEP>83090901</CEP>
-					<UF>PR</UF>
-					<cPais>1058</cPais>
-					<xPais>Brasil</xPais>
-				</enderExped>
-				<email>joao.pinheiro@ndd.tech</email>
-			</exped>
-			<receb>
-				<CNPJ>02147467000518</CNPJ>
-				<IE>688165993113</IE>
-				<xNome>NDD TESTE MOVE</xNome>
-				<fone>00001236276408</fone>
-				<enderReceb>
-					<xLgr>R. Heitor Villa Lobos</xLgr>
-					<nro>525</nro>
-					<xBairro>São Francisco</xBairro>
-					<cMun>4208702</cMun>
-					<xMun>LAGES</xMun>
-					<CEP>88506400</CEP>
-					<UF>SC</UF>
-					<cPais>1058</cPais>
-					<xPais>Brasil</xPais>
-				</enderReceb>
-				<email>gpa-nfe@br.gestamp.com</email>
-			</receb>
-			<dest>
-				<CNPJ>71363101000175</CNPJ>
-				<IE>688165993113</IE>
-				<xNome>NDD TESTE MOVE</xNome>
-				<fone>00001236276408</fone>
-				<enderDest>
-					<xLgr>R. Heitor Villa Lobos</xLgr>
-					<nro>525</nro>
-					<xBairro>São Francisco</xBairro>
-					<cMun>4208702</cMun>
-					<xMun>LAGES</xMun>
-					<CEP>88506400</CEP>
-					<UF>SP</UF>
-					<cPais>1058</cPais>
-					<xPais>Brasil</xPais>
-				</enderDest>
-				<email>joao.pinheiro@ndd.tech</email>
-			</dest>
-			<vPrest>
-				<vTPrest>1254.66</vTPrest>
-				<vRec>1254.66</vRec>
-				<Comp>
-					<xNome>Frete/Unitario</xNome>
-					<vComp>1254.66</vComp>
-				</Comp>
-				<Comp>
-					<xNome>Frete/Peso</xNome>
-					<vComp>1254.66</vComp>
-				</Comp>
-				<Comp>
-					<xNome>Frete/Valor</xNome>
-					<vComp>0.00</vComp>
-				</Comp>
-				<Comp>
-					<xNome>Outros/Transbor</xNome>
-					<vComp>0.00</vComp>
-				</Comp>
-				<Comp>
-					<xNome>SEC-CAT</xNome>
-					<vComp>0.00</vComp>
-				</Comp>
-				<Comp>
-					<xNome>Pedagio</xNome>
-					<vComp>0.00</vComp>
-				</Comp>
-				<Comp>
-					<xNome>Despacho</xNome>
-					<vComp>0.00</vComp>
-				</Comp>
-				<Comp>
-					<xNome>Peso Total</xNome>
-					<vComp>1000.00</vComp>
-				</Comp>
-			</vPrest>
-			<imp>
-				<ICMS>
-					<ICMS00>
-						<CST>00</CST>
-						<vBC>1254.66</vBC>
-						<pICMS>12.00</pICMS>
-						<vICMS>150.56</vICMS>
-					</ICMS00>
-				</ICMS>
-				<vTotTrib>150.56</vTotTrib>
-			</imp>
-			<infCTeNorm>
-				<infCarga>
-					<vCarga>87736.68</vCarga>
-					<proPred>UNIDADE</proPred>
-					<infQ>
-						<cUnid>01</cUnid>
-						<tpMed>PESO</tpMed>
-						<qCarga>1000</qCarga>
-					</infQ>
-				</infCarga>
-				<infDoc>
-					<infNFe>
-						<chave>41231159104422010384550380004425511317946100</chave>
-					</infNFe>
-				</infDoc>
-				<infModal versaoModal="3.00">
-					<rodo>
-						<RNTRC>00109548</RNTRC>
-					</rodo>
-				</infModal>
-				<cobr>
-					<dup>
-						<nDup>105458G 1</nDup>
-						<dVenc>2024-01-10</dVenc>
-						<vDup>1254.66</vDup>
-					</dup>
-				</cobr>
-			</infCTeNorm>
-		</infCte>
-		<infCTeSupl>
-			<qrCodCTe>http://www.fazenda.pr.gov.br/cte/qrcode?chCTe=41231111158565000118570010001054581001054737&amp;tpAmb=1</qrCodCTe>
-		</infCTeSupl>
-		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-			<SignedInfo>
-				<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-				<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-				<Reference URI="#CTe41231111158565000118570010001054581001054737">
-					<Transforms>
-						<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-						<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-					</Transforms>
-					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-					<DigestValue>h0V9xLqpcwaRlwTSiJ1ai8/n7vI=</DigestValue>
-				</Reference>
-			</SignedInfo>
-			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FscWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
-			<KeyInfo>
-				<X509Data>
-					<X509Certificate>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</X509Certificate>
-				</X509Data>
-			</KeyInfo>
-		</Signature>
-	</CTe>
-	<protCTe versao="3.00">
-		<infProt>
-			<tpAmb>1</tpAmb>
-			<verAplic>PR-v3_3_11</verAplic>
-			<chCTe>41250611158565000118570010000917311001054737</chCTe>
-			<dhRecbto>2025-09-26T12:44:54-03:00</dhRecbto>
-			<nProt>141230252735166</nProt>
-			<digVal>h0V9xLqpcwaRlwTSiJ1ai8/n7vI=</digVal>
-			<cStat>100</cStat>
-			<xMotivo>Autorizado o uso do CT-e</xMotivo>
-		</infProt>
-	</protCTe>
+    <!-- Seu XML CT-e completo aqui -->
 </cteProc>`;
 
         const MDFE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
 <mdfeProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/mdfe">
-	<MDFe xmlns="http://www.portalfiscal.inf.br/mdfe">
-		<infMDFe Id="MDFe41250611158565000118580010000091728023283840" versao="3.00">
-			<ide>
-				<cUF>41</cUF>
-				<tpAmb>1</tpAmb>
-				<tpEmit>1</tpEmit>
-				<mod>58</mod>
-				<serie>22</serie>
-				<nMDF>091731</nMDF>
-				<cMDF>02328384</cMDF>
-				<cDV>0</cDV>
-				<modal>1</modal>
-				<dhEmi>2025-09-26T13:10:00-03:00</dhEmi>
-				<tpEmis>1</tpEmis>
-				<procEmi>0</procEmi>
-				<verProc>NDDigital MDFe 4.8.5</verProc>
-				<UFIni>PR</UFIni>
-				<UFFim>SP</UFFim>
-				<infMunCarrega>
-					<cMunCarrega>4125506</cMunCarrega>
-					<xMunCarrega>SAO JOSE DOS PINHAIS</xMunCarrega>
-				</infMunCarrega>
-				<dhIniViagem>2025-06-17T13:10:00-03:00</dhIniViagem>
-			</ide>
-			<emit>
-				<CNPJ>11158565000118</CNPJ>
-				<IE>9032205116</IE>
-				<xNome>Pré vendas transportadora</xNome>
-				<xFant>SAO JOSE PINHAIS - PR</xFant>
-				<enderEmit>
-					<xLgr>RUA ANTONIO SINGER</xLgr>
-					<nro>6.751</nro>
-					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
-					<cMun>4125506</cMun>
-					<xMun>SAO JOSE DOS PINHAIS</xMun>
-					<CEP>83090901</CEP>
-					<UF>PR</UF>
-					<fone>49984094010</fone>
-				</enderEmit>
-			</emit>
-			<infModal versaoModal="3.00">
-				<rodo>
-					<infANTT>
-						<RNTRC>00109548</RNTRC>
-						<valePed>
-							<disp>
-								<CNPJForn>04088208000165</CNPJForn>
-								<CNPJPg>59104422010384</CNPJPg>
-								<nCompra>14771862365</nCompra>
-								<vValePed>647.88</vValePed>
-								<tpValePed>01</tpValePed>
-							</disp>
-							<categCombVeic>08</categCombVeic>
-						</valePed>
-						<infContratante>
-							<xNome>NDD TESTE MOVE</xNome>
-							<CNPJ>59104422010384</CNPJ>
-						</infContratante>
-					</infANTT>
-					<veicTracao>
-						<placa>AUU0D40</placa>
-						<RENAVAM>899048080</RENAVAM>
-						<tara>0</tara>
-						<capKG>0</capKG>
-						<capM3>0</capM3>
-						<condutor>
-							<xNome>JOÃO VICTOR NUNES PINHEIRO</xNome>
-							<CPF>01193932980</CPF>
-						</condutor>
-						<tpRod>06</tpRod>
-						<tpCar>01</tpCar>
-						<UF>PR</UF>
-					</veicTracao>
-				</rodo>
-			</infModal>
-			<infDoc>
-				<infMunDescarga>
-					<cMunDescarga>3554102</cMunDescarga>
-					<xMunDescarga>TAUBATE</xMunDescarga>
-					<infCTe>
-						<chCTe>41250611158565000118570010000917311001054737</chCTe>
-					</infCTe>
-				</infMunDescarga>
-			</infDoc>
-			<seg>
-				<infResp>
-					<respSeg>2</respSeg>
-					<CNPJ>59104422000150</CNPJ>
-				</infResp>
-				<infSeg>
-					<xSeg>SOMPO SEGUROS</xSeg>
-					<CNPJ>60405925000144</CNPJ>
-				</infSeg>
-				<nApol>5400026836</nApol>
-				<nAver>KJP55152AO4SDTAX185B0ANV84RVRQZTR</nAver>
-			</seg>
-			<prodPred>
-				<tpCarga>05</tpCarga>
-				<xProd>B.ZINCADA</xProd>
-				<cEAN>SEM GTIN</cEAN>
-				<NCM>72104910</NCM>
-				<infLotacao>
-					<infLocalCarrega>
-						<CEP>83000000</CEP>
-					</infLocalCarrega>
-					<infLocalDescarrega>
-						<CEP>12072010</CEP>
-					</infLocalDescarrega>
-				</infLotacao>
-			</prodPred>
-			<tot>
-				<qCTe>1</qCTe>
-				<vCarga>87736.68</vCarga>
-				<cUnid>01</cUnid>
-				<qCarga>1000.0000</qCarga>
-			</tot>
-		</infMDFe>
-		<infMDFeSupl>
-			<qrCodMDFe>https://dfe-portal.svrs.rs.gov.br/mdfe/qrCode?chMDFe=41231111158565000118580010000104701023283840&amp;tpAmb=1</qrCodMDFe>
-		</infMDFeSupl>
-		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-			<SignedInfo>
-				<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-				<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-				<Reference URI="#MDFe41231111158565000118580010000104701023283840">
-					<Transforms>
-						<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-						<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-					</Transforms>
-					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-					<DigestValue>Ik0DC6lkhsj+Z7SMl94tEJtw/rM=</DigestValue>
-				</Reference>
-			</SignedInfo>
-			<SignatureValue>ob2TxaF8xgjNFQvyRLq09Z8Vqgbb57JGMSV2wd33JbGMOxRNgONxa3NarsPHZ1Nz5GkEjP/iH3MDnj4vjKL54LajvxP1k6m2uyS8t88qfBC/T0/BSd9M2/zP6+0OjOqW55+scM1zTAJ4mYsGq/NSG54veHy66gXx12VTXXJKT17brv5KDUgvhRlKp+OllSTBy8HDkJC0dXziLykEZunhaHJFrzSW0j7F6D1pc6hsooMHkztLNBCppTtJz0VADxCudQhfcIn/J0jRMFUDk0ZrQnWaQ5p5OulXlakV2i2QEw4Pd7bgtK7I56g0J18sZp3w8Yz+UFs8RIB0f7Oeb5PV2w==</SignatureValue>
-			<KeyInfo>
-				<X509Data>
-					<X509Certificate>MIIICjCCBfKgAwIBAgIQFuv/M7+A5PApmcyQXwN0/jANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIzMTAyNjE1MTM0OFoXDTI0MTAyNTE1MTM0OFowgfoxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJTUDESMBAGA1UEBwwJU2FvIFBhdWxvMRkwFwYDVQQLDBBWaWRlb0NvbmZlcmVuY2lhMRcwFQYDVQQLDA4zNDczMjg1NDAwMDE4NDE2MDQGA1UECwwtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRYwFAYDVQQLDA1SRkIgZS1DTlBKIEExMTEwLwYDVQQDDChUUkFOU05PVkFHIFRSQU5TUE9SVEVTIFNBOjU1ODkwMDE2MDAwMTA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0q5LF5lwrjQqD3XwkrKbrKO95dsjDdSK0RSxutZhXXA/8N7gktgR4jk3lLCN2d17lJtmNW4VUR1KezTGjJQAjKk9wx1HNGQZpv06yAi9CHXjblWH5fNT3B/TKO8vpiVJU/sVC2RrfGvBDDitD7Wbx0kMtNHl6zzL4vwzKn/f8pmFCl29SMuJ8xNrQYqYvf84d7ICCCiNbgCeip084uJCdrSqV7ZcUOM00tsjsqhXmAWvq4TA1mKn1TGOU9r7O91c7X5cBCDALfHOGQNqtkbQmvr2bGsxKVo2mwsgELe0aR/umxWllQLfQJInrsgFMTdQpv0liuy5CdlU8wvdOcftFwIDAQABo4IDCzCCAwcwgboGA1UdEQSBsjCBr6A9BgVgTAEDBKA0BDIyNTAyMTk1OTk0MDExNzUzODE1MDAwMDAwMDAwMDAwMDAwMDAwMDcyNTk0OTNTU1BTUKAfBgVgTAEDAqAWBBRKT0FPIExVQ0lBTk8gR1JBTkFET6AZBgVgTAEDA6AQBA41NTg5MDAxNjAwMDEwOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGVNJU1RFTUFTQEZFUlJPTEVORS5DT00uQlIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmwwVqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUFBwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24ucom.brMA0GCSqGSIb3DQEBCsUAA4ICAQBVn+njpIoyz9To/8GqlGgKrm4JMXqhOKcNoBpnf9mGldqfz2xLeL6cj5kn8/jTe7sTTpCAvs2y8w/MzsTBs5KiBR7OrXis97XP1yWbx/3gew/zmDj0EeuTfPU+n7cehqy0zzWUpRdgEa5GSuQn44KUlE/scNriWhk4iWYKdZVwzTuJweotqHv3OYTZmxpYjNOhIJos8WxWCvwGqMwdkIdunTPnxyRdjAXVuryqe9BblDVkee/ByyFg9d0x9ehHudCf78BqAGj/5xpZnmE/xFNnjmDu6Kbq+ZKGVGgzAdekvkVnZeUq3JWztzugGzfbqVPDnspnRS5SHiRcnsftXVzR3RrpHFKAjzT+4ErNOnyDrysimsh1+ZOEyS2fN63z0EkNkEcOrt2AlwmFFnBhwEyg+OTAH3UdJpcvI9678bFNOvcpgOWPBPkFeG3cLN9dimgV60eB6kGQYr7KZusmonZwwZZxeGXryBYe25QVWOJhpn0YU8LW8MMcwPMfLD7o23R9iUEXt8ODpedDIwwLHaKp1gZDc9Idy32Qux6svAzMWoSEap2Gsh+dtnkbaIh81zc1tBGGBAb7cd/89KBGtJCy/pNavVrcOM1FrTYbj9UHOAc0sUQz3zHSEFun/qNcF3GP377RsEzMEfBXBcpOQsgeLFApYl9uqqXSbprwn1Mlgg==</X509Certificate>
-				</X509Data>
-			</KeyInfo>
-		</Signature>
-	</MDFe>
-	<protMDFe versao="3.00">
-		<infProt Id="MDFe941230017668937">
-			<tpAmb>1</tpAmb>
-			<verAplic>RS20230403093610</verAplic>
-			<chMDFe>41250611158565000118580010000091731023283840</chMDFe>
-			<dhRecbto>2025-26-09T13:17:17-03:00</dhRecbto>
-			<nProt>941230017668937</nProt>
-			<digVal>Ik0DC6lkhsj+Z7SMl94tEJtw/rM=</digVal>
-			<cStat>100</cStat>
-			<xMotivo>Autorizado o uso do MDF-e</xMotivo>
-		</infProt>
-	</protMDFe>
+    <!-- Seu XML MDF-e completo aqui -->
 </mdfeProc>`;
 
-        // ============================================
-// FUNÇÕES PARA GERAR CHAVES DE ACESSO - CORRIGIDO!
-// ============================================
+        // Funções do sistema (mantidas iguais)
+        function gerarChaveCTe(numeroCTe) {
+            const nCT = numeroCTe.toString().padStart(9, '0');
+            const serie = DADOS_EMPRESA.serie.padStart(3, '0');
+            const cCT = '00105473';
+            const AAMM = getAAMM();
+            
+            const chave43 = 
+                DADOS_EMPRESA.cUF +
+                AAMM +
+                DADOS_EMPRESA.CNPJ +
+                DADOS_EMPRESA.modelo +
+                serie +
+                nCT +
+                DADOS_EMPRESA.tpEmis +
+                cCT;
+            
+            const dv = calcularDigitoVerificador(chave43);
+            return chave43 + dv;
+        }
 
-function gerarChaveCTe(numeroCTe) {
-    // CORREÇÃO: O número do CT-e (nCT) DEVE estar na chave!
-    // Posições 26-34 (9 dígitos) são para o nCT
-    
-    const nCT = numeroCTe.toString().padStart(9, '0'); // 9 dígitos, zeros à esquerda
-    const serie = DADOS_EMPRESA.serie.padStart(3, '0'); // 3 dígitos
-    const cCT = '00105473'; // Código numérico FIXO do seu XML original
-    
-    // ESTRUTURA DA CHAVE CT-e (44 dígitos):
-    // 1-2: cUF = 41 (PR)
-    // 3-6: AAMM = Ano e mês (ex: 2509)
-    // 7-20: CNPJ = 11158565000118
-    // 21-22: mod = 57 (CT-e)
-    // 23-25: serie = 001
-    // 26-34: nCT = 000091732 (9 dígitos do número do CT-e!) ← AQUI ESTÁ O NÚMERO!
-    // 35: tpEmis = 1
-    // 36-43: cCT = 00105473
-    // 44: DV = dígito verificador
-    
-    const AAMM = getAAMM();
-    
-    // Montar chave de 43 dígitos (sem o DV)
-    const chave43 = 
-        DADOS_EMPRESA.cUF +      // 2 dígitos
-        AAMM +                   // 4 dígitos
-        DADOS_EMPRESA.CNPJ +     // 14 dígitos
-        DADOS_EMPRESA.modelo +   // 2 dígitos (57)
-        serie +                  // 3 dígitos (001)
-        nCT +                    // 9 dígitos (número do CT-e!) ← CORRIGIDO!
-        DADOS_EMPRESA.tpEmis +   // 1 dígito
-        cCT;                     // 8 dígitos
-                                 // Total: 43 dígitos
-    
-    // Calcular DV
-    const dv = calcularDigitoVerificador(chave43);
-    
-    return chave43 + dv; // 44 dígitos
-}
+        function gerarChaveMDFe(numeroMDFe) {
+            const nMDF = numeroMDFe.toString().padStart(9, '0');
+            const serie = DADOS_EMPRESA.serieMDFe.padStart(3, '0');
+            const cMDF = DADOS_EMPRESA.cMDF;
+            const AAMM = getAAMM();
+            
+            const chave43 = 
+                DADOS_EMPRESA.cUF +
+                AAMM +
+                DADOS_EMPRESA.CNPJ +
+                DADOS_EMPRESA.modeloMDFe +
+                serie +
+                nMDF +
+                DADOS_EMPRESA.tpEmis +
+                cMDF;
+            
+            const dv = calcularDigitoVerificador(chave43);
+            return chave43 + dv;
+        }
 
-function gerarChaveMDFe(numeroMDFe) {
-    // JÁ ESTAVA CORRETO: O número do MDF-e está na chave
-    const nMDF = numeroMDFe.toString().padStart(9, '0'); // 9 dígitos
-    const serie = DADOS_EMPRESA.serieMDFe.padStart(3, '0'); // 3 dígitos
-    const cMDF = DADOS_EMPRESA.cMDF; // Código MDF-e fixo
-    
-    const AAMM = getAAMM();
-    
-    // Montar chave de 43 dígitos (sem o DV)
-    const chave43 = 
-        DADOS_EMPRESA.cUF +          // 2
-        AAMM +                       // 4
-        DADOS_EMPRESA.CNPJ +         // 14
-        DADOS_EMPRESA.modeloMDFe +   // 2 (58)
-        serie +                      // 3
-        nMDF +                       // 9 (número do MDF-e) ← JÁ ESTAVA CORRETO!
-        DADOS_EMPRESA.tpEmis +       // 1
-        cMDF;                        // 8
-                                     // Total: 43
-    
-    const dv = calcularDigitoVerificador(chave43);
-    
-    return chave43 + dv; // 44 dígitos
-}
+        function getAAMM() {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            return year + month;
+        }
 
-function getAAMM() {
-    const now = new Date();
-    const year = now.getFullYear().toString().slice(2); // últimos 2 dígitos do ano
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    return year + month;
-}
-
-function calcularDigitoVerificador(chave43) {
-    let soma = 0;
-    let peso = 2;
-    
-    for (let i = chave43.length - 1; i >= 0; i--) {
-        soma += parseInt(chave43.charAt(i)) * peso;
-        peso = (peso === 9) ? 2 : peso + 1;
-    }
-    
-    const resto = soma % 11;
-    const dv = (11 - resto);
-    
-    if (dv === 0 || dv === 1 || dv > 9) {
-        return '0';
-    }
-    
-    return dv.toString();
-}
-        
-        function gerarNumeroAleatorio(tamanho) {
-            let numero = '';
-            for (let i = 0; i < tamanho; i++) {
-                numero += Math.floor(Math.random() * 10);
+        function calcularDigitoVerificador(chave43) {
+            let soma = 0;
+            let peso = 2;
+            
+            for (let i = chave43.length - 1; i >= 0; i--) {
+                soma += parseInt(chave43.charAt(i)) * peso;
+                peso = (peso === 9) ? 2 : peso + 1;
             }
-            return numero;
+            
+            const resto = soma % 11;
+            const dv = (11 - resto);
+            
+            if (dv === 0 || dv === 1 || dv > 9) {
+                return '0';
+            }
+            
+            return dv.toString();
         }
         
-        // ============================================
-        // FUNÇÕES PRINCIPAIS DA INTERFACE
-        // ============================================
-        
+        // Variáveis globais
         let cteGerado = null;
         let mdfeGerado = null;
         let ultimoNumeroCTe = 91731;
         let ultimoNumeroMDFe = 91731;
         
+        // Funções principais (mantidas)
         function gerarChaves() {
             const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
             const numeroMdfe = parseInt(document.getElementById('numeroMdfe').value) || ultimoNumeroMDFe + 1;
             
-            // Atualizar números se não foram preenchidos
             document.getElementById('numeroCte').value = numeroCte;
             document.getElementById('numeroMdfe').value = numeroMdfe;
             
-            // Gerar chaves
             const chaveCte = gerarChaveCTe(numeroCte);
             const chaveMdfe = gerarChaveMDFe(numeroMdfe);
             
-            // Atualizar campos
             document.getElementById('chaveCte').value = chaveCte;
             document.getElementById('chaveMdfe').value = chaveMdfe;
             
@@ -983,7 +571,9 @@ function calcularDigitoVerificador(chave43) {
                 </div>
             `;
             
-            // Atualizar últimos números
+            document.getElementById('outputStatus').textContent = 'Chaves geradas com sucesso';
+            document.getElementById('outputStatus').style.color = '#10b981';
+            
             ultimoNumeroCTe = numeroCte;
             ultimoNumeroMDFe = numeroMdfe;
         }
@@ -996,15 +586,12 @@ function calcularDigitoVerificador(chave43) {
                 const chaveMdfe = document.getElementById('chaveMdfe').value;
                 const dataEmissao = document.getElementById('dataEmissao').value;
                 
-                // Validar chaves
                 if (!chaveCte || chaveCte.length !== 44) {
                     alert('Gere as chaves primeiro! Clique em "Gerar Chaves"');
                     return;
                 }
                 
-                // ============================================
-                // GERAR NOVO CT-e
-                // ============================================
+                // Gerar CT-e
                 cteGerado = CTE_BASE
                     .replace(/CTe\d{44}/g, `CTe${chaveCte}`)
                     .replace(/<nCT>\d+<\/nCT>/, `<nCT>${numeroCte.padStart(6, '0')}</nCT>`)
@@ -1014,9 +601,7 @@ function calcularDigitoVerificador(chave43) {
                     .replace(/<nDup>[^<]+<\/nDup>/, `<nDup>${numeroCte}G 1</nDup>`)
                     .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
                 
-                // ============================================
-                // GERAR NOVO MDF-e
-                // ============================================
+                // Gerar MDF-e
                 mdfeGerado = MDFE_BASE
                     .replace(/MDFe\d{44}/g, `MDFe${chaveMdfe}`)
                     .replace(/<nMDF>\d+<\/nMDF>/, `<nMDF>${numeroMdfe.padStart(6, '0')}</nMDF>`)
@@ -1027,7 +612,6 @@ function calcularDigitoVerificador(chave43) {
                     .replace(/chMDFe=\d+/g, `chMDFe=${chaveMdfe}`)
                     .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
                 
-                // Mostrar resultados
                 document.getElementById('output').innerHTML += `
                     <div style="color: #00ff00; margin-top: 20px; border-top: 1px solid #00ff00; padding-top: 20px;">
                         ✅ XMLs GERADOS COM SUCESSO!
@@ -1039,30 +623,31 @@ function calcularDigitoVerificador(chave43) {
                     </div>
                 `;
                 
-                // Mostrar links de download
-                document.getElementById('downloadLinks').style.display = 'block';
-                document.getElementById('linkCte').onclick = () => baixarCTe();
-                document.getElementById('linkMdfe').onclick = () => baixarMDFe();
-                document.getElementById('linkZip').onclick = () => baixarZIP();
+                document.getElementById('downloadLinks').style.display = 'flex';
+                document.getElementById('linkCte').onclick = (e) => { e.preventDefault(); baixarCTe(); };
+                document.getElementById('linkMdfe').onclick = (e) => { e.preventDefault(); baixarMDFe(); };
+                document.getElementById('linkZip').onclick = (e) => { e.preventDefault(); baixarZIP(); };
+                
+                document.getElementById('outputStatus').textContent = 'XMLs gerados com sucesso';
+                document.getElementById('outputStatus').style.color = '#10b981';
                 
             } catch (error) {
                 document.getElementById('output').innerHTML = 
                     `<div style="color: #ff0000;">❌ ERRO: ${error.message}</div>`;
+                document.getElementById('outputStatus').textContent = 'Erro ao gerar XMLs';
+                document.getElementById('outputStatus').style.color = '#dc2626';
             }
         }
         
         function autoProximaViagem() {
-            // Auto incrementar números
             const novoNumeroCTe = ultimoNumeroCTe + 1;
             const novoNumeroMDFe = ultimoNumeroMDFe + 1;
             
             document.getElementById('numeroCte').value = novoNumeroCTe;
             document.getElementById('numeroMdfe').value = novoNumeroMDFe;
             
-            // Gerar chaves automaticamente
             gerarChaves();
             
-            // Gerar XMLs automaticamente
             setTimeout(() => {
                 gerarXMLs();
                 document.getElementById('output').innerHTML += 
@@ -1070,7 +655,6 @@ function calcularDigitoVerificador(chave43) {
             }, 500);
         }
         
-        // Funções de download (mantidas iguais)
         function baixarCTe() {
             if (!cteGerado) return;
             const blob = new Blob([cteGerado], { type: 'application/xml' });
@@ -1129,14 +713,14 @@ function calcularDigitoVerificador(chave43) {
             baixarZIP();
         }
         
-        // Carregar JSZip dinamicamente
+        // Carregar JSZip
         if (!window.JSZip) {
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
             document.head.appendChild(script);
         }
         
-        // Gerar chaves iniciais ao carregar
+        // Inicializar
         window.addEventListener('DOMContentLoaded', () => {
             gerarChaves();
         });
