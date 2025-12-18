@@ -1149,9 +1149,25 @@ body {
         }
         
         // Gerar chaves iniciais ao carregar
-        window.addEventListener('DOMContentLoaded', () => {
-            gerarChaves();
-        });
+window.addEventListener('DOMContentLoaded', () => {
+    // COLOCA DATA ATUAL AUTOMÁTICA
+    const agora = new Date();
+    const ano = agora.getFullYear();
+    const mes = String(agora.getMonth() + 1).padStart(2, '0');
+    const dia = String(agora.getDate()).padStart(2, '0');
+    const hora = String(agora.getHours()).padStart(2, '0');
+    const minuto = String(agora.getMinutes()).padStart(2, '0');
+    const segundo = String(agora.getSeconds()).padStart(2, '0');
+    
+    // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
+    const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
+    
+    // Joga a data atual no campo
+    document.getElementById('dataEmissao').value = dataAtual;
+    
+    // Agora sim gera as chaves
+    gerarChaves();
+});
     </script>
 </body>
 </html>
