@@ -355,16 +355,19 @@ body {
 </head>
 <body>
     <div class="container">
+        <!-- HEADER COM TEMA PREMIUM -->
         <div class="header">
             <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e</h1>
             <p class="subtitle">Sistema Premium - XMLs base carregados na memória</p>
         </div>
         
+        <!-- STATUS BAR -->
         <div class="status-bar">
             <i class="fas fa-check-circle"></i>
             <span>SISTEMA PRONTO - XMLs BASE CARREGADOS NA MEMÓRIA</span>
         </div>
         
+        <!-- FORM GRID COM LAYOUT DO SEU PRIMEIRO CÓDIGO -->
         <div class="form-grid">
             <div class="input-group">
                 <label class="form-label">
@@ -397,13 +400,15 @@ body {
             </div>
         </div>
         
+        <!-- CAMPO DATA COM FORMATO DO SEU PRIMEIRO CÓDIGO -->
         <div class="input-group">
             <label class="form-label">
                 <i class="fas fa-calendar-alt"></i> DATA EMISSÃO (YYYY-MM-DDTHH:MM:SS-03:00):
             </label>
-            <input type="text" id="dataEmissao" class="form-input" value="">
+            <input type="text" id="dataEmissao" class="form-input" value="2025-09-27T10:00:00-03:00">
         </div>
         
+        <!-- BOTÕES COM ÍCONES E ESTILO PREMIUM -->
         <div class="action-buttons">
             <button class="btn btn-primary" onclick="gerarChaves()">
                 <i class="fas fa-key"></i> GERAR CHAVES
@@ -419,6 +424,7 @@ body {
             </button>
         </div>
         
+        <!-- OUTPUT SECTION - MANTÉM O TERMINAL HACKER -->
         <div class="output-section">
             <div class="output-header">
                 <h3><i class="fas fa-terminal"></i> RESULTADOS</h3>
@@ -429,6 +435,7 @@ body {
             </div>
         </div>
         
+        <!-- LINKS DE DOWNLOAD -->
         <div class="download-links" id="downloadLinks">
             <a href="#" class="download-link" id="linkCte">
                 <i class="fas fa-file-download"></i> BAIXAR CT-e
@@ -442,28 +449,30 @@ body {
         </div>
     </div>
 
-    <!-- MANTENHO SEU JAVASCRIPT COMPLETO AQUI (sem alterações) -->
+    <!-- JAVASCRIPT DO SEU PRIMEIRO CÓDIGO (FUNCIONAL) -->
     <script>
         // ============================================
         // DADOS FIXOS DA SUA EMPRESA (DOS SEUS XMLs)
         // ============================================
         const DADOS_EMPRESA = {
-            cUF: '41',
-            CNPJ: '11158565000118',
-            modelo: '57',
-            serie: '1',
-            tpEmis: '1',
-            cDV: '7',
-            modeloMDFe: '58',
-            serieMDFe: '22',
-            tpAmb: '1',
-            cMDF: '02328384'
+            cUF: '41',                    // PR - Paraná
+            CNPJ: '11158565000118',       // Seu CNPJ
+            modelo: '57',                 // CT-e
+            serie: '1',                   // Série
+            tpEmis: '1',                  // Normal
+            cDV: '7',                     // DV da chave original
+            
+            // Para MDF-e
+            modeloMDFe: '58',             // MDF-e
+            serieMDFe: '22',              // Série MDF-e
+            tpAmb: '1',                   // Produção
+            cMDF: '02328384'              // Código MDF-e
         };
 
-        // XMLs BASE FIXOS (mantidos do seu código)
+        // ============================================
+        // XMLs BASE FIXOS NA MEMÓRIA (CORRIGIDOS - SEM DUPLICAÇÃO)
+        // ============================================
         const CTE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
-<cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
-    <?xml version="1.0" encoding="UTF-8"?>
 <cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
 	<CTe xmlns="http://www.portalfiscal.inf.br/cte">
 		<infCte Id="CTe41250611158565000118570010000917261001054737" versao="3.00">
@@ -704,10 +713,10 @@ body {
 					<DigestValue>h0V9xLqpcwaRlwTSiJ1ai8/n7vI=</DigestValue>
 				</Reference>
 			</SignedInfo>
-			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FScWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
+			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FscWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>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</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -724,12 +733,9 @@ body {
 			<xMotivo>Autorizado o uso do CT-e</xMotivo>
 		</infProt>
 	</protCTe>
-</cteProc>
 </cteProc>`;
 
         const MDFE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
-<mdfeProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/mdfe">
-    <?xml version="1.0" encoding="UTF-8"?>
 <mdfeProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/mdfe">
 	<MDFe xmlns="http://www.portalfiscal.inf.br/mdfe">
 		<infMDFe Id="MDFe41250611158565000118580010000091728023283840" versao="3.00">
@@ -867,7 +873,7 @@ body {
 			<SignatureValue>ob2TxaF8xgjNFQvyRLq09Z8Vqgbb57JGMSV2wd33JbGMOxRNgONxa3NarsPHZ1Nz5GkEjP/iH3MDnj4vjKL54LajvxP1k6m2uyS8t88qfBC/T0/BSd9M2/zP6+0OjOqW55+scM1zTAJ4mYsGq/NSG54veHy66gXx12VTXXJKT17brv5KDUgvhRlKp+OllSTBy8HDkJC0dXziLykEZunhaHJFrzSW0j7F6D1pc6hsooMHkztLNBCppTtJz0VADxCudQhfcIn/J0jRMFUDk0ZrQnWaQ5p5OulXlakV2i2QEw4Pd7bgtK7I56g0J18sZp3w8Yz+UFs8RIB0f7Oeb5PV2w==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>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</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -884,14 +890,17 @@ body {
 			<xMotivo>Autorizado o uso do MDF-e</xMotivo>
 		</infProt>
 	</protMDFe>
-</mdfeProc>
 </mdfeProc>`;
 
-        // Funções do sistema (mantidas iguais)
+        // ============================================
+        // FUNÇÕES PARA GERAR CHAVES DE ACESSO - CORRIGIDO!
+        // ============================================
+
         function gerarChaveCTe(numeroCTe) {
             const nCT = numeroCTe.toString().padStart(9, '0');
             const serie = DADOS_EMPRESA.serie.padStart(3, '0');
             const cCT = '00105473';
+            
             const AAMM = getAAMM();
             
             const chave43 = 
@@ -912,6 +921,7 @@ body {
             const nMDF = numeroMDFe.toString().padStart(9, '0');
             const serie = DADOS_EMPRESA.serieMDFe.padStart(3, '0');
             const cMDF = DADOS_EMPRESA.cMDF;
+            
             const AAMM = getAAMM();
             
             const chave43 = 
@@ -954,13 +964,15 @@ body {
             return dv.toString();
         }
         
-        // Variáveis globais
+        // ============================================
+        // FUNÇÕES PRINCIPAIS DA INTERFACE
+        // ============================================
+        
         let cteGerado = null;
         let mdfeGerado = null;
         let ultimoNumeroCTe = 91731;
         let ultimoNumeroMDFe = 91731;
         
-        // Funções principais (mantidas)
         function gerarChaves() {
             const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
             const numeroMdfe = parseInt(document.getElementById('numeroMdfe').value) || ultimoNumeroMDFe + 1;
@@ -1007,7 +1019,7 @@ body {
                     return;
                 }
                 
-                // Gerar CT-e
+                // GERAR NOVO CT-e
                 cteGerado = CTE_BASE
                     .replace(/CTe\d{44}/g, `CTe${chaveCte}`)
                     .replace(/<nCT>\d+<\/nCT>/, `<nCT>${numeroCte.padStart(6, '0')}</nCT>`)
@@ -1017,7 +1029,7 @@ body {
                     .replace(/<nDup>[^<]+<\/nDup>/, `<nDup>${numeroCte}G 1</nDup>`)
                     .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
                 
-                // Gerar MDF-e
+                // GERAR NOVO MDF-e
                 mdfeGerado = MDFE_BASE
                     .replace(/MDFe\d{44}/g, `MDFe${chaveMdfe}`)
                     .replace(/<nMDF>\d+<\/nMDF>/, `<nMDF>${numeroMdfe.padStart(6, '0')}</nMDF>`)
@@ -1129,7 +1141,7 @@ body {
             baixarZIP();
         }
         
-        // Carregar JSZip
+        // Carregar JSZip dinamicamente
         if (!window.JSZip) {
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
@@ -1138,23 +1150,8 @@ body {
         
         // Gerar chaves iniciais ao carregar
         window.addEventListener('DOMContentLoaded', () => {
-       // COLOCA DATA ATUAL AUTOMÁTICA
-       const agora = new Date();
-       const ano = agora.getFullYear();
-       const mes = String(agora.getMonth() + 1).padStart(2, '0');
-       const dia = String(agora.getDate()).padStart(2, '0');
-       const hora = String(agora.getHours()).padStart(2, '0');
-       const minuto = String(agora.getMinutes()).padStart(2, '0');
-    
-       // Formato que os XMLs precisam
-       const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:00-03:00`;
-    
-      // Joga a data atual no campo
-       document.getElementById('dataEmissao').value = dataAtual;
-    
-      // Agora sim gera as chaves
-       gerarChaves();
-       });
+            gerarChaves();
+        });
     </script>
 </body>
 </html>
