@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XmlEditor - Gerador Automático CT-e/MDF-e</title>
+    <title>XmlEditor - Gerador Automático CT-e/MDF-e + API iComprova</title>
     <!-- Fonte Inter (Premium) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,7 +86,7 @@ body {
 
 /* ===== CONTAINER PRINCIPAL ===== */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     background: white;
     border-radius: var(--radius-2xl);
@@ -184,10 +184,45 @@ body {
     cursor: not-allowed;
 }
 
+/* ===== CONFIGURAÇÕES API ===== */
+.api-config {
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin: var(--space-2xl) 0;
+    border: 2px solid var(--gray-200);
+}
+
+.api-config h3 {
+    color: var(--gray-800);
+    margin-bottom: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.api-fields {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+    .api-fields {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .api-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== BUTTONS ===== */
 .action-buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: var(--space-md);
     margin: var(--space-2xl) 0;
 }
@@ -257,6 +292,17 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.btn-danger {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
 /* ===== OUTPUT SECTION ===== */
 .output-section {
     background: var(--gray-900);
@@ -320,6 +366,12 @@ body {
     }
     
     .action-buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .action-buttons {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -357,14 +409,50 @@ body {
     <div class="container">
         <!-- HEADER COM TEMA PREMIUM -->
         <div class="header">
-            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e</h1>
-            <p class="subtitle">Sistema Premium - XMLs base carregados na memória</p>
+            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e + API iComprova</h1>
+            <p class="subtitle">Sistema Premium - XMLs base carregados na memória + Integração com API</p>
         </div>
         
         <!-- STATUS BAR -->
         <div class="status-bar">
             <i class="fas fa-check-circle"></i>
-            <span>SISTEMA PRONTO - XMLs BASE CARREGADOS NA MEMÓRIA</span>
+            <span>SISTEMA PRONTO - XMLs BASE CARREGADOS NA MEMÓRIA E CONFIGURADO PARA API</span>
+        </div>
+        
+        <!-- CONFIGURAÇÕES DA API -->
+        <div class="api-config">
+            <h3><i class="fas fa-cogs"></i> CONFIGURAÇÕES DA API iComprova</h3>
+            <div class="api-fields">
+                <div class="input-group">
+                    <label class="form-label">
+                        <i class="fas fa-globe"></i> URL BASE API:
+                    </label>
+                    <input type="text" id="apiUrl" class="form-input" value="https://icomprova.nddcargo.com.br:9051">
+                </div>
+                
+                <div class="input-group">
+                    <label class="form-label">
+                        <i class="fas fa-key"></i> ACCESS TOKEN:
+                    </label>
+                    <input type="password" id="accessToken" class="form-input" placeholder="Cole o token Bearer aqui">
+                </div>
+                
+                <div class="input-group">
+                    <label class="form-label">
+                        <i class="fas fa-check-circle"></i> STATUS TOKEN:
+                    </label>
+                    <input type="text" id="tokenStatus" class="form-input readonly" readonly value="Não configurado">
+                </div>
+            </div>
+            
+            <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-md);">
+                <button class="btn btn-info" onclick="testarToken()">
+                    <i class="fas fa-test-tube"></i> TESTAR TOKEN
+                </button>
+                <button class="btn btn-warning" onclick="obterTokenNovo()">
+                    <i class="fas fa-sync"></i> OBTER NOVO TOKEN
+                </button>
+            </div>
         </div>
         
         <!-- FORM GRID COM LAYOUT DO SEU PRIMEIRO CÓDIGO -->
@@ -419,7 +507,10 @@ body {
             <button class="btn btn-warning" onclick="baixarTudo()">
                 <i class="fas fa-download"></i> BAIXAR TUDO (ZIP)
             </button>
-            <button class="btn btn-info" onclick="autoProximaViagem()">
+            <button class="btn btn-info" onclick="publicarParaAPI()">
+                <i class="fas fa-paper-plane"></i> PUBLICAR API
+            </button>
+            <button class="btn btn-danger" onclick="autoProximaViagem()">
                 <i class="fas fa-redo"></i> PRÓXIMA VIAGEM
             </button>
         </div>
@@ -449,7 +540,7 @@ body {
         </div>
     </div>
 
-    <!-- JAVASCRIPT DO SEU PRIMEIRO CÓDIGO (FUNCIONAL) -->
+    <!-- JAVASCRIPT DO SEU PRIMEIRO CÓDIGO (FUNCIONAL) COM ADIÇÕES PARA API -->
     <script>
         // ============================================
         // DADOS FIXOS DA SUA EMPRESA (DOS SEUS XMLs)
@@ -716,7 +807,7 @@ body {
 			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FscWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>MIIICjCCBfKgAwIBAgIQFuv/M7+A5PApmcyQXwN0/jANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJiYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIzMTAyNjE5MTM0OFoXDTI0MTAyNTE1MTM0OFowgfoxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJTUDESMBAGA1UEBwwJU2FvIFBhdWxvMRkwFwYDVQQLDBBWaWRlb0NvbmZlcmVuY2lhMRcwFQYDVQQLDA4zNDczMjg1NDAwMDE4NDE2MDQGA1UECwwtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRYwFAYDVQQLDA1SRkIgZS1DTlBKIEExMTEwLwYDVQQDDChUUkFOU05PVkFHIFRSQU5TUE9SVEVTIFNBOjU1ODkwMDE2MDAwMTA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0q5LF5lwrjQqD3XwkrKbrKO95dsjDdSK0RSxutZhXXA/8N7gktgR4jk3lLCN2d17lJtmNW4VUR1KezTGjJQAjKk9wx1HNGQZpv06yAi9CHXjblWH5fNT3B/TKO8vpiVJU/sVC2RrfGvBDDitD7Wbx0kMtNHl6zzL4vwzKn/f8pmFCl29SMuJ8xNrQYqYvf84d7ICCCiNbgCeip084uJCdrSqV7ZcUOM00tsjsqhXmAWvq4TA1mKn1TGOU9r7O91c7X5cBCDALfHOGQNqtkbQmvr2bGsxKVo2mwsgELe0aR/umxWllQLfQJInrsgFMTdQpv0liuy5CdlU8wvdOcftFwIDAQABo4IDCzCCAwcwgboGA1UdEQSBsjCBr6A9BgVgTAEDBKA0BDIyNTAyMTk1OTk0MDExNzUzODE1MDAwMDAwMDAwMDAwMDAwMDAwMDcyNTk0OTNTU1BTUKAfBgVgTAEDAqAWBBRKT0FPIExVQ0lBTk8gR1JBTkFET6AZBgVgTAEDA6AQBA41NTg5MDAxNjAwMDEwOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGVNJU1RFTUFTQEZFUlJPTEVORS5DT00uQlIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmwwVqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUFBwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2NlcnRpZmljYWRvcy9BQ19DZXJ0aXNpZ25fUkZCX0c1LnA3YzA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AtYWMtY2VydGlzaWduLXJmYi5jZXJ0aXNpZ24uY29tLmJyMA0GCSqGSIb3DQEBCwUAA4ICAQBVn+njpIoyz9To/8GqlGgKrm4JMXqhOKcNoBpnf9mGldqfz2xLeL6cj5kn8/jTe7sTTpCAvs2y8w/MzsTBs5KiBR7OrXis97XP1yWbx/3gew/zmDj0EeuTfPU+n7cehqy0zzWUpRdgEa5GSuQn44KUlE/scNriWhk4iWYKdZVwzTuJweotqHv3OYTZmxpYjNOhIJos8WxWCvwGqMwdkIdunTPnxyRdjAXVuryqe9BblDVkee/ByyFg9d0x9ehHudCf78BqAGj/5xpZnmE/xFNnjmDu6Kbq+ZKGVGgzAdekvkVnZeUq3JWztzugGzfbqVPDnspnRS5SHiRcnsftXVzR3RrpHFKAjzT+4ErNOnyDrysimsh1+ZOEyS2fN63z0EkNkEcOrt2AlwmFFnBhwEyg+OTAH3UdJpcvI9678bFNOvcpgOWPBPkFeG3cLN9dimgV60eB6kGQYr7KZusmonZwwZZxeGXryBYe25QVWOJhpn0YU8LW8MMcwPMfLD7o23R9iUEXt8ODpedDIwwLHaKp1gZDc9Idy32Qux6svAzMWoSEap2Gsh+dtnkbaIh81zc1tBGGBAb7cd/89KBGtJCy/pNavVrcOM1FrTYbj9UHOAc0sUQz3zHSEFun/qNcF3GP377RsEzMEfBXBcpOQsgeLFApYl9uqqXSbprwn1Mlgg==</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -893,6 +984,16 @@ body {
 </mdfeProc>`;
 
         // ============================================
+        // VARIÁVEIS GLOBAIS PARA ARMAZENAMENTO
+        // ============================================
+        let cteGerado = null;
+        let mdfeGerado = null;
+        let ultimoNumeroCTe = 91731;
+        let ultimoNumeroMDFe = 91731;
+        let accessTokenAtual = null;
+        let tokenValido = false;
+
+        // ============================================
         // FUNÇÕES PARA GERAR CHAVES DE ACESSO - CORRIGIDO!
         // ============================================
 
@@ -965,13 +1066,229 @@ body {
         }
         
         // ============================================
-        // FUNÇÕES PRINCIPAIS DA INTERFACE
+        // FUNÇÕES PARA API iComprova
         // ============================================
         
-        let cteGerado = null;
-        let mdfeGerado = null;
-        let ultimoNumeroCTe = 91731;
-        let ultimoNumeroMDFe = 91731;
+        function obterTokenNovo() {
+            const output = document.getElementById('output');
+            output.innerHTML = `<div style="color: #00ff00;">🔐 SOLICITANDO NOVO TOKEN...</div>`;
+            document.getElementById('outputStatus').textContent = 'Obtendo token...';
+            document.getElementById('outputStatus').style.color = '#f59e0b';
+            
+            const body = new URLSearchParams({
+                client_id: "4a3a17846e714b3288682c5260455347",
+                client_secret: "FFVkTyaM4zVsLYAhKpGIT57C72EzYPSOqFO+O/P9y0Y=",
+                scope: "i-comprova-entregas-integration-api",
+                grant_type: "client_credentials"
+            });
+
+            fetch("https://icomprova.nddcargo.com.br:9051/connect/token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: body.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access_token) {
+                    accessTokenAtual = data.access_token;
+                    tokenValido = true;
+                    
+                    document.getElementById('accessToken').value = accessTokenAtual;
+                    document.getElementById('tokenStatus').value = `✅ Válido (expira em ${data.expires_in}s)`;
+                    document.getElementById('tokenStatus').style.color = '#10b981';
+                    
+                    output.innerHTML = `
+                        <div style="color: #00ff00;">✅ TOKEN OBTIDO COM SUCESSO!</div>
+                        <div style="margin-top: 10px;">
+                            <strong>Token:</strong> ${accessTokenAtual.substring(0, 50)}...<br>
+                            <strong>Tipo:</strong> ${data.token_type}<br>
+                            <strong>Expira em:</strong> ${data.expires_in} segundos<br>
+                            <strong>Escopo:</strong> ${data.scope}
+                        </div>
+                    `;
+                    
+                    document.getElementById('outputStatus').textContent = 'Token obtido com sucesso';
+                    document.getElementById('outputStatus').style.color = '#10b981';
+                } else {
+                    throw new Error('Não foi possível obter o token');
+                }
+            })
+            .catch(err => {
+                output.innerHTML = `<div style="color: #ff0000;">❌ ERRO AO OBTER TOKEN: ${err.message}</div>`;
+                document.getElementById('outputStatus').textContent = 'Erro ao obter token';
+                document.getElementById('outputStatus').style.color = '#dc2626';
+                tokenValido = false;
+            });
+        }
+        
+        function testarToken() {
+            const tokenInput = document.getElementById('accessToken').value;
+            
+            if (!tokenInput || tokenInput.trim() === '') {
+                document.getElementById('tokenStatus').value = "❌ Token vazio";
+                document.getElementById('tokenStatus').style.color = '#dc2626';
+                return;
+            }
+            
+            accessTokenAtual = tokenInput.trim();
+            tokenValido = true;
+            
+            document.getElementById('tokenStatus').value = "✅ Token configurado (testar com envio)";
+            document.getElementById('tokenStatus').style.color = '#10b981';
+            
+            const output = document.getElementById('output');
+            output.innerHTML = `<div style="color: #00ff00;">✅ TOKEN CONFIGURADO PARA USO!</div>`;
+            document.getElementById('outputStatus').textContent = 'Token configurado';
+            document.getElementById('outputStatus').style.color = '#10b981';
+        }
+        
+        async function enviarMDFeParaAPI() {
+            if (!mdfeGerado) {
+                throw new Error('MDF-e não gerado. Gere os XMLs primeiro.');
+            }
+            
+            if (!accessTokenAtual || !tokenValido) {
+                throw new Error('Token não configurado. Configure o token primeiro.');
+            }
+            
+            const apiUrl = document.getElementById('apiUrl').value;
+            const urlCompleta = `${apiUrl}/api/Recepcoes/MDFe`;
+            
+            const payload = {
+                documento: mdfeGerado
+            };
+            
+            const response = await fetch(urlCompleta, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessTokenAtual}`
+                },
+                body: JSON.stringify(payload)
+            });
+            
+            const responseText = await response.text();
+            
+            if (!response.ok) {
+                throw new Error(`Erro ${response.status}: ${responseText}`);
+            }
+            
+            return JSON.parse(responseText);
+        }
+        
+        async function enviarCTeParaAPI() {
+            if (!cteGerado) {
+                throw new Error('CT-e não gerado. Gere os XMLs primeiro.');
+            }
+            
+            if (!accessTokenAtual || !tokenValido) {
+                throw new Error('Token não configurado. Configure o token primeiro.');
+            }
+            
+            const apiUrl = document.getElementById('apiUrl').value;
+            const urlCompleta = `${apiUrl}/api/Recepcoes/CTe`;
+            
+            // Extrair o token do MDF-e (chave MDF-e)
+            const chaveMdfe = document.getElementById('chaveMdfe').value;
+            
+            const payload = {
+                documento: cteGerado,
+                token: chaveMdfe  // Usando a chave MDF-e como token de vinculação
+            };
+            
+            const response = await fetch(urlCompleta, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessTokenAtual}`
+                },
+                body: JSON.stringify(payload)
+            });
+            
+            const responseText = await response.text();
+            
+            if (!response.ok) {
+                throw new Error(`Erro ${response.status}: ${responseText}`);
+            }
+            
+            return JSON.parse(responseText);
+        }
+        
+        async function publicarParaAPI() {
+            const output = document.getElementById('output');
+            const outputStatus = document.getElementById('outputStatus');
+            
+            try {
+                // Verificar se os XMLs foram gerados
+                if (!cteGerado || !mdfeGerado) {
+                    output.innerHTML = `<div style="color: #ff0000;">❌ XMLs não gerados. Clique em "Gerar XMLs" primeiro.</div>`;
+                    outputStatus.textContent = 'XMLs não gerados';
+                    outputStatus.style.color = '#dc2626';
+                    return;
+                }
+                
+                // Verificar token
+                if (!accessTokenAtual || !tokenValido) {
+                    output.innerHTML = `<div style="color: #ff0000;">❌ Token não configurado. Configure o token primeiro.</div>`;
+                    outputStatus.textContent = 'Token não configurado';
+                    outputStatus.style.color = '#dc2626';
+                    return;
+                }
+                
+                output.innerHTML = `<div style="color: #00ff00;">🚀 INICIANDO PUBLICAÇÃO PARA API iComprova...</div>`;
+                outputStatus.textContent = 'Publicando para API...';
+                outputStatus.style.color = '#f59e0b';
+                
+                // PASSO 1: Enviar MDF-e
+                output.innerHTML += `<div style="margin-top: 10px; color: #00ff00;">📤 Enviando MDF-e para API...</div>`;
+                
+                const resultadoMDFe = await enviarMDFeParaAPI();
+                
+                output.innerHTML += `<div style="color: #00ff00; margin-left: 20px;">✅ MDF-e enviado: ${resultadoMDFe.status || 'Sucesso'}</div>`;
+                
+                // Pequena pausa entre requisições
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // PASSO 2: Enviar CT-e
+                output.innerHTML += `<div style="margin-top: 10px; color: #00ff00;">📤 Enviando CT-e para API...</div>`;
+                
+                const resultadoCTe = await enviarCTeParaAPI();
+                
+                output.innerHTML += `<div style="color: #00ff00; margin-left: 20px;">✅ CT-e enviado: ${resultadoCTe.status || 'Sucesso'}</div>`;
+                
+                // RESULTADO FINAL
+                output.innerHTML += `
+                    <div style="margin-top: 20px; color: #00ff00; border-top: 1px solid #00ff00; padding-top: 10px;">
+                        🎉 PUBLICAÇÃO CONCLUÍDA COM SUCESSO!
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <strong>Resumo:</strong><br>
+                        • MDF-e: ${document.getElementById('chaveMdfe').value}<br>
+                        • CT-e: ${document.getElementById('chaveCte').value}<br>
+                        • Status MDF-e: ${JSON.stringify(resultadoMDFe)}<br>
+                        • Status CT-e: ${JSON.stringify(resultadoCTe)}
+                    </div>
+                    <div style="margin-top: 10px; color: #ffff00;">
+                        ⚠️ A viagem será disponibilizada após envio de TODOS os documentos vinculados ao MDF-e.
+                    </div>
+                `;
+                
+                outputStatus.textContent = 'Publicação concluída';
+                outputStatus.style.color = '#10b981';
+                
+            } catch (error) {
+                output.innerHTML = `<div style="color: #ff0000;">❌ ERRO NA PUBLICAÇÃO: ${error.message}</div>`;
+                outputStatus.textContent = 'Erro na publicação';
+                outputStatus.style.color = '#dc2626';
+                console.error('Erro na publicação:', error);
+            }
+        }
+        
+        // ============================================
+        // FUNÇÕES PRINCIPAIS DA INTERFACE (ORIGINAIS)
+        // ============================================
         
         function gerarChaves() {
             const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
@@ -1149,25 +1466,28 @@ body {
         }
         
         // Gerar chaves iniciais ao carregar
-window.addEventListener('DOMContentLoaded', () => {
-    // COLOCA DATA ATUAL AUTOMÁTICA
-    const agora = new Date();
-    const ano = agora.getFullYear();
-    const mes = String(agora.getMonth() + 1).padStart(2, '0');
-    const dia = String(agora.getDate()).padStart(2, '0');
-    const hora = String(agora.getHours()).padStart(2, '0');
-    const minuto = String(agora.getMinutes()).padStart(2, '0');
-    const segundo = String(agora.getSeconds()).padStart(2, '0');
-    
-    // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
-    const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
-    
-    // Joga a data atual no campo
-    document.getElementById('dataEmissao').value = dataAtual;
-    
-    // Agora sim gera as chaves
-    gerarChaves();
-});
+        window.addEventListener('DOMContentLoaded', () => {
+            // COLOCA DATA ATUAL AUTOMÁTICA
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = String(agora.getMonth() + 1).padStart(2, '0');
+            const dia = String(agora.getDate()).padStart(2, '0');
+            const hora = String(agora.getHours()).padStart(2, '0');
+            const minuto = String(agora.getMinutes()).padStart(2, '0');
+            const segundo = String(agora.getSeconds()).padStart(2, '0');
+            
+            // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
+            const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
+            
+            // Joga a data atual no campo
+            document.getElementById('dataEmissao').value = dataAtual;
+            
+            // Configura URL padrão da API
+            document.getElementById('apiUrl').value = 'https://icomprova.nddcargo.com.br:9051';
+            
+            // Agora sim gera as chaves
+            gerarChaves();
+        });
     </script>
 </body>
 </html>
