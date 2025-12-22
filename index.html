@@ -543,27 +543,9 @@ body {
     <!-- JAVASCRIPT DO SEU PRIMEIRO CÓDIGO (FUNCIONAL) COM ADIÇÕES PARA API -->
     <script>
         // ============================================
-        // DADOS FIXOS DA SUA EMPRESA (DOS SEUS XMLs)
-        // ============================================
-        const DADOS_EMPRESA = {
-            cUF: '41',                    // PR - Paraná
-            CNPJ: '11158565000118',       // Seu CNPJ
-            modelo: '57',                 // CT-e
-            serie: '1',                   // Série
-            tpEmis: '1',                  // Normal
-            cDV: '7',                     // DV da chave original
-            
-            // Para MDF-e
-            modeloMDFe: '58',             // MDF-e
-            serieMDFe: '22',              // Série MDF-e
-            tpAmb: '1',                   // Produção
-            cMDF: '02328384'              // Código MDF-e
-        };
-
-        // ============================================
-        // XMLs BASE FIXOS NA MEMÓRIA (CORRIGIDOS - SEM DUPLICAÇÃO)
-        // ============================================
-        const CTE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
+// XMLs BASE FIXOS NA MEMÓRIA (CORRIGIDOS - SEM DUPLICAÇÃO)
+// ============================================
+const CTE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
 <cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
 	<CTe xmlns="http://www.portalfiscal.inf.br/cte">
 		<infCte Id="CTe41250611158565000118570010000917261001054737" versao="3.00">
@@ -842,7 +824,7 @@ body {
 				<modal>1</modal>
 				<dhEmi>2025-09-26T13:10:00-03:00</dhEmi>
 				<tpEmis>1</tpEmis>
-				<procEmi>0</procEmi>
+				<procEmi>0</procEmis>
 				<verProc>NDDigital MDFe 4.8.5</verProc>
 				<UFIni>PR</UFIni>
 				<UFFim>SP</UFFim>
@@ -964,7 +946,7 @@ body {
 			<SignatureValue>ob2TxaF8xgjNFQvyRLq09Z8Vqgbb57JGMSV2wd33JbGMOxRNgONxa3NarsPHZ1Nz5GkEjP/iH3MDnj4vjKL54LajvxP1k6m2uyS8t88qfBC/T0/BSd9M2/zP6+0OjOqW55+scM1zTAJ4mYsGq/NSG54veHy66gXx12VTXXJKT17brv5KDUgvhRlKp+OllSTBy8HDkJC0dXziLykEZunhaHJFrzSW0j7F6D1pc6hsooMHkztLNBCppTtJz0VADxCudQhfcIn/J0jRMFUDk0ZrQnWaQ5p5OulXlakV2i2QEw4Pd7bgtK7I56g0J18sZp3w8Yz+UFs8RIB0f7Oeb5PV2w==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>MIIICjCCBfKgAwIBAgIQFuv/M7+A5PApmcyQXwN0/jANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIzMTAyNjE1MTM0OFoXDTI0MTAyNTE1MTM0OFowgfoxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJTUDESMBAGA1UEBwwJU2FvIFBhdWxvMRkwFwYDVQQLDBBWaWRlb0NvbmZlcmVuY2lhMRcwFQYDVQQLDA4zNDczMjg1NDAwMDE4NDE2MDQGA1UECwwtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRYwFAYDVQQLDA1SRkIgZS1DTlBKIEExMTEwLwYDVQQDDChUUkFOU05PVkFHIFRSQU5TUE9SVEVTIFNBOjU1ODkwMDE2MDAwMTA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0q5LF5lwrjQqD3XwkrKbrKO95dsjDdSK0RSxutZhXXA/8N7gktgR4jk3lLCN2d17lJtmNW4VUR1KezTGjJQAjKk9wx1HNGQZpv06yAi9CHXjblWH5fNT3B/TKO8vpiVJU/sVC2RrfGvBDDitD7Wbx0kMtNHl6zzL4vwzKn/f8pmFCl29SMuJ8xNrQYqYvf84d7ICCCiNbgCeip084uJCdrSqV7ZcUOM00tsjsqhXmAWvq4TA1mKn1TGOU9r7O91c7X5cBCDALfHOGQNqtkbQmvr2bGsxKVo2mwsgELe0aR/umxWllQLfQJInrsgFMTdQpv0liuy5CdlU8wvdOcftFwIDAQABo4IDCzCCAwcwgboGA1UdEQSBsjCBr6A9BgVgTAEDBKA0BDIyNTAyMTk1OTk0MDExNzUzODE1MDAwMDAwMDAwMDAwMDAwMDAwMDcyNTk0OTNTU1BTUKAfBgVgTAEDAqAWBBRKT0FPIExVQ0lBTk8gR1JBTkFET6AZBgVgTAEDA6AQBA41NTg5MDAxNjAwMDEwOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGVNJU1RFTUFTQEZFUlJPTEVORS5DT00uQlIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29mYmxHOC1c2Zk9nTk5WDlpTb0w3S2N6aFFmTzRyb1VlZ3hUVEJhdz09</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -1066,7 +1048,7 @@ body {
         }
         
         // ============================================
-        // FUNÇÕES PARA API iComprova
+        // FUNÇÕES PARA API iComprova - CORRIGIDAS
         // ============================================
         
         function obterTokenNovo() {
@@ -1144,306 +1126,351 @@ body {
             document.getElementById('outputStatus').style.color = '#10b981';
         }
         
+        async function enviarMDFeParaAPI() {
+            if (!mdfeGerado) {
+                throw new Error('MDF-e não gerado. Gere os XMLs primeiro.');
+            }
+            
+            if (!accessTokenAtual || !tokenValido) {
+                throw new Error('Token não configurado. Configure o token primeiro.');
+            }
+            
+            // CORREÇÃO: REMOVER '/api' DO CAMINHO
+            const apiUrl = document.getElementById('apiUrl').value;
+            const urlCompleta = `${apiUrl}/Recepcoes/MDFe`; // REMOVIDO '/api/'
+            
+            const payload = {
+                documento: mdfeGerado
+            };
+            
+            const response = await fetch(urlCompleta, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessTokenAtual}`
+                },
+                body: JSON.stringify(payload)
+            });
+            
+            const responseText = await response.text();
+            
+            if (!response.ok) {
+                throw new Error(`Erro ${response.status}: ${responseText}`);
+            }
+            
+            return JSON.parse(responseText);
+        }
+        
+        async function enviarCTeParaAPI() {
+            if (!cteGerado) {
+                throw new Error('CT-e não gerado. Gere os XMLs primeiro.');
+            }
+            
+            if (!accessTokenAtual || !tokenValido) {
+                throw new Error('Token não configurado. Configure o token primeiro.');
+            }
+            
+            // CORREÇÃO: REMOVER '/api' DO CAMINHO
+            const apiUrl = document.getElementById('apiUrl').value;
+            const urlCompleta = `${apiUrl}/Recepcoes/CTe`; // REMOVIDO '/api/'
+            
+            // Extrair o token do MDF-e (chave MDF-e)
+            const chaveMdfe = document.getElementById('chaveMdfe').value;
+            
+            const payload = {
+                documento: cteGerado,
+                token: chaveMdfe  // Usando a chave MDF-e como token de vinculação
+            };
+            
+            const response = await fetch(urlCompleta, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessTokenAtual}`
+                },
+                body: JSON.stringify(payload)
+            });
+            
+            const responseText = await response.text();
+            
+            if (!response.ok) {
+                throw new Error(`Erro ${response.status}: ${responseText}`);
+            }
+            
+            return JSON.parse(responseText);
+        }
+        
+        async function publicarParaAPI() {
+            const output = document.getElementById('output');
+            const outputStatus = document.getElementById('outputStatus');
+            
+            try {
+                // Verificar se os XMLs foram gerados
+                if (!cteGerado || !mdfeGerado) {
+                    output.innerHTML = `<div style="color: #ff0000;">❌ XMLs não gerados. Clique em "Gerar XMLs" primeiro.</div>`;
+                    outputStatus.textContent = 'XMLs não gerados';
+                    outputStatus.style.color = '#dc2626';
+                    return;
+                }
+                
+                // Verificar token
+                if (!accessTokenAtual || !tokenValido) {
+                    output.innerHTML = `<div style="color: #ff0000;">❌ Token não configurado. Configure o token primeiro.</div>`;
+                    outputStatus.textContent = 'Token não configurado';
+                    outputStatus.style.color = '#dc2626';
+                    return;
+                }
+                
+                output.innerHTML = `<div style="color: #00ff00;">🚀 INICIANDO PUBLICAÇÃO PARA API iComprova...</div>`;
+                outputStatus.textContent = 'Publicando para API...';
+                outputStatus.style.color = '#f59e0b';
+                
+                // PASSO 1: Enviar MDF-e
+                output.innerHTML += `<div style="margin-top: 10px; color: #00ff00;">📤 Enviando MDF-e para API...</div>`;
+                
+                const resultadoMDFe = await enviarMDFeParaAPI();
+                
+                output.innerHTML += `<div style="color: #00ff00; margin-left: 20px;">✅ MDF-e enviado: ${resultadoMDFe.status || 'Sucesso'}</div>`;
+                
+                // Pequena pausa entre requisições
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // PASSO 2: Enviar CT-e
+                output.innerHTML += `<div style="margin-top: 10px; color: #00ff00;">📤 Enviando CT-e para API...</div>`;
+                
+                const resultadoCTe = await enviarCTeParaAPI();
+                
+                output.innerHTML += `<div style="color: #00ff00; margin-left: 20px;">✅ CT-e enviado: ${resultadoCTe.status || 'Sucesso'}</div>`;
+                
+                // RESULTADO FINAL
+                output.innerHTML += `
+                    <div style="margin-top: 20px; color: #00ff00; border-top: 1px solid #00ff00; padding-top: 10px;">
+                        🎉 PUBLICAÇÃO CONCLUÍDA COM SUCESSO!
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <strong>Resumo:</strong><br>
+                        • MDF-e: ${document.getElementById('chaveMdfe').value}<br>
+                        • CT-e: ${document.getElementById('chaveCte').value}<br>
+                        • Status MDF-e: ${JSON.stringify(resultadoMDFe)}<br>
+                        • Status CT-e: ${JSON.stringify(resultadoCTe)}
+                    </div>
+                    <div style="margin-top: 10px; color: #ffff00;">
+                        ⚠️ A viagem será disponibilizada após envio de TODOS os documentos vinculados ao MDF-e.
+                    </div>
+                `;
+                
+                outputStatus.textContent = 'Publicação concluída';
+                outputStatus.style.color = '#10b981';
+                
+            } catch (error) {
+                output.innerHTML = `<div style="color: #ff0000;">❌ ERRO NA PUBLICAÇÃO: ${error.message}</div>`;
+                outputStatus.textContent = 'Erro na publicação';
+                outputStatus.style.color = '#dc2626';
+                console.error('Erro na publicação:', error);
+            }
+        }
+        
         // ============================================
-// FUNÇÕES PARA API iComprova - CORRIGIDAS
-// ============================================
-
-async function enviarMDFeParaAPI() {
-    if (!mdfeGerado) {
-        throw new Error('MDF-e não gerado. Gere os XMLs primeiro.');
-    }
-    
-    if (!accessTokenAtual || !tokenValido) {
-        throw new Error('Token não configurado. Configure o token primeiro.');
-    }
-    
-    // CORREÇÃO: URL base sem o /connect/token
-    const urlBase = "https://icomprova.nddcargo.com.br:9051";
-    const urlCompleta = `${urlBase}/api/Recepcoes/MDFe`;
-    
-    console.log('Enviando MDF-e para:', urlCompleta);
-    
-    const payload = {
-        documento: mdfeGerado
-    };
-    
-    try {
-        const response = await fetch(urlCompleta, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessTokenAtual}`
-            },
-            body: JSON.stringify(payload)
-        });
+        // FUNÇÕES PRINCIPAIS DA INTERFACE (ORIGINAIS)
+        // ============================================
         
-        const responseText = await response.text();
-        console.log('Resposta MDF-e:', response.status, responseText);
-        
-        if (!response.ok) {
-            throw new Error(`Erro ${response.status}: ${responseText}`);
-        }
-        
-        return JSON.parse(responseText);
-    } catch (error) {
-        console.error('Erro no envio do MDF-e:', error);
-        throw new Error(`Falha na comunicação: ${error.message}`);
-    }
-}
-
-async function enviarCTeParaAPI() {
-    if (!cteGerado) {
-        throw new Error('CT-e não gerado. Gere os XMLs primeiro.');
-    }
-    
-    if (!accessTokenAtual || !tokenValido) {
-        throw new Error('Token não configurado. Configure o token primeiro.');
-    }
-    
-    // CORREÇÃO: URL base sem o /connect/token
-    const urlBase = "https://icomprova.nddcargo.com.br:9051";
-    const urlCompleta = `${urlBase}/api/Recepcoes/CTe`;
-    
-    console.log('Enviando CT-e para:', urlCompleta);
-    
-    // Extrair a chave MDF-e para usar como token
-    const chaveMdfe = document.getElementById('chaveMdfe').value;
-    
-    const payload = {
-        documento: cteGerado,
-        token: chaveMdfe  // Usando a chave MDF-e como token de vinculação
-    };
-    
-    try {
-        const response = await fetch(urlCompleta, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessTokenAtual}`
-            },
-            body: JSON.stringify(payload)
-        });
-        
-        const responseText = await response.text();
-        console.log('Resposta CT-e:', response.status, responseText);
-        
-        if (!response.ok) {
-            throw new Error(`Erro ${response.status}: ${responseText}`);
-        }
-        
-        return JSON.parse(responseText);
-    } catch (error) {
-        console.error('Erro no envio do CT-e:', error);
-        throw new Error(`Falha na comunicação: ${error.message}`);
-    }
-}
-
-async function publicarParaAPI() {
-    const output = document.getElementById('output');
-    const outputStatus = document.getElementById('outputStatus');
-    
-    try {
-        // Verificar se os XMLs foram gerados
-        if (!cteGerado || !mdfeGerado) {
-            output.innerHTML = `<div style="color: #ff0000;">❌ XMLs não gerados. Clique em "Gerar XMLs" primeiro.</div>`;
-            outputStatus.textContent = 'XMLs não gerados';
-            outputStatus.style.color = '#dc2626';
-            return;
-        }
-        
-        // Verificar token
-        if (!accessTokenAtual || !tokenValido) {
-            output.innerHTML = `<div style="color: #ff0000;">❌ Token não configurado. Configure o token primeiro.</div>`;
-            outputStatus.textContent = 'Token não configurado';
-            outputStatus.style.color = '#dc2626';
-            return;
-        }
-        
-        // LIMPAR E INICIAR NOVO LOG
-        output.innerHTML = `<div style="color: #00ff00;">🚀 INICIANDO PUBLICAÇÃO PARA API iComprova...</div>`;
-        output.innerHTML += `<div style="color: #ffff00; margin-top: 5px;">📡 URL: https://icomprova.nddcargo.com.br:9051</div>`;
-        outputStatus.textContent = 'Publicando para API...';
-        outputStatus.style.color = '#f59e0b';
-        
-        // Forçar atualização visual
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // PASSO 1: Enviar MDF-e
-        output.innerHTML += `<div style="margin-top: 10px; color: #00ff00;">📤 Enviando MDF-e para API...</div>`;
-        
-        const resultadoMDFe = await enviarMDFeParaAPI();
-        
-        output.innerHTML += `<div style="color: #00ff00; margin-left: 20px;">
-            ✅ MDF-e enviado com sucesso!<br>
-            <span style="font-size: 0.8em; color: #ffff00;">
-            Status: ${JSON.stringify(resultadoMDFe)}
-            </span>
-        </div>`;
-        
-        // Pequena pausa entre requisições
-        output.innerHTML += `<div style="color: #ffff00; margin-left: 20px;">⏳ Aguardando 1 segundo...</div>`;
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // PASSO 2: Enviar CT-e
-        output.innerHTML += `<div style="margin-top: 10px; color: #00ff00;">📤 Enviando CT-e para API...</div>`;
-        
-        const resultadoCTe = await enviarCTeParaAPI();
-        
-        output.innerHTML += `<div style="color: #00ff00; margin-left: 20px;">
-            ✅ CT-e enviado com sucesso!<br>
-            <span style="font-size: 0.8em; color: #ffff00;">
-            Status: ${JSON.stringify(resultadoCTe)}
-            </span>
-        </div>`;
-        
-        // RESULTADO FINAL
-        output.innerHTML += `
-            <div style="margin-top: 20px; color: #00ff00; border-top: 1px solid #00ff00; padding-top: 10px;">
-                🎉 PUBLICAÇÃO CONCLUÍDA COM SUCESSO!
-            </div>
-            <div style="margin-top: 10px;">
-                <strong>📋 Resumo Completo:</strong><br>
-                <div style="margin-left: 20px; margin-top: 5px;">
-                • <strong>MDF-e:</strong> ${document.getElementById('chaveMdfe').value}<br>
-                • <strong>CT-e:</strong> ${document.getElementById('chaveCte').value}<br>
-                • <strong>Data:</strong> ${new Date().toLocaleString()}<br>
-                • <strong>Resposta MDF-e:</strong> ${JSON.stringify(resultadoMDFe)}<br>
-                • <strong>Resposta CT-e:</strong> ${JSON.stringify(resultadoCTe)}
-                </div>
-            </div>
-            <div style="margin-top: 10px; color: #ffff00; background: rgba(255,255,0,0.1); padding: 10px; border-radius: 5px;">
-                ⚠️ <strong>Importante:</strong> A viagem será disponibilizada no portal e no aplicativo do motorista após envio de TODOS os documentos vinculados ao MDF-e.
-            </div>
-        `;
-        
-        outputStatus.textContent = 'Publicação concluída com sucesso!';
-        outputStatus.style.color = '#10b981';
-        
-    } catch (error) {
-        // DETALHAR MELHOR O ERRO 404
-        let mensagemErro = error.message;
-        
-        if (error.message.includes('404')) {
-            mensagemErro += `<br><br><strong>🔍 Possíveis causas do erro 404:</strong><br>
-            1. URL da API incorreta<br>
-            2. Endpoint não existe<br>
-            3. Servidor não está respondendo<br>
-            4. CORS bloqueando a requisição<br><br>
-            <strong>✅ URL testada:</strong> https://icomprova.nddcargo.com.br:9051/api/Recepcoes/MDFe`;
-        }
-        
-        output.innerHTML = `
-            <div style="color: #ff0000;">
-                ❌ ERRO NA PUBLICAÇÃO:<br>
-                ${mensagemErro}
-            </div>
-            <div style="margin-top: 10px; color: #ffff00;">
-                <strong>💡 Soluções possíveis:</strong><br>
-                1. Verificar se a URL da API está correta<br>
-                2. Verificar se o token é válido<br>
-                3. Verificar console do navegador (F12) para mais detalhes<br>
-                4. Contactar suporte iComprova
-            </div>
-        `;
-        
-        outputStatus.textContent = 'Erro na publicação';
-        outputStatus.style.color = '#dc2626';
-        console.error('Erro completo na publicação:', error);
-    }
-}
-
-// Atualizar também a função obterTokenNovo() para usar URL fixa
-function obterTokenNovo() {
-    const output = document.getElementById('output');
-    output.innerHTML = `<div style="color: #00ff00;">🔐 SOLICITANDO NOVO TOKEN...</div>`;
-    output.innerHTML += `<div style="color: #ffff00; margin-top: 5px;">📡 Endpoint: https://icomprova.nddcargo.com.br:9051/connect/token</div>`;
-    
-    document.getElementById('outputStatus').textContent = 'Obtendo token...';
-    document.getElementById('outputStatus').style.color = '#f59e0b';
-    
-    const body = new URLSearchParams({
-        client_id: "4a3a17846e714b3288682c5260455347",
-        client_secret: "FFVkTyaM4zVsLYAhKpGIT57C72EzYPSOqFO+O/P9y0Y=",
-        scope: "i-comprova-entregas-integration-api",
-        grant_type: "client_credentials"
-    });
-
-    fetch("https://icomprova.nddcargo.com.br:9051/connect/token", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: body.toString()
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.access_token) {
-            accessTokenAtual = data.access_token;
-            tokenValido = true;
+        function gerarChaves() {
+            const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
+            const numeroMdfe = parseInt(document.getElementById('numeroMdfe').value) || ultimoNumeroMDFe + 1;
             
-            document.getElementById('accessToken').value = accessTokenAtual;
-            document.getElementById('tokenStatus').value = `✅ Válido (expira em ${data.expires_in}s)`;
-            document.getElementById('tokenStatus').style.color = '#10b981';
+            document.getElementById('numeroCte').value = numeroCte;
+            document.getElementById('numeroMdfe').value = numeroMdfe;
             
-            output.innerHTML = `
-                <div style="color: #00ff00;">✅ TOKEN OBTIDO COM SUCESSO!</div>
-                <div style="margin-top: 10px;">
-                    <strong>🔑 Token:</strong> ${accessTokenAtual.substring(0, 50)}...<br>
-                    <strong>📋 Tipo:</strong> ${data.token_type}<br>
-                    <strong>⏱️ Expira em:</strong> ${data.expires_in} segundos (${Math.floor(data.expires_in/3600)}h ${Math.floor((data.expires_in%3600)/60)}min)<br>
-                    <strong>🎯 Escopo:</strong> ${data.scope}<br>
-                    <strong>📅 Obtido em:</strong> ${new Date().toLocaleTimeString()}
+            const chaveCte = gerarChaveCTe(numeroCte);
+            const chaveMdfe = gerarChaveMDFe(numeroMdfe);
+            
+            document.getElementById('chaveCte').value = chaveCte;
+            document.getElementById('chaveMdfe').value = chaveMdfe;
+            
+            document.getElementById('statusCte').textContent = `✅ Chave válida (44 dígitos)`;
+            document.getElementById('statusMdfe').textContent = `✅ Chave válida (44 dígitos)`;
+            
+            document.getElementById('output').innerHTML = `
+                <div style="color: #00ff00; font-weight: bold;">
+                    🔑 CHAVES GERADAS AUTOMATICAMENTE!
                 </div>
-                <div style="margin-top: 10px; color: #ffff00;">
-                    ✅ Token configurado e pronto para uso!
+                <div style="margin-top: 15px;">
+                    <strong>CT-e ${numeroCte}:</strong> ${chaveCte}<br>
+                    <strong>MDF-e ${numeroMdfe}:</strong> ${chaveMdfe}
                 </div>
             `;
             
-            document.getElementById('outputStatus').textContent = 'Token obtido com sucesso';
+            document.getElementById('outputStatus').textContent = 'Chaves geradas com sucesso';
             document.getElementById('outputStatus').style.color = '#10b981';
-        } else {
-            throw new Error('Não foi possível obter o token. Resposta: ' + JSON.stringify(data));
+            
+            ultimoNumeroCTe = numeroCte;
+            ultimoNumeroMDFe = numeroMdfe;
         }
-    })
-    .catch(err => {
-        output.innerHTML = `
-            <div style="color: #ff0000;">❌ ERRO AO OBTER TOKEN:</div>
-            <div style="margin-top: 5px;">${err.message}</div>
-            <div style="margin-top: 10px; color: #ffff00;">
-                <strong>💡 Verifique:</strong><br>
-                1. Credenciais client_id e client_secret<br>
-                2. Conexão com a internet<br>
-                3. URL do endpoint: https://icomprova.nddcargo.com.br:9051/connect/token
-            </div>
-        `;
-        document.getElementById('outputStatus').textContent = 'Erro ao obter token';
-        document.getElementById('outputStatus').style.color = '#dc2626';
-        tokenValido = false;
-    });
-}
-
-// E na inicialização, corrigir a URL padrão
-window.addEventListener('DOMContentLoaded', () => {
-    // COLOCA DATA ATUAL AUTOMÁTICA
-    const agora = new Date();
-    const ano = agora.getFullYear();
-    const mes = String(agora.getMonth() + 1).padStart(2, '0');
-    const dia = String(agora.getDate()).padStart(2, '0');
-    const hora = String(agora.getHours()).padStart(2, '0');
-    const minuto = String(agora.getMinutes()).padStart(2, '0');
-    const segundo = String(agora.getSeconds()).padStart(2, '0');
-    
-    // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
-    const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
-    
-    // Joga a data atual no campo
-    document.getElementById('dataEmissao').value = dataAtual;
-    
-    // Configura URL padrão da API CORRETA
-    document.getElementById('apiUrl').value = 'https://icomprova.nddcargo.com.br:9051';
-    
-    // Agora sim gera as chaves
-    gerarChaves();
+        
+        function gerarXMLs() {
+            try {
+                const numeroCte = document.getElementById('numeroCte').value;
+                const chaveCte = document.getElementById('chaveCte').value;
+                const numeroMdfe = document.getElementById('numeroMdfe').value;
+                const chaveMdfe = document.getElementById('chaveMdfe').value;
+                const dataEmissao = document.getElementById('dataEmissao').value;
+                
+                if (!chaveCte || chaveCte.length !== 44) {
+                    alert('Gere as chaves primeiro! Clique em "Gerar Chaves"');
+                    return;
+                }
+                
+                // GERAR NOVO CT-e
+                cteGerado = CTE_BASE
+                    .replace(/CTe\d{44}/g, `CTe${chaveCte}`)
+                    .replace(/<nCT>\d+<\/nCT>/, `<nCT>${numeroCte.padStart(6, '0')}</nCT>`)
+                    .replace(/<chCTe>\d+<\/chCTe>/, `<chCTe>${chaveCte}</chCTe>`)
+                    .replace(/<dhEmi>[^<]+<\/dhEmi>/, `<dhEmi>${dataEmissao}</dhEmi>`)
+                    .replace(/chCTe=\d+/g, `chCTe=${chaveCte}`)
+                    .replace(/<nDup>[^<]+<\/nDup>/, `<nDup>${numeroCte}G 1</nDup>`)
+                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
+                
+                // GERAR NOVO MDF-e
+                mdfeGerado = MDFE_BASE
+                    .replace(/MDFe\d{44}/g, `MDFe${chaveMdfe}`)
+                    .replace(/<nMDF>\d+<\/nMDF>/, `<nMDF>${numeroMdfe.padStart(6, '0')}</nMDF>`)
+                    .replace(/<chMDFe>\d+<\/chMDFe>/, `<chMDFe>${chaveMdfe}</chMDFe>`)
+                    .replace(/<chCTe>\d+<\/chCTe>/, `<chCTe>${chaveCte}</chCTe>`)
+                    .replace(/<dhEmi>[^<]+<\/dhEmi>/, `<dhEmi>${dataEmissao}</dhEmi>`)
+                    .replace(/<dhIniViagem>[^<]+<\/dhIniViagem>/, `<dhIniViagem>${dataEmissao}</dhIniViagem>`)
+                    .replace(/chMDFe=\d+/g, `chMDFe=${chaveMdfe}`)
+                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
+                
+                document.getElementById('output').innerHTML += `
+                    <div style="color: #00ff00; margin-top: 20px; border-top: 1px solid #00ff00; padding-top: 20px;">
+                        ✅ XMLs GERADOS COM SUCESSO!
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <strong>CT-e:</strong> Número ${numeroCte} | Chave ${chaveCte}<br>
+                        <strong>MDF-e:</strong> Número ${numeroMdfe} | Chave ${chaveMdfe}<br>
+                        <strong>Data Emissão:</strong> ${dataEmissao}
+                    </div>
+                `;
+                
+                document.getElementById('downloadLinks').style.display = 'flex';
+                document.getElementById('linkCte').onclick = (e) => { e.preventDefault(); baixarCTe(); };
+                document.getElementById('linkMdfe').onclick = (e) => { e.preventDefault(); baixarMDFe(); };
+                document.getElementById('linkZip').onclick = (e) => { e.preventDefault(); baixarZIP(); };
+                
+                document.getElementById('outputStatus').textContent = 'XMLs gerados com sucesso';
+                document.getElementById('outputStatus').style.color = '#10b981';
+                
+            } catch (error) {
+                document.getElementById('output').innerHTML = 
+                    `<div style="color: #ff0000;">❌ ERRO: ${error.message}</div>`;
+                document.getElementById('outputStatus').textContent = 'Erro ao gerar XMLs';
+                document.getElementById('outputStatus').style.color = '#dc2626';
+            }
+        }
+        
+        function autoProximaViagem() {
+            const novoNumeroCTe = ultimoNumeroCTe + 1;
+            const novoNumeroMDFe = ultimoNumeroMDFe + 1;
+            
+            document.getElementById('numeroCte').value = novoNumeroCTe;
+            document.getElementById('numeroMdfe').value = novoNumeroMDFe;
+            
+            gerarChaves();
+            
+            setTimeout(() => {
+                gerarXMLs();
+                document.getElementById('output').innerHTML += 
+                    `<div style="color: #00ff00; margin-top: 10px;">🔄 PRÓXIMA VIAGEM CONFIGURADA AUTOMATICAMENTE!</div>`;
+            }, 500);
+        }
+        
+        function baixarCTe() {
+            if (!cteGerado) return;
+            const blob = new Blob([cteGerado], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CTe_${document.getElementById('chaveCte').value}.xml`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function baixarMDFe() {
+            if (!mdfeGerado) return;
+            const blob = new Blob([mdfeGerado], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `MDFe_${document.getElementById('chaveMdfe').value}.xml`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function baixarZIP() {
+            if (!cteGerado || !mdfeGerado) return;
+            
+            if (window.JSZip) {
+                const zip = new JSZip();
+                zip.file(`CTe_${document.getElementById('chaveCte').value}.xml`, cteGerado);
+                zip.file(`MDFe_${document.getElementById('chaveMdfe').value}.xml`, mdfeGerado);
+                
+                zip.generateAsync({ type: 'blob' }).then(function(content) {
+                    const url = URL.createObjectURL(content);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `XMLs_${document.getElementById('chaveCte').value}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+            } else {
+                baixarCTe();
+                setTimeout(() => baixarMDFe(), 500);
+            }
+        }
+        
+        function baixarTudo() {
+            if (!cteGerado || !mdfeGerado) {
+                alert('Gere os XMLs primeiro!');
+                return;
+            }
+            baixarZIP();
+        }
+        
+        // Carregar JSZip dinamicamente
+        if (!window.JSZip) {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+            document.head.appendChild(script);
+        }
+        
+        // Gerar chaves iniciais ao carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            // COLOCA DATA ATUAL AUTOMÁTICA
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = String(agora.getMonth() + 1).padStart(2, '0');
+            const dia = String(agora.getDate()).padStart(2, '0');
+            const hora = String(agora.getHours()).padStart(2, '0');
+            const minuto = String(agora.getMinutes()).padStart(2, '0');
+            const segundo = String(agora.getSeconds()).padStart(2, '0');
+            
+            // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
+            const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
+            
+            // Joga a data atual no campo
+            document.getElementById('dataEmissao').value = dataAtual;
+            
+            // Configura URL padrão da API
+            document.getElementById('apiUrl').value = 'https://icomprova.nddcargo.com.br:9051';
+            
+            // Agora sim gera as chaves
+            gerarChaves();
         });
     </script>
 </body>
