@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XmlEditor - Gerador Automático CT-e/MDF-e</title>
+    <title>XmlEditor - Gerador Automático CT-e/MDF-e/NF-e</title>
     <!-- Fonte Inter (Premium) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,7 +134,7 @@ body {
 /* ===== FORM GRID ===== */
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xl);
     margin-bottom: var(--space-2xl);
 }
@@ -316,7 +316,7 @@ body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
     .form-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .action-buttons {
@@ -357,7 +357,7 @@ body {
     <div class="container">
         <!-- HEADER COM TEMA PREMIUM -->
         <div class="header">
-            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e</h1>
+            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e/NF-e</h1>
             <p class="subtitle">Sistema Premium - XMLs base carregados na memória</p>
         </div>
         
@@ -369,6 +369,7 @@ body {
         
         <!-- FORM GRID COM LAYOUT DO SEU PRIMEIRO CÓDIGO -->
         <div class="form-grid">
+            <!-- CT-e -->
             <div class="input-group">
                 <label class="form-label">
                     <i class="fas fa-hashtag"></i> NOVO NÚMERO CT-e:
@@ -384,6 +385,7 @@ body {
                 <small id="statusCte" style="color: var(--gray-500); margin-top: var(--space-xs);">Clique em "Gerar Chaves"</small>
             </div>
             
+            <!-- MDF-e -->
             <div class="input-group">
                 <label class="form-label">
                     <i class="fas fa-hashtag"></i> NOVO NÚMERO MDF-e:
@@ -397,6 +399,22 @@ body {
                 </label>
                 <input type="text" id="chaveMdfe" class="form-input readonly" readonly>
                 <small id="statusMdfe" style="color: var(--gray-500); margin-top: var(--space-xs);">Clique em "Gerar Chaves"</small>
+            </div>
+            
+            <!-- NF-e -->
+            <div class="input-group">
+                <label class="form-label">
+                    <i class="fas fa-hashtag"></i> NOVO NÚMERO NF-e:
+                </label>
+                <input type="number" id="numeroNfe" class="form-input" placeholder="000001" value="1" min="1" step="1">
+            </div>
+            
+            <div class="input-group">
+                <label class="form-label">
+                    <i class="fas fa-key"></i> CHAVE NF-e GERADA:
+                </label>
+                <input type="text" id="chaveNfe" class="form-input readonly" readonly>
+                <small id="statusNfe" style="color: var(--gray-500); margin-top: var(--space-xs);">Clique em "Gerar Chaves"</small>
             </div>
         </div>
         
@@ -466,7 +484,12 @@ body {
             modeloMDFe: '58',             // MDF-e
             serieMDFe: '22',              // Série MDF-e
             tpAmb: '1',                   // Produção
-            cMDF: '02328384'              // Código MDF-e
+            cMDF: '02328384',             // Código MDF-e
+            
+            // Para NF-e (NOVO - ADICIONADO AGORA)
+            modeloNFE: '55',              // NF-e modelo 55
+            serieNFE: '1',                // Série NF-e
+            cNF: '12345678'               // Código numérico NF-e (pode ser qualquer número de 8 dígitos)
         };
 
         // ============================================
@@ -716,7 +739,7 @@ body {
 			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FscWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>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</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -938,6 +961,31 @@ body {
             return chave43 + dv;
         }
 
+        // ============================================
+        // FUNÇÃO NOVA PARA GERAR CHAVE NF-e
+        // ============================================
+        function gerarChaveNFe(numeroNFe) {
+            const nNF = numeroNFe.toString().padStart(9, '0');
+            const serie = DADOS_EMPRESA.serieNFE.padStart(3, '0');
+            const cNF = DADOS_EMPRESA.cNF;
+            
+            const AAMM = getAAMM();
+            
+            // Formato da chave NF-e: cUF (2) + AAMM (4) + CNPJ (14) + mod (2) + serie (3) + nNF (9) + tpEmis (1) + cNF (8)
+            const chave43 = 
+                DADOS_EMPRESA.cUF +
+                AAMM +
+                DADOS_EMPRESA.CNPJ +
+                DADOS_EMPRESA.modeloNFE +
+                serie +
+                nNF +
+                DADOS_EMPRESA.tpEmis +
+                cNF;
+            
+            const dv = calcularDigitoVerificador(chave43);
+            return chave43 + dv;
+        }
+
         function getAAMM() {
             const now = new Date();
             const year = now.getFullYear().toString().slice(2);
@@ -972,22 +1020,28 @@ body {
         let mdfeGerado = null;
         let ultimoNumeroCTe = 91731;
         let ultimoNumeroMDFe = 91731;
+        let ultimoNumeroNFe = 1;
         
         function gerarChaves() {
             const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
             const numeroMdfe = parseInt(document.getElementById('numeroMdfe').value) || ultimoNumeroMDFe + 1;
+            const numeroNfe = parseInt(document.getElementById('numeroNfe').value) || ultimoNumeroNFe + 1;
             
             document.getElementById('numeroCte').value = numeroCte;
             document.getElementById('numeroMdfe').value = numeroMdfe;
+            document.getElementById('numeroNfe').value = numeroNfe;
             
             const chaveCte = gerarChaveCTe(numeroCte);
             const chaveMdfe = gerarChaveMDFe(numeroMdfe);
+            const chaveNfe = gerarChaveNFe(numeroNfe);
             
             document.getElementById('chaveCte').value = chaveCte;
             document.getElementById('chaveMdfe').value = chaveMdfe;
+            document.getElementById('chaveNfe').value = chaveNfe;
             
             document.getElementById('statusCte').textContent = `✅ Chave válida (44 dígitos)`;
             document.getElementById('statusMdfe').textContent = `✅ Chave válida (44 dígitos)`;
+            document.getElementById('statusNfe').textContent = `✅ Chave válida (44 dígitos)`;
             
             document.getElementById('output').innerHTML = `
                 <div style="color: #00ff00; font-weight: bold;">
@@ -995,7 +1049,8 @@ body {
                 </div>
                 <div style="margin-top: 15px;">
                     <strong>CT-e ${numeroCte}:</strong> ${chaveCte}<br>
-                    <strong>MDF-e ${numeroMdfe}:</strong> ${chaveMdfe}
+                    <strong>MDF-e ${numeroMdfe}:</strong> ${chaveMdfe}<br>
+                    <strong>NF-e ${numeroNfe}:</strong> ${chaveNfe}
                 </div>
             `;
             
@@ -1004,6 +1059,7 @@ body {
             
             ultimoNumeroCTe = numeroCte;
             ultimoNumeroMDFe = numeroMdfe;
+            ultimoNumeroNFe = numeroNfe;
         }
         
         function gerarXMLs() {
@@ -1012,6 +1068,8 @@ body {
                 const chaveCte = document.getElementById('chaveCte').value;
                 const numeroMdfe = document.getElementById('numeroMdfe').value;
                 const chaveMdfe = document.getElementById('chaveMdfe').value;
+                const numeroNfe = document.getElementById('numeroNfe').value;
+                const chaveNfe = document.getElementById('chaveNfe').value;
                 const dataEmissao = document.getElementById('dataEmissao').value;
                 
                 if (!chaveCte || chaveCte.length !== 44) {
@@ -1047,6 +1105,7 @@ body {
                     <div style="margin-top: 10px;">
                         <strong>CT-e:</strong> Número ${numeroCte} | Chave ${chaveCte}<br>
                         <strong>MDF-e:</strong> Número ${numeroMdfe} | Chave ${chaveMdfe}<br>
+                        <strong>NF-e:</strong> Número ${numeroNfe} | Chave ${chaveNfe}<br>
                         <strong>Data Emissão:</strong> ${dataEmissao}
                     </div>
                 `;
@@ -1070,9 +1129,11 @@ body {
         function autoProximaViagem() {
             const novoNumeroCTe = ultimoNumeroCTe + 1;
             const novoNumeroMDFe = ultimoNumeroMDFe + 1;
+            const novoNumeroNFe = ultimoNumeroNFe + 1;
             
             document.getElementById('numeroCte').value = novoNumeroCTe;
             document.getElementById('numeroMdfe').value = novoNumeroMDFe;
+            document.getElementById('numeroNfe').value = novoNumeroNFe;
             
             gerarChaves();
             
