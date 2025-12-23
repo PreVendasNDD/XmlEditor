@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XmlEditor - Gerador Automático CT-e/MDF-e/NF-e</title>
+    <title>XmlEditor - Gerador e Publicador Automático CT-e/MDF-e/NF-e</title>
     <!-- Fonte Inter (Premium) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,7 +86,7 @@ body {
 
 /* ===== CONTAINER PRINCIPAL ===== */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     background: white;
     border-radius: var(--radius-2xl);
@@ -131,7 +131,7 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* ===== FORM GRID ===== */
+/* ===== FORM GRID COM LAYOUT DO SEU PRIMEIRO CÓDIGO ===== */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -184,10 +184,59 @@ body {
     cursor: not-allowed;
 }
 
+/* ===== API TOKEN SECTION ===== */
+.api-section {
+    background: var(--gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    border: 1px solid var(--gray-200);
+}
+
+.api-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.api-header h3 {
+    color: var(--gray-800);
+    font-size: 1.125rem;
+}
+
+.token-display {
+    background: var(--gray-900);
+    color: var(--gray-200);
+    padding: var(--space-md);
+    border-radius: var(--radius);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.token-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+}
+
+.token-status .valid {
+    color: var(--success);
+}
+
+.token-status .invalid {
+    color: var(--danger);
+}
+
 /* ===== BUTTONS ===== */
 .action-buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: var(--space-md);
     margin: var(--space-2xl) 0;
 }
@@ -257,7 +306,18 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
-/* ===== OUTPUT SECTION ===== */
+.btn-danger {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== OUTPUT SECTION - MANTÉM O TERMINAL HACKER ===== */
 .output-section {
     background: var(--gray-900);
     border-radius: var(--radius-xl);
@@ -282,7 +342,7 @@ body {
     font-size: 0.875rem;
     line-height: 1.7;
     overflow-x: auto;
-    min-height: 150px;
+    min-height: 200px;
     border: 1px solid var(--gray-700);
 }
 
@@ -313,7 +373,28 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+/* ===== LOADING ANIMATION ===== */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .action-buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 1024px) {
     .form-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -357,14 +438,31 @@ body {
     <div class="container">
         <!-- HEADER COM TEMA PREMIUM -->
         <div class="header">
-            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR AUTOMÁTICO CT-e/MDF-e/NF-e</h1>
-            <p class="subtitle">Sistema Premium - XMLs base carregados na memória</p>
+            <h1><i class="fas fa-code"></i> XML EDITOR - GERADOR E PUBLICADOR AUTOMÁTICO</h1>
+            <p class="subtitle">Sistema Premium - XMLs base carregados na memória | Integração com iComprova/NDD Cargo</p>
         </div>
         
         <!-- STATUS BAR -->
         <div class="status-bar">
             <i class="fas fa-check-circle"></i>
             <span>SISTEMA PRONTO - XMLs BASE CARREGADOS NA MEMÓRIA</span>
+        </div>
+        
+        <!-- API TOKEN SECTION -->
+        <div class="api-section">
+            <div class="api-header">
+                <h3><i class="fas fa-key"></i> AUTENTICAÇÃO iCOMPROVA API</h3>
+                <div class="token-status">
+                    <span id="tokenStatusText" class="invalid">Token não obtido</span>
+                    <i id="tokenStatusIcon" class="fas fa-times-circle" style="color: var(--danger);"></i>
+                </div>
+            </div>
+            <div class="token-display" id="tokenDisplay">
+                Clique em "Obter Token" para autenticar na API iComprova/NDD Cargo...
+            </div>
+            <button class="btn btn-primary" onclick="obterTokenAPI()">
+                <i class="fas fa-key"></i> OBTER TOKEN API
+            </button>
         </div>
         
         <!-- FORM GRID COM LAYOUT DO SEU PRIMEIRO CÓDIGO -->
@@ -435,17 +533,23 @@ body {
                 <i class="fas fa-bolt"></i> GERAR XMLs
             </button>
             <button class="btn btn-warning" onclick="baixarTudo()">
-                <i class="fas fa-download"></i> BAIXAR TUDO (ZIP)
+                <i class="fas fa-download"></i> BAIXAR TUDO
             </button>
             <button class="btn btn-info" onclick="autoProximaViagem()">
                 <i class="fas fa-redo"></i> PRÓXIMA VIAGEM
+            </button>
+            <button class="btn btn-success" onclick="publicarMDFe()" id="btnPublicarMDFe">
+                <i class="fas fa-cloud-upload-alt"></i> PUBLICAR MDF-e
+            </button>
+            <button class="btn btn-info" onclick="publicarCTe()" id="btnPublicarCTe">
+                <i class="fas fa-cloud-upload-alt"></i> PUBLICAR CT-e
             </button>
         </div>
         
         <!-- OUTPUT SECTION - MANTÉM O TERMINAL HACKER -->
         <div class="output-section">
             <div class="output-header">
-                <h3><i class="fas fa-terminal"></i> RESULTADOS</h3>
+                <h3><i class="fas fa-terminal"></i> LOG DE OPERAÇÕES</h3>
                 <span id="outputStatus" style="color: var(--gray-400);">Aguardando operação...</span>
             </div>
             <div class="output-content" id="output">
@@ -467,7 +571,7 @@ body {
         </div>
     </div>
 
-    <!-- JAVASCRIPT DO SEU PRIMEIRO CÓDIGO (FUNCIONAL) -->
+    <!-- JAVASCRIPT DO SEU PRIMEIRO CÓDIGO (FUNCIONAL) COM ADIÇÕES PARA API -->
     <script>
         // ============================================
         // DADOS FIXOS DA SUA EMPRESA (DOS SEUS XMLs)
@@ -491,6 +595,29 @@ body {
             serieNFE: '1',                // Série NF-e
             cNF: '12345678'               // Código numérico NF-e (pode ser qualquer número de 8 dígitos)
         };
+
+        // ============================================
+        // CONFIGURAÇÕES DA API iCOMPROVA
+        // ============================================
+        const API_CONFIG = {
+            tokenUrl: "https://icomprova.nddcargo.com.br:9051/connect/token",
+            baseUrl: "https://icomprova.nddcargo.com.br:9051/api",
+            clientId: "4a3a17846e714b3288682c5260455347",
+            clientSecret: "FFVkTyaM4zVsLYAhKpGIT57C72EzYPSOqFO+O/P9y0Y=",
+            scope: "i-comprova-entregas-integration-api",
+            grantType: "client_credentials"
+        };
+
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let accessToken = null;
+        let tokenExpiry = null;
+        let cteGerado = null;
+        let mdfeGerado = null;
+        let ultimoNumeroCTe = 91731;
+        let ultimoNumeroMDFe = 91731;
+        let ultimoNumeroNFe = 1;
 
         // ============================================
         // XMLs BASE FIXOS NA MEMÓRIA (CORRIGIDOS - SEM DUPLICAÇÃO)
@@ -1013,14 +1140,212 @@ body {
         }
         
         // ============================================
-        // FUNÇÕES PRINCIPAIS DA INTERFACE
+        // FUNÇÕES DA API iCOMPROVA
         // ============================================
         
-        let cteGerado = null;
-        let mdfeGerado = null;
-        let ultimoNumeroCTe = 91731;
-        let ultimoNumeroMDFe = 91731;
-        let ultimoNumeroNFe = 1;
+        async function obterTokenAPI() {
+            const output = document.getElementById('output');
+            const tokenDisplay = document.getElementById('tokenDisplay');
+            const tokenStatusText = document.getElementById('tokenStatusText');
+            const tokenStatusIcon = document.getElementById('tokenStatusIcon');
+            
+            output.innerHTML = `<span style="color: #00ff00;">[API] Obtendo token de autenticação...</span>`;
+            
+            try {
+                const body = new URLSearchParams({
+                    client_id: API_CONFIG.clientId,
+                    client_secret: API_CONFIG.clientSecret,
+                    scope: API_CONFIG.scope,
+                    grant_type: API_CONFIG.grantType
+                });
+
+                const response = await fetch(API_CONFIG.tokenUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: body.toString()
+                });
+
+                const text = await response.text();
+
+                if (!response.ok) {
+                    output.innerHTML += `<br><span style="color: #ff0000;">[API] Erro ${response.status}: ${text}</span>`;
+                    tokenStatusText.textContent = "Erro ao obter token";
+                    tokenStatusIcon.className = "fas fa-times-circle";
+                    tokenStatusIcon.style.color = "var(--danger)";
+                    return;
+                }
+
+                const data = JSON.parse(text);
+                accessToken = data.access_token;
+                tokenExpiry = new Date(Date.now() + (data.expires_in * 1000));
+                
+                // Exibir token truncado para segurança
+                const tokenTruncado = data.access_token.substring(0, 50) + '...';
+                tokenDisplay.textContent = `TOKEN: ${tokenTruncado}\nEXPIRA EM: ${new Date(tokenExpiry).toLocaleString()}\nTIPO: ${data.token_type}`;
+                
+                tokenStatusText.textContent = "Token válido";
+                tokenStatusText.className = "valid";
+                tokenStatusIcon.className = "fas fa-check-circle";
+                tokenStatusIcon.style.color = "var(--success)";
+                
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ Token obtido com sucesso!</span>`;
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] Expira em: ${data.expires_in} segundos</span>`;
+                
+                // Habilitar botões de publicação
+                document.getElementById('btnPublicarMDFe').disabled = false;
+                document.getElementById('btnPublicarCTe').disabled = false;
+                
+            } catch (err) {
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] Erro de conexão: ${err.message}</span>`;
+                tokenStatusText.textContent = "Erro de conexão";
+                tokenStatusIcon.className = "fas fa-times-circle";
+                tokenStatusIcon.style.color = "var(--danger)";
+            }
+        }
+        
+        function verificarTokenValido() {
+            if (!accessToken) {
+                outputLog("[API] ❌ Token não disponível. Obtenha um token primeiro.");
+                return false;
+            }
+            
+            if (tokenExpiry && new Date() > tokenExpiry) {
+                outputLog("[API] ❌ Token expirado. Obtenha um novo token.");
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // ============================================
+        // FUNÇÕES DE PUBLICAÇÃO PARA API
+        // ============================================
+        
+        async function publicarMDFe() {
+            if (!verificarTokenValido()) return;
+            if (!mdfeGerado) {
+                outputLog("[API] ❌ MDF-e não gerado. Gere os XMLs primeiro.");
+                return;
+            }
+            
+            const output = document.getElementById('output');
+            const btn = document.getElementById('btnPublicarMDFe');
+            const originalText = btn.innerHTML;
+            
+            output.innerHTML += `<br><span style="color: #00ff00;">[API] Enviando MDF-e para iComprova...</span>`;
+            btn.innerHTML = '<div class="loading"></div> Enviando...';
+            btn.disabled = true;
+            
+            try {
+                // Converter XML para string Base64 (como exigido pela API)
+                const xmlBase64 = btoa(unescape(encodeURIComponent(mdfeGerado)));
+                
+                const response = await fetch(`${API_CONFIG.baseUrl}/Recepcoes/MDFe`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({
+                        documento: xmlBase64
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.status === "success") {
+                    output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ MDF-e enviado com sucesso!</span>`;
+                    output.innerHTML += `<br><span style="color: #00ff00;">[API] ID: ${result.id || 'N/A'}</span>`;
+                    output.innerHTML += `<br><span style="color: #00ff00;">[API] MDF-e aguardando envio dos CT-es vinculados...</span>`;
+                } else {
+                    output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro ao enviar MDF-e: ${result.message || 'Erro desconhecido'}</span>`;
+                    if (result.errors) {
+                        output.innerHTML += `<br><span style="color: #ff9900;">[API] Detalhes: ${JSON.stringify(result.errors)}</span>`;
+                    }
+                }
+                
+            } catch (error) {
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro de conexão: ${error.message}</span>`;
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+        
+        async function publicarCTe() {
+            if (!verificarTokenValido()) return;
+            if (!cteGerado) {
+                outputLog("[API] ❌ CT-e não gerado. Gere os XMLs primeiro.");
+                return;
+            }
+            
+            const output = document.getElementById('output');
+            const btn = document.getElementById('btnPublicarCTe');
+            const originalText = btn.innerHTML;
+            
+            output.innerHTML += `<br><span style="color: #00ff00;">[API] Enviando CT-e para iComprova...</span>`;
+            btn.innerHTML = '<div class="loading"></div> Enviando...';
+            btn.disabled = true;
+            
+            try {
+                // Converter XML para string Base64 (como exigido pela API)
+                const xmlBase64 = btoa(unescape(encodeURIComponent(cteGerado)));
+                
+                // Extrair chave do CT-e para usar como token
+                const chaveCte = document.getElementById('chaveCte').value;
+                
+                const response = await fetch(`${API_CONFIG.baseUrl}/Recepcoes/CTe`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({
+                        documento: xmlBase64,
+                        token: chaveCte
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.status === "success") {
+                    output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ CT-e enviado com sucesso!</span>`;
+                    output.innerHTML += `<br><span style="color: #00ff00;">[API] ID: ${result.id || 'N/A'}</span>`;
+                    output.innerHTML += `<br><span style="color: #00ff00;">[API] Viagem será disponibilizada após envio de todos os documentos.</span>`;
+                } else {
+                    output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro ao enviar CT-e: ${result.message || 'Erro desconhecido'}</span>`;
+                    if (result.errors) {
+                        output.innerHTML += `<br><span style="color: #ff9900;">[API] Detalhes: ${JSON.stringify(result.errors)}</span>`;
+                    }
+                }
+                
+            } catch (error) {
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro de conexão: ${error.message}</span>`;
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+        
+        // Função para publicar NF-e (caso necessário)
+        async function publicarNFe() {
+            if (!verificarTokenValido()) return;
+            
+            const output = document.getElementById('output');
+            output.innerHTML += `<br><span style="color: #00ff00;">[API] Função de envio NF-e será implementada conforme necessidade...</span>`;
+        }
+        
+        // ============================================
+        // FUNÇÕES PRINCIPAIS DA INTERFACE (ORIGINAIS)
+        // ============================================
+        
+        function outputLog(message) {
+            const output = document.getElementById('output');
+            output.innerHTML += `<br>${message}`;
+            output.scrollTop = output.scrollHeight;
+        }
         
         function gerarChaves() {
             const numeroCte = parseInt(document.getElementById('numeroCte').value) || ultimoNumeroCTe + 1;
@@ -1210,25 +1535,29 @@ body {
         }
         
         // Gerar chaves iniciais ao carregar
-window.addEventListener('DOMContentLoaded', () => {
-    // COLOCA DATA ATUAL AUTOMÁTICA
-    const agora = new Date();
-    const ano = agora.getFullYear();
-    const mes = String(agora.getMonth() + 1).padStart(2, '0');
-    const dia = String(agora.getDate()).padStart(2, '0');
-    const hora = String(agora.getHours()).padStart(2, '0');
-    const minuto = String(agora.getMinutes()).padStart(2, '0');
-    const segundo = String(agora.getSeconds()).padStart(2, '0');
-    
-    // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
-    const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
-    
-    // Joga a data atual no campo
-    document.getElementById('dataEmissao').value = dataAtual;
-    
-    // Agora sim gera as chaves
-    gerarChaves();
-});
+        window.addEventListener('DOMContentLoaded', () => {
+            // COLOCA DATA ATUAL AUTOMÁTICA
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = String(agora.getMonth() + 1).padStart(2, '0');
+            const dia = String(agora.getDate()).padStart(2, '0');
+            const hora = String(agora.getHours()).padStart(2, '0');
+            const minuto = String(agora.getMinutes()).padStart(2, '0');
+            const segundo = String(agora.getSeconds()).padStart(2, '0');
+            
+            // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
+            const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
+            
+            // Joga a data atual no campo
+            document.getElementById('dataEmissao').value = dataAtual;
+            
+            // Agora sim gera as chaves
+            gerarChaves();
+            
+            // Inicializar botões de publicação como desabilitados
+            document.getElementById('btnPublicarMDFe').disabled = true;
+            document.getElementById('btnPublicarCTe').disabled = true;
+        });
     </script>
 </body>
 </html>
