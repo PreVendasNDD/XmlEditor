@@ -1138,72 +1138,82 @@ body {
             
             return dv.toString();
         }
+		
         
         // ============================================
         // FUNÇÕES DA API iCOMPROVA
         // ============================================
         
         async function obterTokenAPI() {
-            const output = document.getElementById('output');
-            const tokenDisplay = document.getElementById('tokenDisplay');
-            const tokenStatusText = document.getElementById('tokenStatusText');
-            const tokenStatusIcon = document.getElementById('tokenStatusIcon');
-            
-            output.innerHTML = `<span style="color: #00ff00;">[API] Obtendo token de autenticação...</span>`;
-            
-            try {
-                const body = new URLSearchParams({
-                    client_id: API_CONFIG.clientId,
-                    client_secret: API_CONFIG.clientSecret,
-                    scope: API_CONFIG.scope,
-                    grant_type: API_CONFIG.grantType
-                });
+    const output = document.getElementById('output');
+    const tokenDisplay = document.getElementById('tokenDisplay');
+    const tokenStatusText = document.getElementById('tokenStatusText');
+    const tokenStatusIcon = document.getElementById('tokenStatusIcon');
+    
+    output.innerHTML = `<span style="color: #00ff00;">[API] Obtendo token de autenticação...</span>`;
+    
+    try {
+        const body = new URLSearchParams({
+            client_id: API_CONFIG.clientId,
+            client_secret: API_CONFIG.clientSecret,
+            scope: API_CONFIG.scope,
+            grant_type: API_CONFIG.grantType
+        });
 
-                const response = await fetch(API_CONFIG.tokenUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: body.toString()
-                });
+        const response = await fetch(API_CONFIG.tokenUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body.toString()
+        });
 
-                const text = await response.text();
+        const responseText = await response.text();
 
-                if (!response.ok) {
-                    output.innerHTML += `<br><span style="color: #ff0000;">[API] Erro ${response.status}: ${text}</span>`;
-                    tokenStatusText.textContent = "Erro ao obter token";
-                    tokenStatusIcon.className = "fas fa-times-circle";
-                    tokenStatusIcon.style.color = "var(--danger)";
-                    return;
-                }
-
-                const data = JSON.parse(text);
-                accessToken = data.access_token;
-                tokenExpiry = new Date(Date.now() + (data.expires_in * 1000));
-                
-                // Exibir token truncado para segurança
-                const tokenTruncado = data.access_token.substring(0, 50) + '...';
-                tokenDisplay.textContent = `TOKEN: ${tokenTruncado}\nEXPIRA EM: ${new Date(tokenExpiry).toLocaleString()}\nTIPO: ${data.token_type}`;
-                
-                tokenStatusText.textContent = "Token válido";
-                tokenStatusText.className = "valid";
-                tokenStatusIcon.className = "fas fa-check-circle";
-                tokenStatusIcon.style.color = "var(--success)";
-                
-                output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ Token obtido com sucesso!</span>`;
-                output.innerHTML += `<br><span style="color: #00ff00;">[API] Expira em: ${data.expires_in} segundos</span>`;
-                
-                // Habilitar botões de publicação
-                document.getElementById('btnPublicarMDFe').disabled = false;
-                document.getElementById('btnPublicarCTe').disabled = false;
-                
-            } catch (err) {
-                output.innerHTML += `<br><span style="color: #ff0000;">[API] Erro de conexão: ${err.message}</span>`;
-                tokenStatusText.textContent = "Erro de conexão";
-                tokenStatusIcon.className = "fas fa-times-circle";
-                tokenStatusIcon.style.color = "var(--danger)";
-            }
+        if (!response.ok) {
+            output.innerHTML += `<br><span style="color: #ff0000;">[API] Erro ${response.status}:</span>`;
+            output.innerHTML += `<br><span style="color: #ff9900;">${responseText}</span>`;
+            tokenStatusText.textContent = "Erro ao obter token";
+            tokenStatusIcon.className = "fas fa-times-circle";
+            tokenStatusIcon.style.color = "var(--danger)";
+            return;
         }
+
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            output.innerHTML += `<br><span style="color: #ff0000;">[API] Resposta não é JSON válido:</span>`;
+            output.innerHTML += `<br><span style="color: #ff9900;">${responseText.substring(0, 200)}...</span>`;
+            return;
+        }
+        
+        accessToken = data.access_token;
+        tokenExpiry = new Date(Date.now() + (data.expires_in * 1000));
+        
+        // Exibir token truncado para segurança
+        const tokenTruncado = data.access_token.substring(0, 50) + '...';
+        tokenDisplay.textContent = `TOKEN: ${tokenTruncado}\nEXPIRA EM: ${new Date(tokenExpiry).toLocaleString()}\nTIPO: ${data.token_type}`;
+        
+        tokenStatusText.textContent = "Token válido";
+        tokenStatusText.className = "valid";
+        tokenStatusIcon.className = "fas fa-check-circle";
+        tokenStatusIcon.style.color = "var(--success)";
+        
+        output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ Token obtido com sucesso!</span>`;
+        output.innerHTML += `<br><span style="color: #00ff00;">[API] Expira em: ${data.expires_in} segundos</span>`;
+        
+        // Habilitar botões de publicação
+        document.getElementById('btnPublicarMDFe').disabled = false;
+        document.getElementById('btnPublicarCTe').disabled = false;
+        
+    } catch (err) {
+        output.innerHTML += `<br><span style="color: #ff0000;">[API] Erro de conexão: ${err.message}</span>`;
+        tokenStatusText.textContent = "Erro de conexão";
+        tokenStatusIcon.className = "fas fa-times-circle";
+        tokenStatusIcon.style.color = "var(--danger)";
+    }
+}
         
         function verificarTokenValido() {
             if (!accessToken) {
@@ -1224,55 +1234,133 @@ body {
         // ============================================
         
         async function publicarMDFe() {
-            if (!verificarTokenValido()) return;
-            if (!mdfeGerado) {
-                outputLog("[API] ❌ MDF-e não gerado. Gere os XMLs primeiro.");
-                return;
-            }
-            
-            const output = document.getElementById('output');
-            const btn = document.getElementById('btnPublicarMDFe');
-            const originalText = btn.innerHTML;
-            
-            output.innerHTML += `<br><span style="color: #00ff00;">[API] Enviando MDF-e para iComprova...</span>`;
-            btn.innerHTML = '<div class="loading"></div> Enviando...';
-            btn.disabled = true;
-            
-            try {
-                // Converter XML para string Base64 (como exigido pela API)
-                const xmlBase64 = btoa(unescape(encodeURIComponent(mdfeGerado)));
-                
-                const response = await fetch(`${API_CONFIG.baseUrl}/Recepcoes/MDFe`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${accessToken}`
-                    },
-                    body: JSON.stringify({
-                        documento: xmlBase64
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok && result.status === "success") {
-                    output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ MDF-e enviado com sucesso!</span>`;
-                    output.innerHTML += `<br><span style="color: #00ff00;">[API] ID: ${result.id || 'N/A'}</span>`;
-                    output.innerHTML += `<br><span style="color: #00ff00;">[API] MDF-e aguardando envio dos CT-es vinculados...</span>`;
-                } else {
-                    output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro ao enviar MDF-e: ${result.message || 'Erro desconhecido'}</span>`;
-                    if (result.errors) {
-                        output.innerHTML += `<br><span style="color: #ff9900;">[API] Detalhes: ${JSON.stringify(result.errors)}</span>`;
-                    }
-                }
-                
-            } catch (error) {
-                output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro de conexão: ${error.message}</span>`;
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
+    if (!verificarTokenValido()) return;
+    if (!mdfeGerado) {
+        outputLog("[API] ❌ MDF-e não gerado. Gere os XMLs primeiro.");
+        return;
+    }
+    
+    const output = document.getElementById('output');
+    const btn = document.getElementById('btnPublicarMDFe');
+    const originalText = btn.innerHTML;
+    
+    output.innerHTML += `<br><span style="color: #00ff00;">[API] Enviando MDF-e para iComprova...</span>`;
+    btn.innerHTML = '<div class="loading"></div> Enviando...';
+    btn.disabled = true;
+    
+    try {
+        // Converter XML para string Base64 (como exigido pela API)
+        const xmlBase64 = btoa(unescape(encodeURIComponent(mdfeGerado)));
+        
+        const response = await fetch(`${API_CONFIG.baseUrl}/Recepcoes/MDFe`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                documento: xmlBase64
+            })
+        });
+        
+        // Primeiro pega a resposta como texto
+        const responseText = await response.text();
+        
+        // Tenta parsear como JSON, se falhar, mostra o texto puro
+        let result;
+        try {
+            result = JSON.parse(responseText);
+        } catch (e) {
+            // Se não for JSON, mostra o que veio
+            output.innerHTML += `<br><span style="color: #ff9900;">[API] Resposta não-JSON recebida:</span>`;
+            output.innerHTML += `<br><span style="color: #ff9900;">${responseText.substring(0, 500)}...</span>`;
+            result = { status: "unknown", rawResponse: responseText };
         }
+        
+        if (response.ok) {
+            if (result.status === "success") {
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ MDF-e enviado com sucesso!</span>`;
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] ID: ${result.id || 'N/A'}</span>`;
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] MDF-e aguardando envio dos CT-es vinculados...</span>`;
+            } else {
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Status não-success: ${result.status || 'unknown'}</span>`;
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] Mensagem: ${result.message || 'Sem mensagem'}</span>`;
+            }
+        } else {
+            output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro HTTP ${response.status}: ${response.statusText}</span>`;
+            output.innerHTML += `<br><span style="color: #ff9900;">[API] Resposta: ${responseText.substring(0, 300)}</span>`;
+        }
+        
+    } catch (error) {
+        output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro de conexão: ${error.message}</span>`;
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+    
+    const output = document.getElementById('output');
+    const btn = document.getElementById('btnPublicarCTe');
+    const originalText = btn.innerHTML;
+    
+    output.innerHTML += `<br><span style="color: #00ff00;">[API] Enviando CT-e para iComprova...</span>`;
+    btn.innerHTML = '<div class="loading"></div> Enviando...';
+    btn.disabled = true;
+    
+    try {
+        // Converter XML para string Base64 (como exigido pela API)
+        const xmlBase64 = btoa(unescape(encodeURIComponent(cteGerado)));
+        
+        // Extrair chave do CT-e para usar como token
+        const chaveCte = document.getElementById('chaveCte').value;
+        
+        const response = await fetch(`${API_CONFIG.baseUrl}/Recepcoes/CTe`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                documento: xmlBase64,
+                token: chaveCte
+            })
+        });
+        
+        // Primeiro pega a resposta como texto
+        const responseText = await response.text();
+        
+        // Tenta parsear como JSON, se falhar, mostra o texto puro
+        let result;
+        try {
+            result = JSON.parse(responseText);
+        } catch (e) {
+            // Se não for JSON, mostra o que veio
+            output.innerHTML += `<br><span style="color: #ff9900;">[API] Resposta não-JSON recebida:</span>`;
+            output.innerHTML += `<br><span style="color: #ff9900;">${responseText.substring(0, 500)}...</span>`;
+            result = { status: "unknown", rawResponse: responseText };
+        }
+        
+        if (response.ok) {
+            if (result.status === "success") {
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] ✅ CT-e enviado com sucesso!</span>`;
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] ID: ${result.id || 'N/A'}</span>`;
+                output.innerHTML += `<br><span style="color: #00ff00;">[API] Viagem será disponibilizada após envio de todos os documentos.</span>`;
+            } else {
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Status não-success: ${result.status || 'unknown'}</span>`;
+                output.innerHTML += `<br><span style="color: #ff0000;">[API] Mensagem: ${result.message || 'Sem mensagem'}</span>`;
+            }
+        } else {
+            output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro HTTP ${response.status}: ${response.statusText}</span>`;
+            output.innerHTML += `<br><span style="color: #ff9900;">[API] Resposta: ${responseText.substring(0, 300)}</span>`;
+        }
+        
+    } catch (error) {
+        output.innerHTML += `<br><span style="color: #ff0000;">[API] ❌ Erro de conexão: ${error.message}</span>`;
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
         
         async function publicarCTe() {
             if (!verificarTokenValido()) return;
