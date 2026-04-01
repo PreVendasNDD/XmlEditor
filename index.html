@@ -461,6 +461,9 @@ body {
             <a href="#" class="download-link" id="linkMdfe">
                 <i class="fas fa-file-download"></i> BAIXAR MDF-e
             </a>
+            <a href="#" class="download-link" id="linkNfe">
+                <i class="fas fa-file-download"></i> BAIXAR NF-e
+            </a>
             <a href="#" class="download-link" id="linkZip">
                 <i class="fas fa-file-archive"></i> BAIXAR ZIP
             </a>
@@ -486,14 +489,14 @@ body {
             tpAmb: '1',                   // Produção
             cMDF: '02328384',             // Código MDF-e
             
-            // Para NF-e (NOVO - ADICIONADO AGORA)
+            // Para NF-e
             modeloNFE: '55',              // NF-e modelo 55
             serieNFE: '1',                // Série NF-e
-            cNF: '12345678'               // Código numérico NF-e (pode ser qualquer número de 8 dígitos)
+            cNF: '12345678'               // Código numérico NF-e (8 dígitos)
         };
 
         // ============================================
-        // XMLs BASE FIXOS NA MEMÓRIA (CORRIGIDOS - SEM DUPLICAÇÃO)
+        // XMLs BASE FIXOS NA MEMÓRIA
         // ============================================
         const CTE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
 <cteProc versao="3.00" xmlns="http://www.portalfiscal.inf.br/cte">
@@ -739,7 +742,7 @@ body {
 			<SignatureValue>Hev/TYisXsJpawWwvHid5L2+3TYZhOVJul53ilQXO79FpP89FscWa8jPPN5KaN0aQ5Y/C981wpjfY+Hr6PqmScSDMG2PHQ0ufxZNAvGZbJ3fb0YaMIceKU4WP8vHmkUUFyidRyDdmZTRLZruhy0L49kDFuG3Ap3or9aFOD/DqSXBTa+rA9ActBrXmuEJEEYU1Bs5fjNkyvA5ZwtSyRfPyqn0HGDcHHo1IzEi/zna/YUWCJwH3GWv9p6SqmPnkDklm5pf82lNEAmqFJPVZo2aeYDX4zr8nyhpdK6ZyGS8Hmfe62Up6wPxQxQxj/M5krqXwwinT1t0/MSGNuVteiWEFQ==</SignatureValue>
 			<KeyInfo>
 				<X509Data>
-					<X509Certificate>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</X509Certificate>
+					<X509Certificate>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</X509Certificate>
 				</X509Data>
 			</KeyInfo>
 		</Signature>
@@ -916,7 +919,189 @@ body {
 </mdfeProc>`;
 
         // ============================================
-        // FUNÇÕES PARA GERAR CHAVES DE ACESSO - CORRIGIDO!
+        // XML BASE DA NF-e (MODELO 55) - CORREÇÃO ADICIONADA
+        // ============================================
+        const NFE_BASE = `<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+	<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+		<infNFe Id="NFe41250111158565000115550010000000011234567890" versao="4.00">
+			<ide>
+				<cUF>41</cUF>
+				<cNF>12345678</cNF>
+				<natOp>VENDA DE MERCADORIA</natOp>
+				<mod>55</mod>
+				<serie>1</serie>
+				<nNF>1</nNF>
+				<dhEmi>2025-09-27T10:00:00-03:00</dhEmi>
+				<tpNF>1</tpNF>
+				<idDest>1</idDest>
+				<cMunFG>4125506</cMunFG>
+				<tpImp>1</tpImp>
+				<tpEmis>1</tpEmis>
+				<cDV>0</cDV>
+				<tpAmb>1</tpAmb>
+				<finNFe>1</finNFe>
+				<indFinal>1</indFinal>
+				<indPres>1</indPres>
+				<procEmi>0</procEmi>
+				<verProc>NDDigital NFe 4.8.5</verProc>
+			</ide>
+			<emit>
+				<CNPJ>11158565000118</CNPJ>
+				<xNome>Pré vendas transportadora</xNome>
+				<xFant>SAO JOSE PINHAIS - PR</xFant>
+				<enderEmit>
+					<xLgr>RUA ANTONIO SINGER</xLgr>
+					<nro>6.751</nro>
+					<xBairro>CAMPO LARGO ROSEIRA</xBairro>
+					<cMun>4125506</cMun>
+					<xMun>SAO JOSE DOS PINHAIS</xMun>
+					<UF>PR</UF>
+					<CEP>83090901</CEP>
+					<cPais>1058</cPais>
+					<xPais>BRASIL</xPais>
+					<fone>4133843470</fone>
+				</enderEmit>
+				<IE>9032205116</IE>
+				<CRT>3</CRT>
+			</emit>
+			<dest>
+				<CNPJ>71363101000175</CNPJ>
+				<xNome>NDD TESTE MOVE</xNome>
+				<enderDest>
+					<xLgr>R. Heitor Villa Lobos</xLgr>
+					<nro>525</nro>
+					<xBairro>São Francisco</xBairro>
+					<cMun>4208702</cMun>
+					<xMun>LAGES</xMun>
+					<UF>SC</UF>
+					<CEP>88506400</CEP>
+					<cPais>1058</cPais>
+					<xPais>BRASIL</xPais>
+					<fone>1236276408</fone>
+				</enderDest>
+				<indIEDest>1</indIEDest>
+				<IE>688165993113</IE>
+			</dest>
+			<det nItem="1">
+				<prod>
+					<cProd>001</cProd>
+					<cEAN>SEM GTIN</cEAN>
+					<xProd>PRODUTO TESTE</xProd>
+					<NCM>72104910</NCM>
+					<CFOP>5102</CFOP>
+					<uCom>UN</uCom>
+					<qCom>10.0000</qCom>
+					<vUnCom>100.0000</vUnCom>
+					<vProd>1000.00</vProd>
+					<cEANTrib>SEM GTIN</cEANTrib>
+					<uTrib>UN</uTrib>
+					<qTrib>10.0000</qTrib>
+					<vUnTrib>100.0000</vUnTrib>
+					<indTot>1</indTot>
+				</prod>
+				<imposto>
+					<ICMS>
+						<ICMS00>
+							<orig>0</orig>
+							<CST>00</CST>
+							<modBC>0</modBC>
+							<vBC>1000.00</vBC>
+							<pICMS>18.00</pICMS>
+							<vICMS>180.00</vICMS>
+						</ICMS00>
+					</ICMS>
+					<PIS>
+						<PISNT>
+							<CST>49</CST>
+							<vBC>0.00</vBC>
+							<pPIS>0.00</pPIS>
+							<vPIS>0.00</vPIS>
+						</PISNT>
+					</PIS>
+					<COFINS>
+						<COFINSNT>
+							<CST>49</CST>
+							<vBC>0.00</vBC>
+							<pCOFINS>0.00</pCOFINS>
+							<vCOFINS>0.00</vCOFINS>
+						</COFINSNT>
+					</COFINS>
+				</imposto>
+			</det>
+			<total>
+				<ICMSTot>
+					<vBC>1000.00</vBC>
+					<vICMS>180.00</vICMS>
+					<vICMSDeson>0.00</vICMSDeson>
+					<vFCP>0.00</vFCP>
+					<vBCST>0.00</vBCST>
+					<vST>0.00</vST>
+					<vFCPST>0.00</vFCPST>
+					<vFCPSTRet>0.00</vFCPSTRet>
+					<vProd>1000.00</vProd>
+					<vFrete>0.00</vFrete>
+					<vSeg>0.00</vSeg>
+					<vDesc>0.00</vDesc>
+					<vII>0.00</vII>
+					<vIPI>0.00</vIPI>
+					<vIPIDevol>0.00</vIPIDevol>
+					<vPIS>0.00</vPIS>
+					<vCOFINS>0.00</vCOFINS>
+					<vOutro>0.00</vOutro>
+					<vNF>1000.00</vNF>
+					<vTotTrib>0.00</vTotTrib>
+				</ICMSTot>
+			</total>
+			<transp>
+				<modFrete>0</modFrete>
+				<transporta>
+					<CNPJ>11158565000118</CNPJ>
+					<xNome>Pré vendas transportadora</xNome>
+					<IE>9032205116</IE>
+					<xEnder>RUA ANTONIO SINGER, 6751</xEnder>
+					<xMun>SAO JOSE DOS PINHAIS</xMun>
+					<UF>PR</UF>
+				</transporta>
+			</transp>
+		</infNFe>
+		<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+			<SignedInfo>
+				<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+				<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+				<Reference URI="#NFe41250111158565000115550010000000011234567890">
+					<Transforms>
+						<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+						<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+					</Transforms>
+					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+					<DigestValue>dummyDigestValueForNFe</DigestValue>
+				</Reference>
+			</SignedInfo>
+			<SignatureValue>dummySignatureValueForNFe</SignatureValue>
+			<KeyInfo>
+				<X509Data>
+					<X509Certificate>MIIICjCCBfKgAwIBAgIQFuv/M7+A5PApmcyQXwN0/jANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIzMTAyNjE5MTM0OFoXDTI0MTAyNTE1MTM0OFowgfoxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJTUDESMBAGA1UEBwwJU2FvIFBhdWxvMRkwFwYDVQQLDBBWaWRlb0NvbmZlcmVuY2lhMRcwFQYDVQQLDA4zNDczMjg1NDAwMDE4NDE2MDQGA1UECwwtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRYwFAYDVQQLDA1SRkIgZS1DTlBKIEExMTEwLwYDVQQDDChUUkFOU05PVkFHIFRSQU5TUE9SVEVTIFNBOjU1ODkwMDE2MDAwMTA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0q5LF5lwrjQqD3XwkrKbrKO95dsjDdSK0RSxutZhXXA/8N7gktgR4jk3lLCN2d17lJtmNW4VUR1KezTGjJQAjKk9wx1HNGQZpv06yAi9CHXjblWH5fNT3B/TKO8vpiVJU/sVC2RrfGvBDDitD7Wbx0kMtNHl6zzL4vwzKn/f8pmFCl29SMuJ8xNrQYqYvf84d7ICCCiNbgCeip084uJCdrSqV7ZcUOM00tsjsqhXmAWvq4TA1mKn1TGOU9r7O91c7X5cBCDALfHOGQNqtkbQmvr2bGsxKVo2mwsgELe0aR/umxWllQLfQJInrsgFMTdQpv0liuy5CdlU8wvdOcftFwIDAQABo4IDCzCCAwcwgboGA1UdEQSBsjCBr6A9BgVgTAEDBKA0BDIyNTAyMTk1OTk0MDExNzUzODE1MDAwMDAwMDAwMDAwMDAwMDAwMDcyNTk0OTNTU1BTUKAfBgVgTAEDAqAWBBRKT0FPIExVQ0lBTk8gR1JBTkFET6AZBgVgTAEDA6AQBA41NTg5MDAxNjAwMDEwOaAXBgVgTAEDB6AOBAwwMDAwMDAwMDAwMDCBGVNJU1RFTUFTQEZFUlJPTEVORS5DT00uQlIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmwwVqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUFBwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2NlcnRpZmljYWRvcy9BQ19DZXJ0aXNpZ25fUkZCX0c1LnA3YzA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AtYWMtY2VydGlzaWduLXJmYi5jZXJ0aXNpZ24uY29tLmJyMA0GCSqGSIb3DQEBCwUAA4ICAQBVn+njpIoyz9To/8GqlGgKrm4JMXqhOKcNoBpnf9mGldqfz2xLeL6cj5kn8/jTe7sTTpCAvs2y8w/MzsTBs5KiBR7OrXis97XP1yWbx/3gew/zmDj0EeuTfPU+n7cehqy0zzWUpRdgEa5GSuQn44KUlE/scNriWhk4iWYKdZVwzTuJweotqHv3OYTZmxpYjNOhIJos8WxWCvwGqMwdkIdunTPnxyRdjAXVuryqe9BblDVkee/ByyFg9d0x9ehHudCf78BqAGj/5xpZnmE/xFNnjmDu6Kbq+ZKGVGgzAdekvkVnZeUq3JWztzugGzfbqVPDnspnRS5SHiRcnsftXVzR3RrpHFKAjzT+4ErNOnyDrysimsh1+ZOEyS2fN63z0EkNkEcOrt2AlwmFFnBhwEyg+OTAH3UdJpcvI9678bFNOvcpgOWPBPkFeG3cLN9dimgV60eB6kGQYr7KZusmonZwwZZxeGXryBYe25QVWOJhpn0YU8LW8MMcwPMfLD7o23R9iUEXt8ODpedDIwwLHaKp1gZDc9Idy32Qux6svAzMWoSEap2Gsh+dtnkbaIh81zc1tBGGBAb7cd/89KBGtJCy/pNavVrcOM1FrTYbj9UHOAc0sUQz3zHSEFun/qNcF3GP377RsEzMEfBXBcpOQsgeLFApYl9uqqXSbprwn1Mlgg==</X509Certificate>
+				</X509Data>
+			</KeyInfo>
+		</Signature>
+	</NFe>
+	<protNFe versao="4.00">
+		<infProt>
+			<tpAmb>1</tpAmb>
+			<verAplic>PR-v4_0_0</verAplic>
+			<chNFe>41250111158565000115550010000000011234567890</chNFe>
+			<dhRecbto>2025-09-27T10:00:00-03:00</dhRecbto>
+			<nProt>141230252735166</nProt>
+			<digVal>dummyDigestValueForNFe</digVal>
+			<cStat>100</cStat>
+			<xMotivo>Autorizado o uso da NF-e</xMotivo>
+		</infProt>
+	</protNFe>
+</nfeProc>`;
+
+        // ============================================
+        // FUNÇÕES PARA GERAR CHAVES DE ACESSO
         // ============================================
 
         function gerarChaveCTe(numeroCTe) {
@@ -961,9 +1146,6 @@ body {
             return chave43 + dv;
         }
 
-        // ============================================
-        // FUNÇÃO NOVA PARA GERAR CHAVE NF-e
-        // ============================================
         function gerarChaveNFe(numeroNFe) {
             const nNF = numeroNFe.toString().padStart(9, '0');
             const serie = DADOS_EMPRESA.serieNFE.padStart(3, '0');
@@ -971,7 +1153,6 @@ body {
             
             const AAMM = getAAMM();
             
-            // Formato da chave NF-e: cUF (2) + AAMM (4) + CNPJ (14) + mod (2) + serie (3) + nNF (9) + tpEmis (1) + cNF (8)
             const chave43 = 
                 DADOS_EMPRESA.cUF +
                 AAMM +
@@ -1018,6 +1199,7 @@ body {
         
         let cteGerado = null;
         let mdfeGerado = null;
+        let nfeGerado = null;
         let ultimoNumeroCTe = 91731;
         let ultimoNumeroMDFe = 91731;
         let ultimoNumeroNFe = 1;
@@ -1098,11 +1280,20 @@ body {
                     .replace(/chMDFe=\d+/g, `chMDFe=${chaveMdfe}`)
                     .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`);
                 
-                document.getElementById('output').innerHTML += `
-                    <div style="color: #00ff00; margin-top: 20px; border-top: 1px solid #00ff00; padding-top: 20px;">
+                // GERAR NOVO NF-e - CORREÇÃO ADICIONADA
+                nfeGerado = NFE_BASE
+                    .replace(/NFe\d{44}/g, `NFe${chaveNfe}`)
+                    .replace(/<nNF>\d+<\/nNF>/, `<nNF>${numeroNfe.padStart(9, '0')}</nNF>`)
+                    .replace(/<chNFe>\d+<\/chNFe>/, `<chNFe>${chaveNfe}</chNFe>`)
+                    .replace(/<dhEmi>[^<]+<\/dhEmi>/, `<dhEmi>${dataEmissao}</dhEmi>`)
+                    .replace(/<dhRecbto>[^<]+<\/dhRecbto>/, `<dhRecbto>${dataEmissao}</dhRecbto>`)
+                    .replace(/chNFe=\d+/g, `chNFe=${chaveNfe}`);
+                
+                document.getElementById('output').innerHTML = `
+                    <div style="color: #00ff00; font-weight: bold;">
                         ✅ XMLs GERADOS COM SUCESSO!
                     </div>
-                    <div style="margin-top: 10px;">
+                    <div style="margin-top: 15px;">
                         <strong>CT-e:</strong> Número ${numeroCte} | Chave ${chaveCte}<br>
                         <strong>MDF-e:</strong> Número ${numeroMdfe} | Chave ${chaveMdfe}<br>
                         <strong>NF-e:</strong> Número ${numeroNfe} | Chave ${chaveNfe}<br>
@@ -1113,6 +1304,7 @@ body {
                 document.getElementById('downloadLinks').style.display = 'flex';
                 document.getElementById('linkCte').onclick = (e) => { e.preventDefault(); baixarCTe(); };
                 document.getElementById('linkMdfe').onclick = (e) => { e.preventDefault(); baixarMDFe(); };
+                document.getElementById('linkNfe').onclick = (e) => { e.preventDefault(); baixarNFe(); };
                 document.getElementById('linkZip').onclick = (e) => { e.preventDefault(); baixarZIP(); };
                 
                 document.getElementById('outputStatus').textContent = 'XMLs gerados com sucesso';
@@ -1170,13 +1362,28 @@ body {
             URL.revokeObjectURL(url);
         }
         
+        // Função para baixar NF-e - CORREÇÃO ADICIONADA
+        function baixarNFe() {
+            if (!nfeGerado) return;
+            const blob = new Blob([nfeGerado], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `NFe_${document.getElementById('chaveNfe').value}.xml`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
         function baixarZIP() {
-            if (!cteGerado || !mdfeGerado) return;
+            if (!cteGerado || !mdfeGerado || !nfeGerado) return;
             
             if (window.JSZip) {
                 const zip = new JSZip();
                 zip.file(`CTe_${document.getElementById('chaveCte').value}.xml`, cteGerado);
                 zip.file(`MDFe_${document.getElementById('chaveMdfe').value}.xml`, mdfeGerado);
+                zip.file(`NFe_${document.getElementById('chaveNfe').value}.xml`, nfeGerado);
                 
                 zip.generateAsync({ type: 'blob' }).then(function(content) {
                     const url = URL.createObjectURL(content);
@@ -1191,11 +1398,12 @@ body {
             } else {
                 baixarCTe();
                 setTimeout(() => baixarMDFe(), 500);
+                setTimeout(() => baixarNFe(), 1000);
             }
         }
         
         function baixarTudo() {
-            if (!cteGerado || !mdfeGerado) {
+            if (!cteGerado || !mdfeGerado || !nfeGerado) {
                 alert('Gere os XMLs primeiro!');
                 return;
             }
@@ -1210,25 +1418,25 @@ body {
         }
         
         // Gerar chaves iniciais ao carregar
-window.addEventListener('DOMContentLoaded', () => {
-    // COLOCA DATA ATUAL AUTOMÁTICA
-    const agora = new Date();
-    const ano = agora.getFullYear();
-    const mes = String(agora.getMonth() + 1).padStart(2, '0');
-    const dia = String(agora.getDate()).padStart(2, '0');
-    const hora = String(agora.getHours()).padStart(2, '0');
-    const minuto = String(agora.getMinutes()).padStart(2, '0');
-    const segundo = String(agora.getSeconds()).padStart(2, '0');
-    
-    // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
-    const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
-    
-    // Joga a data atual no campo
-    document.getElementById('dataEmissao').value = dataAtual;
-    
-    // Agora sim gera as chaves
-    gerarChaves();
-});
+        window.addEventListener('DOMContentLoaded', () => {
+            // COLOCA DATA ATUAL AUTOMÁTICA
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = String(agora.getMonth() + 1).padStart(2, '0');
+            const dia = String(agora.getDate()).padStart(2, '0');
+            const hora = String(agora.getHours()).padStart(2, '0');
+            const minuto = String(agora.getMinutes()).padStart(2, '0');
+            const segundo = String(agora.getSeconds()).padStart(2, '0');
+            
+            // Formato que os XMLs precisam: YYYY-MM-DDTHH:MM:SS-03:00
+            const dataAtual = `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}-03:00`;
+            
+            // Joga a data atual no campo
+            document.getElementById('dataEmissao').value = dataAtual;
+            
+            // Agora sim gera as chaves
+            gerarChaves();
+        });
     </script>
 </body>
 </html>
